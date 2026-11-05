@@ -1,0 +1,4348 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE rem:requirementsProject SYSTEM "https://cdn.jsdelivr.net/gh/amador-duran-toro/remus/xml/remus.dtd">
+<rem:requirementsProject xmlns:rem="http://rem.lsi.us.es">
+<rem:name>condor</rem:name>
+<rem:c_requirementsSpecification oid = "CRS-0001">
+<rem:name>Documento de Requisitos del Sistema</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Sistema de Ventas y Facturación Cóndor - Ferretería Cóndor Majes S.A.C. ERS según IEEE Std 830-1998. Versión 1.1: incorpora la solicitud de cambio CC-01 (ingreso con usuario, contraseña y roles; backend REST).</rem:comments>
+<rem:preparedFor organizations = "ORG-0001 "/>
+<rem:preparedBy organizations = "ORG-0002 "/>
+<rem:section oid="SEC-0001">
+<rem:name>Introducción</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:level>1</rem:level>
+<rem:number>1 </rem:number>
+<rem:paragraph oid="PRG-0001">
+<rem:name>Propósito</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:text>El presente documento especifica los requisitos del **Sistema de Ventas y Facturación Cóndor** para la **Ferretería Cóndor Majes S.A.C.** (Majes, Arequipa).<br/><br/>Sirve de acuerdo entre la ferretería y el equipo de desarrollo sobre lo que el sistema debe hacer, y de línea base para el diseño (G03), la estimación (G04), la gestión de cambios (G02) y las pruebas (G07 a G09). Se redacta tomando como referencia académica la norma _IEEE Std 830-1998_ y las plantillas de requisitos de REMUS.</rem:text>
+</rem:paragraph>
+<rem:paragraph oid="PRG-0002">
+<rem:name>Ámbito del sistema</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:text>Cóndor registra las ventas del mostrador en las tres PC del local, emite boletas, facturas, notas de venta y proformas, imprime el ticket en la ticketera térmica, envía los comprobantes electrónicos a la SUNAT, registra proveedores, compras y guías de remisión, ofrece el historial y un reporte consolidado de ventas, y genera respaldos de la base de datos.<br/><br/>Todas las PC trabajan sobre una base de datos PostgreSQL central a través de un backend REST (_Condor.Api_) instalado en la PC principal, con ingreso por usuario y contraseña y dos roles: **Vendedor** y **Encargado general**.<br/><br/>**Queda fuera de esta versión:** control de stock e inventario valorizado, cuentas por cobrar y crédito a clientes, notas de crédito y débito, pagos con tarjeta integrados, venta por internet y pantalla de administración de usuarios.</rem:text>
+</rem:paragraph>
+<rem:paragraph oid="PRG-0003">
+<rem:name>Situación actual y problema</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:text>La ferretería vende al público y a obras de construcción. Hoy las ventas se anotan en un cuaderno y las boletas se llenan a mano en talonarios; los precios se consultan en una lista impresa que se desactualiza, y la facturación electrónica se hace aparte en el portal de la SUNAT al final del día.<br/><br/>Esto provoca colas en horas punta, errores de precio y de cálculo del IGV, comprobantes que no se informan a tiempo a la SUNAT, compras a proveedores sin registro ordenado y ninguna información consolidada para el gerente. Tampoco se sabe qué vendedor emitió cada comprobante.</rem:text>
+</rem:paragraph>
+<rem:paragraph oid="PRG-0004">
+<rem:name>Procesos de negocio cubiertos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:text>* **PN-01 Venta y facturación electrónica:** buscar productos, identificar al cliente, emitir boleta, factura o nota de venta, imprimir el ticket y enviar el comprobante a la SUNAT (RF-05, RF-06, RF-07, RF-09, RF-10; opcionalmente RF-13).<br/>* **PN-02 Cotización y conversión en venta:** emitir una proforma con vigencia de 7 días y convertirla en boleta o factura una sola vez (RF-08, RF-07).<br/>* **PN-03 Abastecimiento:** registrar al proveedor y registrar sus compras sin duplicar comprobantes (RF-11, RF-12).<br/><br/>Los procesos se apoyan en el ingreso y los roles (RF-01 a RF-03), el catálogo (RF-04), las consultas (RF-14, RF-15) y el respaldo (RF-16).</rem:text>
+</rem:paragraph>
+<rem:paragraph oid="PRG-0005">
+<rem:name>Definiciones y acrónimos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:text>* **SUNAT:** Superintendencia Nacional de Aduanas y de Administración Tributaria.<br/>* **CDR:** Constancia de Recepción que devuelve la SUNAT por cada comprobante electrónico.<br/>* **IGV:** Impuesto General a las Ventas, 18 % incluido en el precio de venta.<br/>* **DNI / RUC:** documento de identidad (8 dígitos) / Registro Único de Contribuyentes (11 dígitos).<br/>* **Boleta, factura:** comprobantes electrónicos de venta (series B001 y F001).<br/>* **Nota de venta:** documento interno de control, sin valor tributario (serie NV01).<br/>* **Proforma:** cotización sin valor tributario con vigencia de 7 días (serie PR01).<br/>* **Guía de remisión:** documento electrónico que sustenta el traslado de bienes (serie T001).<br/>* **Ticketera:** impresora térmica de 80 mm que recibe comandos ESC/POS.<br/>* **JWT:** token firmado que identifica al usuario ante la API.<br/>* **RF / RNF:** requisito funcional / no funcional.</rem:text>
+</rem:paragraph>
+<rem:paragraph oid="PRG-0006">
+<rem:name>Referencias</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:text>* IEEE Std 830-1998, _IEEE Recommended Practice for Software Requirements Specifications_.<br/>* Guía de laboratorio PRAC01 Requerimientos, Calidad de Software, J. M. Silva Fernández.<br/>* Product Backlog del proyecto Cóndor: historias HU-01 a HU-18 (CHANGELOG.md del repositorio).<br/>* Solicitud de cambio CC-01 (G02_Proceso_Requerimientos).<br/>* SUNAT, Resolución de Superintendencia N.° 097-2012/SUNAT y modificatorias (comprobantes electrónicos).</rem:text>
+</rem:paragraph>
+<rem:paragraph oid="PRG-0007">
+<rem:name>Fuentes de elicitación empleadas</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:text>Se aplicaron tres técnicas, cuyos instrumentos y resultados están en _G01_Requerimientos/02_Elicitacion_:<br/><br/>* **ENT-01 Entrevista semiestructurada** al gerente general y al encargado general.<br/>* **CUE-01 Cuestionario** a los vendedores de mostrador.<br/>* **OBS-01 Observación directa** del proceso de venta actual, con toma de tiempos.<br/><br/>**Declaración:** las sesiones se realizaron con **usuarios representados**: integrantes del equipo asumieron los roles de gerente, encargado y vendedores a partir del conocimiento del negocio recogido en el Product Backlog del proyecto.</rem:text>
+</rem:paragraph>
+</rem:section>
+<rem:section oid="SEC-0002">
+<rem:name>Participantes en el proyecto</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:level>1</rem:level>
+<rem:number>2 </rem:number>
+<rem:organization
+ oid="ORG-0001">
+<rem:name>Ferretería Cóndor Majes S.A.C.</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:address>Majes, Caylloma, Arequipa</rem:address>
+<rem:telephone><rem:tbd/></rem:telephone>
+<rem:fax><rem:tbd/></rem:fax>
+</rem:organization>
+<rem:organization
+ oid="ORG-0002">
+<rem:name>Equipo de desarrollo - Calidad de Software 2026-B (EPIS - UNSA)</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:address>Escuela Profesional de Ingeniería de Sistemas, UNSA, Arequipa</rem:address>
+<rem:telephone><rem:tbd/></rem:telephone>
+<rem:fax><rem:tbd/></rem:fax>
+</rem:organization>
+<rem:stakeholder oid="STK-0001">
+<rem:name>Gerente general</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:stakeholderRole>Patrocinador y decisor final; define el alcance, aprueba los cambios y usa el reporte consolidado</rem:stakeholderRole>
+<rem:isCustomer/>
+<rem:isUser/>
+<rem:worksFor organization = "ORG-0001"/>
+</rem:stakeholder>
+<rem:stakeholder oid="STK-0002">
+<rem:name>Encargado general de tienda</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:stakeholderRole>Usuario con el rol Encargado general: vende y administra compras, proveedores, guías y respaldos</rem:stakeholderRole>
+<rem:isCustomer/>
+<rem:isUser/>
+<rem:worksFor organization = "ORG-0001"/>
+</rem:stakeholder>
+<rem:stakeholder oid="STK-0003">
+<rem:name>Vendedores de mostrador</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:stakeholderRole>Usuarios con el rol Vendedor: atienden al público y emiten los comprobantes</rem:stakeholderRole>
+<rem:isUser/>
+<rem:worksFor organization = "ORG-0001"/>
+</rem:stakeholder>
+<rem:stakeholder oid="STK-0004">
+<rem:name>Contador externo</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:stakeholderRole>Interesado: vela por el cumplimiento tributario (IGV, envío a la SUNAT, conservación de comprobantes)</rem:stakeholderRole>
+<rem:worksFor organization = "ORG-0001"/>
+</rem:stakeholder>
+<rem:stakeholder oid="STK-0005">
+<rem:name>Equipo de desarrollo (4 integrantes)</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:stakeholderRole>Cada integrante asume los roles de analista, desarrollador, responsable de configuración y evaluador de calidad</rem:stakeholderRole>
+<rem:isDeveloper/>
+<rem:worksFor organization = "ORG-0002"/>
+</rem:stakeholder>
+<rem:stakeholder oid="STK-0006">
+<rem:name>Docente del curso</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:stakeholderRole>Valida el alcance del producto y evalúa las evidencias de calidad</rem:stakeholderRole>
+<rem:worksFor organization = "ORG-0002"/>
+</rem:stakeholder>
+</rem:section>
+<rem:section oid="SEC-0003">
+<rem:name>Objetivos del sistema</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:level>1</rem:level>
+<rem:number>3 </rem:number>
+<rem:objective oid="OBJ-0001">
+<rem:name>Agilizar la venta en mostrador</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0003 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>permitir que el vendedor arme la venta y entregue el comprobante impreso **en menos de un minuto**, sin cálculos manuales ni consultas a listas impresas</rem:description>
+</rem:objective>
+<rem:objective oid="OBJ-0002">
+<rem:name>Cumplir con la facturación electrónica</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>emitir boletas, facturas y guías de remisión electrónicas válidas y **enviarlas a la SUNAT dentro del plazo de 3 días**, aunque falle el internet al momento de vender</rem:description>
+</rem:objective>
+<rem:objective oid="OBJ-0003">
+<rem:name>Controlar el acceso y la trazabilidad</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:description>identificar a cada persona que usa el sistema, limitar las funciones según su rol y **registrar qué usuario y qué terminal** emitió cada comprobante</rem:description>
+</rem:objective>
+<rem:objective oid="OBJ-0004">
+<rem:name>Ordenar el abastecimiento</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>registrar a los proveedores y sus compras sin duplicar comprobantes, y conocer el total de egresos de un período</rem:description>
+</rem:objective>
+<rem:objective oid="OBJ-0005">
+<rem:name>Disponer de información consolidada</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:description>ofrecer el historial de ventas y un **reporte consolidado por día, tipo de comprobante, terminal y usuario** para las decisiones del gerente</rem:description>
+</rem:objective>
+<rem:objective oid="OBJ-0006">
+<rem:name>Proteger la información del negocio</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0002 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>conservar los datos tras reinicios y cortes de energía, evitar números de comprobante repetidos o saltados con tres PC simultáneas y permitir respaldar y restaurar la base de datos</rem:description>
+</rem:objective>
+</rem:section>
+<rem:section oid="SEC-0004">
+<rem:name>Catálogo de requisitos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:level>1</rem:level>
+<rem:number>4 </rem:number>
+<rem:section oid="SEC-0005">
+<rem:name>Requisitos de información</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:level>2</rem:level>
+<rem:number>4.1 </rem:number>
+<rem:informationRequirement oid="IRQ-0001">
+<rem:name>Información sobre productos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:relevantConcept>los productos del catálogo de la ferretería</rem:relevantConcept>
+<rem:averageLifeTime>
+<rem:value>3</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:averageLifeTime>
+<rem:maximumLifeTime>
+<rem:value>10</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:maximumLifeTime>
+<rem:averageOcurrences>
+<rem:value>3000</rem:value>
+</rem:averageOcurrences>
+<rem:maximumOcurrences>
+<rem:value>5000</rem:value>
+</rem:maximumOcurrences>
+<rem:specificData oid = "DAT-0001">
+<rem:description>Nombre del producto (único, hasta 150 caracteres)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0002">
+<rem:description>Precio de venta con IGV (mayor que 0 y hasta S/ 99 999.99, dos decimales)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0003">
+<rem:description>Unidad de medida (UND, KG, M, GAL...)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0004">
+<rem:description>Código de barras (único, de 4 a 30 caracteres, opcional)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0005">
+<rem:description>Indicador de producto activo</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0006">
+<rem:description>Fecha y hora de registro</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+</rem:informationRequirement>
+<rem:informationRequirement oid="IRQ-0002">
+<rem:name>Información sobre clientes</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0003 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:relevantConcept>los clientes identificados en las ventas</rem:relevantConcept>
+<rem:averageLifeTime>
+<rem:value>5</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:averageLifeTime>
+<rem:maximumLifeTime>
+<rem:value>10</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:maximumLifeTime>
+<rem:averageOcurrences>
+<rem:value>2000</rem:value>
+</rem:averageOcurrences>
+<rem:maximumOcurrences>
+<rem:value>8000</rem:value>
+</rem:maximumOcurrences>
+<rem:specificData oid = "DAT-0007">
+<rem:description>Tipo de documento (1 = DNI, 6 = RUC)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0008">
+<rem:description>Número de documento (único)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0009">
+<rem:description>Nombre o razón social (hasta 200 caracteres)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0010">
+<rem:description>Dirección (hasta 250 caracteres; obligatoria para factura)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+</rem:informationRequirement>
+<rem:informationRequirement oid="IRQ-0003">
+<rem:name>Información sobre comprobantes de venta</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:relevantConcept>las boletas, facturas, notas de venta y proformas emitidas</rem:relevantConcept>
+<rem:averageLifeTime>
+<rem:value>5</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:averageLifeTime>
+<rem:maximumLifeTime>
+<rem:value>10</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:maximumLifeTime>
+<rem:averageOcurrences>
+<rem:value>40000</rem:value>
+</rem:averageOcurrences>
+<rem:maximumOcurrences>
+<rem:value>60000</rem:value>
+</rem:maximumOcurrences>
+<rem:specificData oid = "DAT-0011">
+<rem:description>Serie (B001, F001, NV01, PR01) y número correlativo</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0012">
+<rem:description>Fecha y hora de emisión</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0013">
+<rem:description>Cliente (opcional en boleta hasta S/ 700 y en nota de venta)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0014">
+<rem:description>Terminal y usuario que lo emitió</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0015">
+<rem:description>Operación gravada, IGV y total</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0016">
+<rem:description>Detalle: ítem, producto, descripción, cantidad, precio unitario e importe</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0017">
+<rem:description>Estado ante la SUNAT (PENDIENTE, ACEPTADO, OBSERVADO, RECHAZADO)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0018">
+<rem:description>Número de impresiones y fecha de la última</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0019">
+<rem:description>Vigencia (proforma) y proforma de origen (venta convertida)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+</rem:informationRequirement>
+<rem:informationRequirement oid="IRQ-0004">
+<rem:name>Información sobre envíos a la SUNAT</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:relevantConcept>el envío electrónico de cada comprobante y guía</rem:relevantConcept>
+<rem:averageLifeTime>
+<rem:value>5</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:averageLifeTime>
+<rem:maximumLifeTime>
+<rem:value>10</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:maximumLifeTime>
+<rem:averageOcurrences>
+<rem:value>35000</rem:value>
+</rem:averageOcurrences>
+<rem:maximumOcurrences>
+<rem:value>55000</rem:value>
+</rem:maximumOcurrences>
+<rem:specificData oid = "DAT-0020">
+<rem:description>XML UBL 2.1 firmado</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0021">
+<rem:description>CDR recibido (ZIP) y código de respuesta</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0022">
+<rem:description>Descripción del motivo de observación o rechazo</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0023">
+<rem:description>Número de intentos y fecha del último</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0024">
+<rem:description>Reserva de reenvío (terminal y vencimiento)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+</rem:informationRequirement>
+<rem:informationRequirement oid="IRQ-0005">
+<rem:name>Información sobre proveedores</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:relevantConcept>los proveedores de la ferretería</rem:relevantConcept>
+<rem:averageLifeTime>
+<rem:value>5</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:averageLifeTime>
+<rem:maximumLifeTime>
+<rem:value>10</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:maximumLifeTime>
+<rem:averageOcurrences>
+<rem:value>60</rem:value>
+</rem:averageOcurrences>
+<rem:maximumOcurrences>
+<rem:value>300</rem:value>
+</rem:maximumOcurrences>
+<rem:specificData oid = "DAT-0025">
+<rem:description>RUC (único)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0026">
+<rem:description>Razón social y nombre comercial</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0027">
+<rem:description>Dirección</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0028">
+<rem:description>Teléfono y correo electrónico</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0029">
+<rem:description>Persona de contacto</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+</rem:informationRequirement>
+<rem:informationRequirement oid="IRQ-0006">
+<rem:name>Información sobre compras</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:relevantConcept>las compras realizadas a los proveedores</rem:relevantConcept>
+<rem:averageLifeTime>
+<rem:value>5</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:averageLifeTime>
+<rem:maximumLifeTime>
+<rem:value>10</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:maximumLifeTime>
+<rem:averageOcurrences>
+<rem:value>600</rem:value>
+</rem:averageOcurrences>
+<rem:maximumOcurrences>
+<rem:value>1500</rem:value>
+</rem:maximumOcurrences>
+<rem:specificData oid = "DAT-0030">
+<rem:description>Proveedor</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0031">
+<rem:description>Tipo, serie y número del comprobante del proveedor (únicos por proveedor)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0032">
+<rem:description>Fecha del comprobante (no futura ni de más de un año)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0033">
+<rem:description>Terminal y usuario que la registró</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0034">
+<rem:description>Detalle: producto, cantidad y costo unitario</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0035">
+<rem:description>Total de la compra</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+</rem:informationRequirement>
+<rem:informationRequirement oid="IRQ-0007">
+<rem:name>Información sobre guías de remisión</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0004"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:relevantConcept>las guías de remisión electrónicas emitidas</rem:relevantConcept>
+<rem:averageLifeTime>
+<rem:value>5</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:averageLifeTime>
+<rem:maximumLifeTime>
+<rem:value>10</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:maximumLifeTime>
+<rem:averageOcurrences>
+<rem:value>500</rem:value>
+</rem:averageOcurrences>
+<rem:maximumOcurrences>
+<rem:value>1200</rem:value>
+</rem:maximumOcurrences>
+<rem:specificData oid = "DAT-0036">
+<rem:description>Serie T001 y número</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0037">
+<rem:description>Destinatario (DNI o RUC y nombre)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0038">
+<rem:description>Motivo y fecha de traslado, peso bruto</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0039">
+<rem:description>Punto de partida y de llegada (ubigeo y dirección)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0040">
+<rem:description>Modalidad de transporte: transportista (RUC y razón social) o vehículo y conductor</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0041">
+<rem:description>Comprobante que la sustenta (opcional)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0042">
+<rem:description>Detalle de productos y cantidades</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0043">
+<rem:description>Estado ante la SUNAT</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+</rem:informationRequirement>
+<rem:informationRequirement oid="IRQ-0008">
+<rem:name>Información sobre usuarios y accesos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:relevantConcept>las cuentas de usuario y la bitácora de accesos</rem:relevantConcept>
+<rem:averageLifeTime>
+<rem:value>2</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:averageLifeTime>
+<rem:maximumLifeTime>
+<rem:value>5</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:maximumLifeTime>
+<rem:averageOcurrences>
+<rem:value>5</rem:value>
+</rem:averageOcurrences>
+<rem:maximumOcurrences>
+<rem:value>20</rem:value>
+</rem:maximumOcurrences>
+<rem:specificData oid = "DAT-0044">
+<rem:description>Nombre de usuario (único) y nombre completo</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0045">
+<rem:description>Hash de la contraseña (PBKDF2-SHA256 con sal)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0046">
+<rem:description>Rol (VENDEDOR o ENCARGADO)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0047">
+<rem:description>Indicador de cuenta activa</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0048">
+<rem:description>Intentos fallidos seguidos y bloqueo hasta</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0049">
+<rem:description>Bitácora: fecha, usuario, terminal o IP, resultado y motivo de cada intento</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+</rem:informationRequirement>
+<rem:informationRequirement oid="IRQ-0009">
+<rem:name>Información sobre respaldos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:relevantConcept>los respaldos de la base de datos</rem:relevantConcept>
+<rem:averageLifeTime>
+<rem:value>1</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:averageLifeTime>
+<rem:maximumLifeTime>
+<rem:value>3</rem:value>
+<rem:timeUnit value = "TUV-0002"/>
+</rem:maximumLifeTime>
+<rem:averageOcurrences>
+<rem:value>300</rem:value>
+</rem:averageOcurrences>
+<rem:maximumOcurrences>
+<rem:value>1000</rem:value>
+</rem:maximumOcurrences>
+<rem:specificData oid = "DAT-0050">
+<rem:description>Fecha y hora</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0051">
+<rem:description>Terminal que lo generó</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0052">
+<rem:description>Ruta y nombre del archivo (.backup)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0053">
+<rem:description>Tamaño en bytes</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+<rem:specificData oid = "DAT-0054">
+<rem:description>Resultado (correcto o error y su motivo)</rem:description>
+<rem:comments>Ninguno</rem:comments>
+</rem:specificData>
+</rem:informationRequirement>
+</rem:section>
+<rem:section oid="SEC-0006">
+<rem:name>Reglas de negocio y restricciones</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:level>2</rem:level>
+<rem:number>4.2 </rem:number>
+<rem:constraintRequirement
+ oid="CRQ-0001">
+<rem:name>IGV incluido en el precio</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>el precio de venta incluye el IGV del 18 %; la operación gravada es el total dividido entre 1.18, el IGV es la diferencia, todo redondeado a dos decimales, y operación gravada más IGV debe ser igual al total</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0002">
+<rem:name>Boleta identificada desde S/ 700</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>una boleta cuyo total sea mayor que S/ 700.00 exige el DNI del cliente</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0003">
+<rem:name>Factura solo con RUC</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>una factura solo se emite a un cliente registrado con RUC válido, razón social y dirección</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0004">
+<rem:name>Validez del DNI y del RUC</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>el DNI tiene 8 dígitos; el RUC tiene 11 dígitos, empieza con 10, 15, 16, 17 o 20 y su último dígito cumple el verificador módulo 11 de la SUNAT</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0005">
+<rem:name>Correlativo sin repetidos ni saltos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>cada serie (B001, F001, NV01, PR01, T001) numera sus documentos de uno en uno, sin números repetidos ni saltados, aunque emitan varias PC a la vez o falle una emisión</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0006">
+<rem:name>Vigencia y conversión única de la proforma</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>una proforma vale 7 días contando el de su emisión y se convierte en venta una sola vez; una proforma vencida o ya convertida no se convierte</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0007">
+<rem:name>Precio tomado del catálogo</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>el precio y la descripción de cada línea de venta se toman del catálogo y el servidor recalcula los importes y totales; no se acepta el precio enviado por la terminal</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0008">
+<rem:name>Unicidad de productos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>no pueden existir dos productos con el mismo nombre (sin distinguir mayúsculas ni tildes) ni dos productos con el mismo código de barras</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0009">
+<rem:name>Compra sin duplicados</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>un mismo comprobante de proveedor (RUC, tipo, serie y número) no se registra dos veces</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0010">
+<rem:name>Plazo de envío a la SUNAT</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:description>las boletas, facturas y guías se envían a la SUNAT como máximo 3 días después de su emisión; las notas de venta y las proformas no se envían</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0011">
+<rem:name>Autoría del comprobante</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>cada comprobante guarda el usuario que lo emitió, tomado de su sesión y no de los datos enviados, y la terminal desde donde se emitió</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0012">
+<rem:name>Funciones exclusivas del Encargado general</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:description>solo el Encargado general accede a proveedores, compras, guías de remisión, respaldos y al reporte consolidado de ventas, tanto en la aplicación como en la API</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0013">
+<rem:name>Datos obligatorios de la guía de remisión</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0004"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:description>la guía exige motivo, fecha de traslado no anterior a hoy, peso bruto, ubigeos de 6 dígitos, punto de llegada distinto del de partida y los datos del transporte según su modalidad (RUC y razón social del transportista, o placa, DNI, nombre y licencia del conductor)</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0014">
+<rem:name>Límites de las líneas de venta</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>cada línea tiene una cantidad mayor que 0 y hasta 99 999, con tres decimales como máximo, y un comprobante tiene como máximo 100 líneas</rem:description>
+</rem:constraintRequirement>
+<rem:constraintRequirement
+ oid="CRQ-0015">
+<rem:name>Período del reporte consolidado</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:description>la fecha final del reporte no es anterior a la inicial y el período no pasa de 366 días; las proformas no suman ventas y los rechazados se muestran aparte</rem:description>
+</rem:constraintRequirement>
+</rem:section>
+<rem:section oid="SEC-0007">
+<rem:name>Actores del sistema</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:level>2</rem:level>
+<rem:number>4.3 </rem:number>
+<rem:actor oid="ACT-0001">
+<rem:name>Usuario</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:actorRole>a cualquier persona registrada en el sistema, sea Vendedor o Encargado general, cuando se identifica o cierra su sesión</rem:actorRole>
+</rem:actor>
+<rem:actor oid="ACT-0002">
+<rem:name>Vendedor</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:actorRole>al vendedor de mostrador, que atiende al cliente, arma la venta, emite el comprobante y entrega el ticket</rem:actorRole>
+</rem:actor>
+<rem:actor oid="ACT-0003">
+<rem:name>Encargado general</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:actorRole>al encargado general de la ferretería, que además de vender administra proveedores, compras, guías de remisión y respaldos, y consulta el reporte consolidado</rem:actorRole>
+</rem:actor>
+<rem:actor oid="ACT-0004">
+<rem:name>SUNAT</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:actorRole>al servicio web de la SUNAT (ambiente beta o un servicio simulado en las pruebas) que recibe los comprobantes y guías electrónicos y devuelve el CDR</rem:actorRole>
+</rem:actor>
+<rem:actor oid="ACT-0005">
+<rem:name>Ticketera térmica</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:actorRole>a la impresora térmica de 80 mm conectada a la PC de caja, que imprime el ticket con comandos ESC/POS</rem:actorRole>
+</rem:actor>
+</rem:section>
+<rem:section oid="SEC-0008">
+<rem:name>Requisitos funcionales (casos de uso)</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:level>2</rem:level>
+<rem:number>4.4 </rem:number>
+<rem:useCase oid="UC-0001">
+<rem:name>Iniciar sesión</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:triggeringEvent>una persona del local abre el sistema o necesita identificarse para trabajar</rem:triggeringEvent>
+<rem:precondition>La persona tiene una cuenta activa y la API de la PC principal está disponible.</rem:precondition>
+<rem:postcondition>La sesión queda abierta con el rol del usuario, el pie de la pantalla muestra su nombre y rol, y el intento queda en la bitácora de accesos.</rem:postcondition>
+<rem:frequency>
+<rem:value>12</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0001">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0001">
+<rem:description>escribe su usuario y su contraseña en la ventana Ingresar y pulsa Ingresar</rem:description>
+</rem:actorAction>
+<rem:stepException oid = "STX-0001">
+<rem:condition>falta el usuario o la contraseña</rem:condition>
+<rem:systemAction>
+<rem:description>mantiene deshabilitado el botón Ingresar y no consulta la base de datos</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0002">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>verifica la contraseña contra el hash PBKDF2-SHA256 guardado de la cuenta</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0002">
+<rem:condition>el usuario no existe, está inactivo o la contraseña es incorrecta</rem:condition>
+<rem:systemAction>
+<rem:description>muestra el mensaje «Usuario o contraseña incorrectos.», suma un intento fallido y lo registra en la bitácora</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:stepException oid = "STX-0003">
+<rem:condition>la cuenta acumula 5 intentos fallidos seguidos</rem:condition>
+<rem:systemAction>
+<rem:description>bloquea la cuenta durante 15 minutos e informa el bloqueo, aunque después se escriba la contraseña correcta</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:stepException oid = "STX-0004">
+<rem:condition>la API no responde</rem:condition>
+<rem:systemAction>
+<rem:description>muestra el aviso de conexión con la opción Reintentar</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0003">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>pone en cero los intentos fallidos y registra el acceso exitoso con la terminal, la fecha y la hora</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0004">
+<rem:number>4</rem:number>
+<rem:systemAction>
+<rem:description>abre la pantalla Nueva venta mostrando solo los módulos permitidos para el rol del usuario</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0002">
+<rem:name>Cerrar sesión</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:triggeringEvent>el usuario termina su turno o deja la PC</rem:triggeringEvent>
+<rem:precondition>El usuario tiene una sesión abierta y no se está generando un respaldo.</rem:precondition>
+<rem:postcondition>La sesión queda cerrada, la venta en curso se descarta y se muestra otra vez la ventana Ingresar.</rem:postcondition>
+<rem:frequency>
+<rem:value>12</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0005">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0001">
+<rem:description>pulsa Cerrar sesión en el menú</rem:description>
+</rem:actorAction>
+<rem:stepException oid = "STX-0005">
+<rem:condition>se está generando un respaldo</rem:condition>
+<rem:systemAction>
+<rem:description>no permite cerrar la sesión hasta que el respaldo termine</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0006">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>descarta la venta en curso y vuelve a Nueva venta</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0007">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>oculta la ventana principal y muestra la ventana Ingresar vacía</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0003">
+<rem:name>Restringir módulos según el rol</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:triggeringEvent>un usuario intenta abrir un módulo desde el menú, con su tecla de función o mediante una ruta de la API</rem:triggeringEvent>
+<rem:precondition>El usuario tiene una sesión abierta con el rol Vendedor o Encargado general.</rem:precondition>
+<rem:postcondition>El usuario solo accede a los módulos de su rol; los intentos no permitidos se rechazan sin cambiar los datos.</rem:postcondition>
+<rem:frequency>
+<rem:value>50</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0008">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0001">
+<rem:description>elige un módulo (F2 a F9) o invoca una ruta de la API</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0009">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>comprueba el rol de la sesión contra los permisos del módulo, en la aplicación y otra vez en la API</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0006">
+<rem:condition>un Vendedor elige Compras, Proveedores, Guías o Respaldo</rem:condition>
+<rem:systemAction>
+<rem:description>se queda en Nueva venta y muestra «Acceso denegado: el módulo … es solo para el Encargado general»</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:stepException oid = "STX-0007">
+<rem:condition>un Vendedor invoca una ruta exclusiva del Encargado en la API</rem:condition>
+<rem:systemAction>
+<rem:description>responde 403 sin ejecutar la operación</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:stepException oid = "STX-0008">
+<rem:condition>la petición a la API no trae token o el token está alterado o vencido</rem:condition>
+<rem:systemAction>
+<rem:description>responde 401</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0010">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>abre el módulo en el panel derecho de la ventana principal</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0004">
+<rem:name>Registrar producto en el catálogo</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 STK-0003 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:triggeringEvent>llega un producto nuevo o hay que asignar el código de barras a uno existente</rem:triggeringEvent>
+<rem:precondition>El usuario tiene una sesión abierta.</rem:precondition>
+<rem:postcondition>El producto queda en el catálogo central y las demás PC lo ven en sus búsquedas en 3 segundos como máximo.</rem:postcondition>
+<rem:frequency>
+<rem:value>5</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0011">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0002">
+<rem:description>abre Nuevo producto (Ctrl+N o desde el Catálogo F2)</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0012">
+<rem:number>2</rem:number>
+<rem:actorAction actor = "ACT-0002">
+<rem:description>escribe el nombre, el precio con IGV, la unidad y, si tiene, lee el código de barras con el lector</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0013">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>valida los datos contra las reglas del producto y la unicidad de nombre y código de barras</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0009">
+<rem:condition>el nombre está vacío, el precio no es mayor que 0, pasa de S/ 99 999.99 o tiene más de dos decimales</rem:condition>
+<rem:systemAction>
+<rem:description>señala cada campo con su mensaje y no guarda</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:stepException oid = "STX-0010">
+<rem:condition>ya existe un producto con el mismo nombre o el mismo código de barras</rem:condition>
+<rem:systemAction>
+<rem:description>informa el duplicado y no guarda</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0014">
+<rem:number>4</rem:number>
+<rem:systemAction>
+<rem:description>guarda el producto en la base central y avisa a las demás PC del cambio en el catálogo</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0005">
+<rem:name>Buscar producto para la venta</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0003 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:triggeringEvent>el vendedor necesita agregar un producto al detalle de la venta</rem:triggeringEvent>
+<rem:precondition>El vendedor está en la pantalla Nueva venta.</rem:precondition>
+<rem:postcondition>El producto queda agregado al detalle con su precio del catálogo y los totales se recalculan.</rem:postcondition>
+<rem:frequency>
+<rem:value>400</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0015">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0002">
+<rem:description>escribe al menos tres letras del nombre del producto o lo pasa por el lector de código de barras</rem:description>
+</rem:actorAction>
+<rem:stepException oid = "STX-0011">
+<rem:condition>el código leído no pertenece a ningún producto</rem:condition>
+<rem:systemAction>
+<rem:description>avisa que el código no está en el catálogo y ofrece registrarlo</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0016">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>muestra hasta 15 sugerencias que contienen el texto, sin distinguir mayúsculas ni tildes, con su precio</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0012">
+<rem:condition>ningún producto coincide con el texto</rem:condition>
+<rem:systemAction>
+<rem:description>no muestra sugerencias y el vendedor puede corregir el texto</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0017">
+<rem:number>3</rem:number>
+<rem:actorAction actor = "ACT-0002">
+<rem:description>elige la sugerencia con Enter y escribe la cantidad</rem:description>
+</rem:actorAction>
+<rem:stepException oid = "STX-0013">
+<rem:condition>la cantidad no es mayor que 0, pasa de 99 999 o tiene más de tres decimales</rem:condition>
+<rem:systemAction>
+<rem:description>no agrega la línea y señala la cantidad</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0018">
+<rem:number>4</rem:number>
+<rem:systemAction>
+<rem:description>agrega la línea al detalle y recalcula la operación gravada, el IGV y el total</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0006">
+<rem:name>Registrar y buscar cliente por DNI o RUC</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0003 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:triggeringEvent>el cliente pide un comprobante a su nombre</rem:triggeringEvent>
+<rem:precondition>El usuario tiene una sesión abierta.</rem:precondition>
+<rem:postcondition>El cliente queda identificado en la venta y, si era nuevo, registrado en la base central.</rem:postcondition>
+<rem:frequency>
+<rem:value>80</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0019">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0002">
+<rem:description>escribe el DNI o el RUC en el campo Cliente (Alt+D) y pulsa Enter</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0020">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>valida el documento y busca al cliente en la base central</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0014">
+<rem:condition>el documento no tiene 8 u 11 dígitos o el RUC no cumple el dígito verificador</rem:condition>
+<rem:systemAction>
+<rem:description>indica que el documento no es válido</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:stepException oid = "STX-0015">
+<rem:condition>el cliente no está registrado</rem:condition>
+<rem:systemAction>
+<rem:description>abre Nuevo cliente con el documento escrito; al guardarlo queda registrado y elegido en la venta</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:stepException oid = "STX-0016">
+<rem:condition>otra PC registra el mismo documento al mismo tiempo</rem:condition>
+<rem:systemAction>
+<rem:description>conserva un solo cliente y usa el ya registrado</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0021">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>completa el nombre o la razón social y la dirección en la venta</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0007">
+<rem:name>Emitir comprobante de venta</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0003 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:triggeringEvent>el cliente confirma la compra y pide su comprobante</rem:triggeringEvent>
+<rem:precondition>La venta en pantalla tiene al menos una línea y el usuario tiene una sesión abierta.</rem:precondition>
+<rem:postcondition>El comprobante queda guardado con su serie y número correlativo, el usuario y la terminal; las boletas y facturas quedan pendientes de envío a la SUNAT.</rem:postcondition>
+<rem:frequency>
+<rem:value>150</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0022">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0002">
+<rem:description>elige el tipo de comprobante (Boleta, Con DNI, Factura o Nota de venta) y pulsa Emitir e imprimir (F10)</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0023">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>valida las reglas del tipo elegido y recalcula los importes con los precios del catálogo</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0017">
+<rem:condition>es una boleta de más de S/ 700.00 sin DNI del cliente</rem:condition>
+<rem:systemAction>
+<rem:description>pide el DNI y no emite</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:stepException oid = "STX-0018">
+<rem:condition>es una factura sin un cliente con RUC</rem:condition>
+<rem:systemAction>
+<rem:description>pasa el foco al campo RUC y no emite</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0024">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>asigna el siguiente número de la serie y guarda la cabecera y el detalle en una sola transacción</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0019">
+<rem:condition>se pierde la conexión con la API o la base de datos</rem:condition>
+<rem:systemAction>
+<rem:description>no guarda nada, no consume número y conserva la venta en pantalla para reintentar</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0025">
+<rem:number>4</rem:number>
+<rem:useCaseAction useCase = "UC-0009"/><rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0026">
+<rem:number>5</rem:number>
+<rem:useCaseAction useCase = "UC-0010"/><rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0027">
+<rem:number>6</rem:number>
+<rem:systemAction>
+<rem:description>deja la pantalla lista para la siguiente venta</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0008">
+<rem:name>Emitir proforma y convertirla en venta</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0003 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:triggeringEvent>un cliente pide una cotización o regresa a comprar lo cotizado</rem:triggeringEvent>
+<rem:precondition>El usuario tiene una sesión abierta.</rem:precondition>
+<rem:postcondition>La proforma queda emitida con su vigencia; al convertirla, la venta queda enlazada a la proforma y la proforma ya no se puede volver a convertir.</rem:postcondition>
+<rem:frequency>
+<rem:value>20</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0028">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0002">
+<rem:description>arma el detalle, elige Proforma y pulsa Emitir e imprimir</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0029">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>emite la proforma con serie PR01 y la fecha «Válida hasta» de 7 días contando el de emisión, e imprime el ticket con la leyenda de cotización</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0030">
+<rem:number>3</rem:number>
+<rem:actorAction actor = "ACT-0002">
+<rem:description>cuando el cliente regresa, busca la proforma en Proformas (F7) por número, DNI, RUC o nombre y pulsa Convertir en venta</rem:description>
+</rem:actorAction>
+<rem:stepException oid = "STX-0020">
+<rem:condition>la proforma está vencida</rem:condition>
+<rem:systemAction>
+<rem:description>informa la fecha de vencimiento y no la convierte</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:stepException oid = "STX-0021">
+<rem:condition>la proforma ya fue convertida, incluso desde otra PC al mismo tiempo</rem:condition>
+<rem:systemAction>
+<rem:description>informa el comprobante que la convirtió y no la convierte otra vez</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0031">
+<rem:number>4</rem:number>
+<rem:systemAction>
+<rem:description>lleva el detalle y el cliente a Nueva venta y propone factura si el cliente tiene RUC o boleta en otro caso</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0032">
+<rem:number>5</rem:number>
+<rem:useCaseAction useCase = "UC-0007"/><rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0009">
+<rem:name>Imprimir y reimprimir el ticket</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0003 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:triggeringEvent>se emite un comprobante o el cliente pide una copia</rem:triggeringEvent>
+<rem:precondition>El comprobante está emitido.</rem:precondition>
+<rem:postcondition>El ticket queda impreso y el comprobante registra el número de impresiones.</rem:postcondition>
+<rem:frequency>
+<rem:value>160</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0033">
+<rem:number>1</rem:number>
+<rem:systemAction>
+<rem:description>arma el ticket de 80 mm con el RUC de la empresa, tipo y número, cliente, detalle, operación gravada, IGV, total e importe en letras</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0024">
+<rem:condition>es una reimpresión desde el Historial o con F11</rem:condition>
+<rem:systemAction>
+<rem:description>marca el ticket con «*** COPIA - REIMPRESIÓN ***»</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0034">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>envía el ticket a la Ticketera térmica en comandos ESC/POS por el spooler de Windows</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0022">
+<rem:condition>la PC no tiene ticketera configurada</rem:condition>
+<rem:systemAction>
+<rem:description>muestra el ticket en pantalla como vista previa</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0035">
+<rem:number>3</rem:number>
+<rem:actorAction actor = "ACT-0005">
+<rem:description>imprime el ticket</rem:description>
+</rem:actorAction>
+<rem:stepException oid = "STX-0023">
+<rem:condition>la ticketera está apagada o sin papel</rem:condition>
+<rem:systemAction>
+<rem:description>avisa del problema y permite reimprimir con F11 sin volver a emitir</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0036">
+<rem:number>4</rem:number>
+<rem:systemAction>
+<rem:description>suma una impresión al comprobante</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0010">
+<rem:name>Enviar comprobantes a la SUNAT y reenviar pendientes</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:triggeringEvent>se emite una boleta o factura, o vence el intervalo de reenvío de pendientes</rem:triggeringEvent>
+<rem:precondition>La PC tiene configurada la sección Sunat (certificado y usuario SOL) y el comprobante es electrónico.</rem:precondition>
+<rem:postcondition>El comprobante queda ACEPTADO, OBSERVADO o RECHAZADO con su CDR guardado, o PENDIENTE para un nuevo intento.</rem:postcondition>
+<rem:frequency>
+<rem:value>140</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0037">
+<rem:number>1</rem:number>
+<rem:systemAction>
+<rem:description>genera el XML UBL 2.1 del comprobante y lo firma con el certificado digital</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0038">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>envía el ZIP a la SUNAT por sendBill en paralelo con la impresión</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0025">
+<rem:condition>no hay internet o la SUNAT no responde</rem:condition>
+<rem:systemAction>
+<rem:description>deja el comprobante PENDIENTE sin frenar la venta y lo reintenta en el siguiente ciclo</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0039">
+<rem:number>3</rem:number>
+<rem:actorAction actor = "ACT-0004">
+<rem:description>devuelve el CDR con el código de respuesta</rem:description>
+</rem:actorAction>
+<rem:stepException oid = "STX-0026">
+<rem:condition>la SUNAT responde que el comprobante ya fue recibido (código 1033)</rem:condition>
+<rem:systemAction>
+<rem:description>consulta el CDR con getStatusCdr y lo guarda</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0040">
+<rem:number>4</rem:number>
+<rem:systemAction>
+<rem:description>guarda el XML, el CDR y el estado, y lo muestra bajo el botón Emitir y en el Historial</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0041">
+<rem:number>5</rem:number>
+<rem:systemAction>
+<rem:description>cada ReenvioMinutos aparta los pendientes y los reenvía del más antiguo al más reciente</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0027">
+<rem:condition>el pendiente más antiguo está por vencer el plazo de 3 días</rem:condition>
+<rem:systemAction>
+<rem:description>muestra un aviso en rojo en el pie de Nueva venta</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0011">
+<rem:name>Registrar proveedor</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:triggeringEvent>la ferretería empieza a comprar a un proveedor nuevo</rem:triggeringEvent>
+<rem:precondition>El usuario tiene una sesión abierta con el rol Encargado general.</rem:precondition>
+<rem:postcondition>El proveedor queda registrado una sola vez por RUC y disponible para registrar compras.</rem:postcondition>
+<rem:frequency>
+<rem:value>2</rem:value>
+<rem:timeUnit value = "TUV-0007"/>
+</rem:frequency>
+<rem:step oid = "STP-0042">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0003">
+<rem:description>abre Proveedores (F6) y pulsa Nuevo proveedor (Alt+N)</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0043">
+<rem:number>2</rem:number>
+<rem:actorAction actor = "ACT-0003">
+<rem:description>escribe el RUC, la razón social, el nombre comercial, la dirección, el teléfono, el correo y el contacto</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0044">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>valida el RUC y los formatos de teléfono y correo</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0028">
+<rem:condition>el RUC no es válido, falta la razón social o el correo no tiene un formato válido</rem:condition>
+<rem:systemAction>
+<rem:description>señala cada campo con su mensaje y no guarda</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0045">
+<rem:number>4</rem:number>
+<rem:systemAction>
+<rem:description>guarda al proveedor y lo muestra en la lista</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0029">
+<rem:condition>ya existe un proveedor con el mismo RUC</rem:condition>
+<rem:systemAction>
+<rem:description>informa el duplicado y no guarda</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0012">
+<rem:name>Registrar compra a proveedor</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:triggeringEvent>llega mercadería de un proveedor con su factura o boleta</rem:triggeringEvent>
+<rem:precondition>El usuario tiene una sesión abierta con el rol Encargado general y el proveedor está registrado.</rem:precondition>
+<rem:postcondition>La compra queda registrada con su detalle y suma al total de egresos del período.</rem:postcondition>
+<rem:frequency>
+<rem:value>3</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0046">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0003">
+<rem:description>abre Compras (F4) y pulsa Nueva compra (Alt+N)</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0047">
+<rem:number>2</rem:number>
+<rem:actorAction actor = "ACT-0003">
+<rem:description>busca al proveedor por RUC, indica el tipo, la serie, el número y la fecha de su comprobante y agrega los productos con cantidad y costo</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0048">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>valida la compra y que el comprobante del proveedor no esté ya registrado</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0030">
+<rem:condition>la serie no tiene 4 caracteres, el número no está entre 1 y 99999999, la fecha es futura o de hace más de un año, o una línea no tiene cantidad y costo mayores que cero</rem:condition>
+<rem:systemAction>
+<rem:description>señala el campo con su mensaje y no guarda</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:stepException oid = "STX-0031">
+<rem:condition>el mismo comprobante del proveedor ya está registrado, aunque lo intente otra PC a la vez</rem:condition>
+<rem:systemAction>
+<rem:description>informa el duplicado y no lo registra otra vez</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0049">
+<rem:number>4</rem:number>
+<rem:systemAction>
+<rem:description>guarda la compra y actualiza el total de egresos del período</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0013">
+<rem:name>Emitir guía de remisión electrónica</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0004"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:triggeringEvent>hay que trasladar la mercadería vendida a una obra o a otro establecimiento</rem:triggeringEvent>
+<rem:precondition>El usuario tiene una sesión abierta con el rol Encargado general.</rem:precondition>
+<rem:postcondition>La guía queda emitida con serie T001, impresa y enviada a la SUNAT, o pendiente de envío.</rem:postcondition>
+<rem:frequency>
+<rem:value>2</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0050">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0003">
+<rem:description>abre Guías (F8) y crea una guía desde una factura o boleta, o a mano</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0051">
+<rem:number>2</rem:number>
+<rem:actorAction actor = "ACT-0003">
+<rem:description>completa el destinatario, el motivo y la fecha de traslado, el peso, los puntos de partida y llegada y el transporte</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0052">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>valida los datos obligatorios según la modalidad de transporte</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0032">
+<rem:condition>falta un dato obligatorio o el punto de llegada es igual al de partida</rem:condition>
+<rem:systemAction>
+<rem:description>señala el campo con su mensaje y no emite</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0053">
+<rem:number>4</rem:number>
+<rem:systemAction>
+<rem:description>emite la guía, la imprime y la envía a la SUNAT por la API de guías</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0033">
+<rem:condition>la SUNAT no responde</rem:condition>
+<rem:systemAction>
+<rem:description>deja la guía pendiente y la reenvía o consulta sola más tarde</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0054">
+<rem:number>5</rem:number>
+<rem:actorAction actor = "ACT-0004">
+<rem:description>devuelve el ticket y luego el CDR de la guía</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0014">
+<rem:name>Consultar historial de ventas</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 STK-0003 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:triggeringEvent>el usuario necesita ubicar un comprobante o conocer las ventas de un período</rem:triggeringEvent>
+<rem:precondition>El usuario tiene una sesión abierta.</rem:precondition>
+<rem:postcondition>Se muestran los comprobantes que cumplen los filtros y el total del período.</rem:postcondition>
+<rem:frequency>
+<rem:value>30</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0055">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0002">
+<rem:description>abre Historial (F5) y elige el período (Hoy, Este mes, Todo o fechas), el tipo, el cliente o el número</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0056">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>lista los comprobantes con su estado ante la SUNAT, usando los días de la hora de Perú</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0034">
+<rem:condition>ningún comprobante cumple los filtros</rem:condition>
+<rem:systemAction>
+<rem:description>muestra la lista vacía con total S/ 0.00</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0002"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0057">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>muestra el total de ventas del período sin contar proformas ni rechazados</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0015">
+<rem:name>Generar reporte consolidado de ventas</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:triggeringEvent>el gerente o el encargado necesitan analizar las ventas de un período</rem:triggeringEvent>
+<rem:precondition>El usuario tiene una sesión abierta con el rol Encargado general.</rem:precondition>
+<rem:postcondition>Se obtiene el reporte con los totales por día, por tipo de comprobante, por terminal y por usuario.</rem:postcondition>
+<rem:frequency>
+<rem:value>1</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0058">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0003">
+<rem:description>solicita el reporte de ventas indicando la fecha inicial y la final</rem:description>
+</rem:actorAction>
+<rem:stepException oid = "STX-0036">
+<rem:condition>el usuario tiene el rol Vendedor</rem:condition>
+<rem:systemAction>
+<rem:description>responde 403</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0059">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>valida el período</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0035">
+<rem:condition>la fecha final es anterior a la inicial o el período pasa de 366 días</rem:condition>
+<rem:systemAction>
+<rem:description>rechaza la consulta con el motivo (400)</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0060">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>agrupa las ventas por día, tipo, terminal y usuario, sin proformas, y muestra los rechazados aparte</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+<rem:useCase oid="UC-0016">
+<rem:name>Generar respaldo de la base de datos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:triggeringEvent>termina el día de trabajo o el sistema avisa que el último respaldo tiene más de 24 horas</rem:triggeringEvent>
+<rem:precondition>El usuario tiene una sesión abierta con el rol Encargado general y el disco externo está conectado a la PC principal.</rem:precondition>
+<rem:postcondition>Queda un archivo .backup con la fecha y la hora en el nombre y el respaldo registrado en la base.</rem:postcondition>
+<rem:frequency>
+<rem:value>1</rem:value>
+<rem:timeUnit value = "TUV-0008"/>
+</rem:frequency>
+<rem:step oid = "STP-0061">
+<rem:number>1</rem:number>
+<rem:actorAction actor = "ACT-0003">
+<rem:description>abre Respaldo (F9), confirma la carpeta del disco externo y pulsa Generar respaldo</rem:description>
+</rem:actorAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0062">
+<rem:number>2</rem:number>
+<rem:systemAction>
+<rem:description>ejecuta pg_dump en formato personalizado y muestra el avance tabla por tabla</rem:description>
+</rem:systemAction>
+<rem:stepException oid = "STX-0037">
+<rem:condition>falla pg_dump o el disco se desconecta</rem:condition>
+<rem:systemAction>
+<rem:description>borra el archivo incompleto, registra el error y lo informa</rem:description>
+</rem:systemAction>
+<rem:termination value = "TEV-0003"/>
+<rem:comments>Ninguno</rem:comments>
+</rem:stepException>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+<rem:step oid = "STP-0063">
+<rem:number>3</rem:number>
+<rem:systemAction>
+<rem:description>registra el respaldo con su tamaño y confirma el resultado</rem:description>
+</rem:systemAction>
+<rem:comments>Ninguno</rem:comments>
+</rem:step>
+</rem:useCase>
+</rem:section>
+<rem:section oid="SEC-0009">
+<rem:name>Requisitos no funcionales</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:level>2</rem:level>
+<rem:number>4.5 </rem:number>
+<rem:nonFunctionalRequirement oid="NFR-0001">
+<rem:name>Tiempo de respuesta de la búsqueda de productos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0003 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>mostrar las sugerencias de productos en **menos de 1 segundo** desde que se escribe la tercera letra, con un catálogo de **3 000 productos**</rem:description>
+</rem:nonFunctionalRequirement>
+<rem:nonFunctionalRequirement oid="NFR-0002">
+<rem:name>Capacidad de la API bajo carga esperada</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0006 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0003"/>
+<rem:stability value = "SBV-0003"/>
+<rem:description>atender las transacciones críticas consultar productos y emitir boleta con un **percentil 95 menor o igual a 2 segundos** y una **tasa de error menor o igual a 1 %**, con **10 usuarios concurrentes durante 5 minutos**</rem:description>
+</rem:nonFunctionalRequirement>
+<rem:nonFunctionalRequirement oid="NFR-0003">
+<rem:name>Protección de credenciales y del acceso</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0006 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:description>guardar las contraseñas solo como hash **PBKDF2-SHA256 con 100 000 iteraciones y sal de 16 bytes**, bloquear la cuenta **15 minutos tras 5 intentos fallidos seguidos** y rechazar el **100 %** de los accesos a funciones del Encargado general por usuarios sin ese rol</rem:description>
+</rem:nonFunctionalRequirement>
+<rem:nonFunctionalRequirement oid="NFR-0004">
+<rem:name>Integridad con trabajo simultáneo</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0002 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>permitir que **3 terminales** emitan comprobantes al mismo tiempo sin producir **ningún** número de comprobante repetido ni saltado</rem:description>
+</rem:nonFunctionalRequirement>
+<rem:nonFunctionalRequirement oid="NFR-0005">
+<rem:name>Tolerancia a la caída de internet</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0004 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0003"/>
+<rem:description>seguir emitiendo e imprimiendo comprobantes sin internet y reenviar automáticamente el **100 %** de los pendientes cuando vuelva la conexión, avisando cuando el más antiguo esté por vencer el plazo de **3 días**</rem:description>
+</rem:nonFunctionalRequirement>
+<rem:nonFunctionalRequirement oid="NFR-0006">
+<rem:name>Venta operable solo con teclado</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0003 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0003"/>
+<rem:stability value = "SBV-0003"/>
+<rem:description>permitir completar una venta de **3 productos con boleta** usando **solo el teclado** (atajos F1 a F11, Enter y Esc) en **60 segundos o menos** para un vendedor con una hora de capacitación</rem:description>
+</rem:nonFunctionalRequirement>
+<rem:nonFunctionalRequirement oid="NFR-0007">
+<rem:name>Persistencia y recuperación de los datos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0001 STK-0002 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+<rem:status value = "STV-0005"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>conservar el **100 %** de los registros tras reiniciar la aplicación, la API o la PC principal, y permitir **restaurar un respaldo** en una base vacía; avisar al Encargado si el último respaldo tiene **más de 24 horas**</rem:description>
+</rem:nonFunctionalRequirement>
+<rem:nonFunctionalRequirement oid="NFR-0008">
+<rem:name>Cobertura de la lógica de negocio</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:sources stakeholders="STK-0006 "/>
+<rem:comments>Ninguno</rem:comments>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+<rem:status value = "STV-0003"/>
+<rem:stability value = "SBV-0004"/>
+<rem:description>mantener una cobertura de líneas de **al menos 80 %** en el paquete de lógica de negocio `Condor.Dominio`, con la suite automatizada en verde</rem:description>
+</rem:nonFunctionalRequirement>
+</rem:section>
+</rem:section>
+<rem:section oid="SEC-0010">
+<rem:name>Matrices de rastreabilidad</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:level>1</rem:level>
+<rem:number>5 </rem:number>
+<rem:paragraph oid="PRG-0008">
+<rem:name>Nota sobre las matrices</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:text>Las matrices relacionan cada requisito con los objetivos que satisface. La trazabilidad de cada requisito con su criterio de aceptación y sus pruebas está en la ERS (sección 6) y se completa en la matriz de trazabilidad final del trabajo.</rem:text>
+</rem:paragraph>
+<rem:traceabilityMatrix oid="TRM-0001">
+<rem:name>Objetivos frente a requisitos de información</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:tr>
+<rem:th/>
+<rem:th oid ="OBJ-0001"/>
+<rem:th oid ="OBJ-0002"/>
+<rem:th oid ="OBJ-0003"/>
+<rem:th oid ="OBJ-0004"/>
+<rem:th oid ="OBJ-0005"/>
+<rem:th oid ="OBJ-0006"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0001"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0002"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0003"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0004"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0005"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0006"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0007"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0008"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0009"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+</rem:traceabilityMatrix>
+<rem:traceabilityMatrix oid="TRM-0002">
+<rem:name>Objetivos frente a reglas de negocio</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:tr>
+<rem:th/>
+<rem:th oid ="OBJ-0001"/>
+<rem:th oid ="OBJ-0002"/>
+<rem:th oid ="OBJ-0003"/>
+<rem:th oid ="OBJ-0004"/>
+<rem:th oid ="OBJ-0005"/>
+<rem:th oid ="OBJ-0006"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0001"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0002"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0003"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0004"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0005"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0006"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0007"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0008"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0009"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0010"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0011"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0012"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0013"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0014"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0015"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+</rem:tr>
+</rem:traceabilityMatrix>
+<rem:traceabilityMatrix oid="TRM-0003">
+<rem:name>Objetivos frente a casos de uso</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:tr>
+<rem:th/>
+<rem:th oid ="OBJ-0001"/>
+<rem:th oid ="OBJ-0002"/>
+<rem:th oid ="OBJ-0003"/>
+<rem:th oid ="OBJ-0004"/>
+<rem:th oid ="OBJ-0005"/>
+<rem:th oid ="OBJ-0006"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0001"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0002"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0003"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0004"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0005"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0006"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0007"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0008"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0009"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0010"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0011"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0012"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0013"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0014"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0015"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0016"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+</rem:traceabilityMatrix>
+<rem:traceabilityMatrix oid="TRM-0004">
+<rem:name>Objetivos frente a requisitos no funcionales</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:tr>
+<rem:th/>
+<rem:th oid ="OBJ-0001"/>
+<rem:th oid ="OBJ-0002"/>
+<rem:th oid ="OBJ-0003"/>
+<rem:th oid ="OBJ-0004"/>
+<rem:th oid ="OBJ-0005"/>
+<rem:th oid ="OBJ-0006"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0001"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0002"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0003"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0004"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0005"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0006"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0007"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0008"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+</rem:traceabilityMatrix>
+<rem:traceabilityMatrix oid="TRM-0005">
+<rem:name>Matriz general de rastreabilidad</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:tr>
+<rem:th/>
+<rem:th oid ="OBJ-0001"/>
+<rem:th oid ="OBJ-0002"/>
+<rem:th oid ="OBJ-0003"/>
+<rem:th oid ="OBJ-0004"/>
+<rem:th oid ="OBJ-0005"/>
+<rem:th oid ="OBJ-0006"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0001"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0002"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0003"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0004"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0005"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0006"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0007"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0008"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="IRQ-0009"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0001"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0002"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0003"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0004"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0005"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0006"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0007"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0008"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0009"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0010"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0011"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0012"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0013"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0014"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="CRQ-0015"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0001"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0002"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0003"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0004"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0005"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0006"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0007"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0008"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0009"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0010"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0011"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0012"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0013"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0014"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0015"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="UC-0016"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0001"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0002"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0003"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0004"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0005"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0006"/>
+<rem:td mark ="yes"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0007"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+<rem:tr>
+<rem:th oid ="NFR-0008"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="no"/>
+<rem:td mark ="yes"/>
+</rem:tr>
+</rem:traceabilityMatrix>
+</rem:section>
+<rem:section oid="SEC-0011">
+<rem:name>Conflictos detectados</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:level>1</rem:level>
+<rem:number>6 </rem:number>
+<rem:conflict oid="CFL-0001">
+<rem:name>Rapidez del ingreso frente a control de acceso</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:description>Los vendedores pidieron que el sistema abra **directo en Nueva venta, sin usuario ni contraseña** (HU-14, perfil único MAESTRO). El gerente necesita saber **quién emitió cada comprobante** y que los vendedores no vean compras ni respaldos; el curso exige autenticación y roles.</rem:description>
+<rem:solution>Se aprobó la solicitud de cambio **CC-01**: ingreso con usuario y contraseña **una vez por turno** (el token dura 480 minutos) y dos roles. Se mantiene la apertura directa en Nueva venta tras el ingreso, de modo que el vendedor no pierde rapidez.</rem:solution>
+<rem:status value = "CSV-0004"/>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+</rem:conflict>
+<rem:conflict oid="CFL-0002">
+<rem:name>Venta sin internet frente a la obligación de informar a la SUNAT</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:description>El internet del local se corta con frecuencia y los vendedores **no pueden dejar de vender**; el contador exige que **todo comprobante llegue a la SUNAT** dentro del plazo.</rem:description>
+<rem:solution>El comprobante se emite e imprime sin esperar a la SUNAT y queda PENDIENTE; un proceso en segundo plano lo reenvía solo y el pie avisa en rojo cuando el más antiguo está por vencer el plazo de 3 días (RF-10, RNF-05).</rem:solution>
+<rem:status value = "CSV-0004"/>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+</rem:conflict>
+<rem:conflict oid="CFL-0003">
+<rem:name>Ajuste de precio por el vendedor frente al control de precios</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:description>Algunos vendedores quieren **cambiar el precio en la venta** para hacer descuentos; el gerente quiere que **los precios los fije solo el catálogo**.</rem:description>
+<rem:solution>El precio de cada línea sale del catálogo y el servidor recalcula los totales (CRQ-07). Los descuentos quedan fuera del alcance de esta versión y se registran como posible cambio futuro.</rem:solution>
+<rem:status value = "CSV-0004"/>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+</rem:conflict>
+<rem:conflict oid="CFL-0004">
+<rem:name>Boleta rápida sin datos frente a la norma de identificación</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:description>Los vendedores prefieren **no pedir el DNI** para no demorar; la norma de la SUNAT obliga a identificar al comprador en boletas desde cierto monto.</rem:description>
+<rem:solution>Se pide el DNI **solo en boletas de más de S/ 700.00** (CRQ-02); por debajo, la boleta se emite sin cliente.</rem:solution>
+<rem:status value = "CSV-0004"/>
+<rem:importance value = "IMV-0002"/>
+<rem:urgency value = "URV-0002"/>
+</rem:conflict>
+<rem:conflict oid="CFL-0005">
+<rem:name>Respaldo automático frente a la infraestructura disponible</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:description>El gerente quiere **respaldos automáticos en la nube**; la ferretería no tiene servidor dedicado ni presupuesto para un servicio en la nube y solo cuenta con un disco externo.</rem:description>
+<rem:solution>Respaldo **manual** con pg_dump en el disco externo desde la PC principal y **aviso si el último tiene más de 24 horas** (RF-16, RNF-07). El respaldo automático queda como mejora futura.</rem:solution>
+<rem:status value = "CSV-0004"/>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+</rem:conflict>
+<rem:conflict oid="CFL-0006">
+<rem:name>Visibilidad de compras para todos frente a confidencialidad</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+<rem:description>El encargado propuso que todos vean las compras para consultar costos; el gerente no quiere que los vendedores conozcan **costos ni egresos**.</rem:description>
+<rem:solution>Compras, proveedores, guías, respaldos y el reporte consolidado son exclusivos del Encargado general (CRQ-12, RF-03).</rem:solution>
+<rem:status value = "CSV-0004"/>
+<rem:importance value = "IMV-0003"/>
+<rem:urgency value = "URV-0003"/>
+</rem:conflict>
+</rem:section>
+</rem:c_requirementsSpecification>
+<rem:d_requirementsSpecification oid = "DRS-0002">
+<rem:name>Documento de Análisis del Sistema</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+</rem:d_requirementsSpecification>
+<rem:defectsSpecification oid = "DFS-0003">
+<rem:name>Registro de Defectos</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+</rem:defectsSpecification>
+<rem:changeRequestsSpecification oid = "CHS-0004">
+<rem:name>Registro de Peticiones de Cambio</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>1</rem:minor>
+<rem:date>
+<rem:year>2026</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Ninguno</rem:comments>
+</rem:changeRequestsSpecification>
+<rem:trace source="IRQ-0001"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0002"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0002"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0003"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0003"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0010"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0004"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0006"  target="OBJ-0004" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0008"  target="OBJ-0003" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0007"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0003"  target="OBJ-0003" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0005"  target="OBJ-0004" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0003"  target="OBJ-0005" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0002"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0004"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0001"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0005"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0007"  target="OBJ-0003" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="IRQ-0009"  target="OBJ-0006" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0007"  target="OBJ-0006" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0008"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0003"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0009"  target="OBJ-0004" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0005"  target="OBJ-0006" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0006"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="NFR-0006"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="NFR-0007"  target="OBJ-0006" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0005"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0014"  target="OBJ-0005" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0016"  target="OBJ-0006" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="NFR-0005"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0006"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0007"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0009"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0008"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0006"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0010"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0011"  target="OBJ-0004" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="NFR-0003"  target="OBJ-0003" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="NFR-0008"  target="OBJ-0006" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0012"  target="OBJ-0004" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0007"  target="OBJ-0003" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0015"  target="OBJ-0005" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="NFR-0002"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0007"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0013"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="NFR-0001"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="NFR-0004"  target="OBJ-0006" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0012"  target="OBJ-0003" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0003"  target="OBJ-0003" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0004"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0011"  target="OBJ-0003" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0013"  target="OBJ-0002" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0015"  target="OBJ-0005" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="CRQ-0014"  target="OBJ-0001" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0001"  target="OBJ-0003" >
+<rem:isChecked/>
+</rem:trace>
+<rem:trace source="UC-0002"  target="OBJ-0003" >
+<rem:isChecked/>
+</rem:trace>
+<rem:predefinedValueTypes>
+<rem:predefinedValueType oid="PVT-0005">
+<rem:name>String</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2000</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Predefined OCL type</rem:comments>
+<rem:description>Alphanumeric strings</rem:description>
+<rem:definition>(null)</rem:definition>
+</rem:predefinedValueType>
+<rem:predefinedValueType oid="PVT-0004">
+<rem:name>Natural</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2000</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Predefined OCL type</rem:comments>
+<rem:description>Natural numbers</rem:description>
+<rem:definition>(null)</rem:definition>
+</rem:predefinedValueType>
+<rem:predefinedValueType oid="PVT-0006">
+<rem:name>Date</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2000</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Predefined OCL type (non-standard)</rem:comments>
+<rem:description>Dates</rem:description>
+<rem:definition>(null)</rem:definition>
+</rem:predefinedValueType>
+<rem:predefinedValueType oid="PVT-0007">
+<rem:name>Time</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2000</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Predefined OCL type (non-standard)</rem:comments>
+<rem:description>Hour:minutes:seconds</rem:description>
+<rem:definition>(null)</rem:definition>
+</rem:predefinedValueType>
+<rem:predefinedValueType oid="PVT-0002">
+<rem:name>Real</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2000</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Predefined OCL type</rem:comments>
+<rem:description>Real numbers</rem:description>
+<rem:definition>(null)</rem:definition>
+</rem:predefinedValueType>
+<rem:predefinedValueType oid="PVT-0003">
+<rem:name>Integer</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2000</rem:year>
+<rem:month>10</rem:month>
+<rem:day>30</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Predefined OCL type</rem:comments>
+<rem:description>Integer numbers</rem:description>
+<rem:definition>(null)</rem:definition>
+</rem:predefinedValueType>
+<rem:predefinedValueType oid="PVT-0001">
+<rem:name>Enum Literal</rem:name>
+<rem:version>
+<rem:major>1</rem:major>
+<rem:minor>0</rem:minor>
+<rem:date>
+<rem:year>2020</rem:year>
+<rem:month>10</rem:month>
+<rem:day>11</rem:day>
+</rem:date>
+</rem:version>
+<rem:comments>Predefined OCL type (non-standard)</rem:comments>
+<rem:description>Enumeration literals</rem:description>
+<rem:definition>(null)</rem:definition>
+</rem:predefinedValueType>
+</rem:predefinedValueTypes>
+<rem:predefinedValues>
+<rem:changeRequestStatusValue oid = "CRV-0002">
+<rem:name>pendiente de análisis</rem:name>
+</rem:changeRequestStatusValue>
+<rem:changeRequestStatusValue oid = "CRV-0001">
+<rem:name>PD</rem:name>
+</rem:changeRequestStatusValue>
+<rem:changeRequestStatusValue oid = "CRV-0004">
+<rem:name>pendiente de realización</rem:name>
+</rem:changeRequestStatusValue>
+<rem:changeRequestStatusValue oid = "CRV-0006">
+<rem:name>rechazado</rem:name>
+</rem:changeRequestStatusValue>
+<rem:changeRequestStatusValue oid = "CRV-0005">
+<rem:name>verificado</rem:name>
+</rem:changeRequestStatusValue>
+<rem:changeRequestStatusValue oid = "CRV-0003">
+<rem:name>pendiente de aprobar/rechazar</rem:name>
+</rem:changeRequestStatusValue>
+<rem:conflictStatusValue oid = "CSV-0002">
+<rem:name>no resuelto</rem:name>
+</rem:conflictStatusValue>
+<rem:conflictStatusValue oid = "CSV-0001">
+<rem:name>PD</rem:name>
+</rem:conflictStatusValue>
+<rem:conflictStatusValue oid = "CSV-0003">
+<rem:name>en proceso de negociación</rem:name>
+</rem:conflictStatusValue>
+<rem:conflictStatusValue oid = "CSV-0004">
+<rem:name>resuelto</rem:name>
+</rem:conflictStatusValue>
+<rem:defectStatusValue oid = "DSV-0003">
+<rem:name>en proceso de negociación</rem:name>
+</rem:defectStatusValue>
+<rem:defectStatusValue oid = "DSV-0001">
+<rem:name>PD</rem:name>
+</rem:defectStatusValue>
+<rem:defectStatusValue oid = "DSV-0002">
+<rem:name>no eliminado</rem:name>
+</rem:defectStatusValue>
+<rem:defectStatusValue oid = "DSV-0004">
+<rem:name>eliminado</rem:name>
+</rem:defectStatusValue>
+<rem:defectTypeValue oid = "DTV-0001">
+<rem:name>PD</rem:name>
+<rem:description>
+<![CDATA[Por Determinar]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0002">
+<rem:name>Ambigüedad</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos, aunque comprensibles, tienen más de una interpretación posible]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0003">
+<rem:name>No necesidad</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no son necesarios porque no contribuyen a satisfacer ninguna necesidad de clientes o usuarios]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0004">
+<rem:name>Incomprensibilidad</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no pueden ser entendidos por algún lector]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0005">
+<rem:name>No verificabilidad</rem:name>
+<rem:description>
+<![CDATA[No se puede comprobar que el sistema satisface el requisito o requisitos]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0023">
+<rem:name>Otro</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos presentan otro tipo de defecto]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0011">
+<rem:name>Imprecisión</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no se expresan de forma precisa, es decir, usando cantidades numéricas siempre que sea posible con el nivel adecuado de precisión]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0015">
+<rem:name>Nivel incorrecto de detalle</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no están expresados con el nivel adecuado de detalle, es decir, son demasiado abstractos o demasiado detallados]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0007">
+<rem:name>No implementabilidad</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no pueden ser implementados con la tecnología actual o dentro de un coste razonable]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0010">
+<rem:name>Redundancia</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos son redundantes o contienen elementos redundantes]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0017">
+<rem:name>Organización incorrecta</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no están organizados correctamente según la normativa aplicada o el documento no contiene las secciones obligatorias]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0009">
+<rem:name>Dependiente del diseño</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos incluyen elementos dependientes del diseño del sistema]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0016">
+<rem:name>No rastreabilidad</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no están trazados hacia sus orígenes, bien requisitos de nivel superior (objetivos), bien clientes y usuarios]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0008">
+<rem:name>Verbosidad excesiva</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos pueden expresarse de forma más concisa sin alterar su significado]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0012">
+<rem:name>Incompleción</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no describen todo lo que el sistema se supone que deberá hacer, no describen las respuestas del sistema a todas las posibles situaciones o incluyen elementos por determinar (PD)]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0014">
+<rem:name>Estabilidad no establecida</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no tienen estimada su estabilidad]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0013">
+<rem:name>Prioridad no establecida</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no tienen establecida su prioridad, es decir, su importancia y su urgencia]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:defectTypeValue oid = "DTV-0006">
+<rem:name>Inconsistencia</rem:name>
+<rem:description>
+<![CDATA[El requisito o requisitos no son consistentes, es decir, presentan contradicciones internas o entre varios]]>
+</rem:description>
+</rem:defectTypeValue>
+<rem:importanceValue oid = "IMV-0004">
+<rem:name>quedaría bien</rem:name>
+</rem:importanceValue>
+<rem:importanceValue oid = "IMV-0003">
+<rem:name>importante</rem:name>
+</rem:importanceValue>
+<rem:importanceValue oid = "IMV-0002">
+<rem:name>vital</rem:name>
+</rem:importanceValue>
+<rem:importanceValue oid = "IMV-0001">
+<rem:name>PD</rem:name>
+</rem:importanceValue>
+<rem:stabilityValue oid = "SBV-0001">
+<rem:name>PD</rem:name>
+</rem:stabilityValue>
+<rem:stabilityValue oid = "SBV-0002">
+<rem:name>baja</rem:name>
+</rem:stabilityValue>
+<rem:stabilityValue oid = "SBV-0003">
+<rem:name>media</rem:name>
+</rem:stabilityValue>
+<rem:stabilityValue oid = "SBV-0004">
+<rem:name>alta</rem:name>
+</rem:stabilityValue>
+<rem:statusValue oid = "STV-0001">
+<rem:name>PD</rem:name>
+</rem:statusValue>
+<rem:statusValue oid = "STV-0002">
+<rem:name>en construcción</rem:name>
+</rem:statusValue>
+<rem:statusValue oid = "STV-0003">
+<rem:name>pendiente de verificación</rem:name>
+</rem:statusValue>
+<rem:statusValue oid = "STV-0004">
+<rem:name>pendiente de validación</rem:name>
+</rem:statusValue>
+<rem:statusValue oid = "STV-0005">
+<rem:name>validado</rem:name>
+</rem:statusValue>
+<rem:terminationValue oid = "TEV-0001">
+<rem:name>PD</rem:name>
+</rem:terminationValue>
+<rem:terminationValue oid = "TEV-0003">
+<rem:name>queda sin efecto</rem:name>
+</rem:terminationValue>
+<rem:terminationValue oid = "TEV-0002">
+<rem:name>continúa</rem:name>
+</rem:terminationValue>
+<rem:timeUnitValue oid = "TUV-0001">
+<rem:name>PD</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0009">
+<rem:name>hora(s)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0005">
+<rem:name>mes(es)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0007">
+<rem:name>semana(s)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0008">
+<rem:name>día(s)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0002">
+<rem:name>año(s)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0012">
+<rem:name>décima(s) de segundo</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0013">
+<rem:name>centésima(s) de segundo</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0014">
+<rem:name>milisegundo(s)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0010">
+<rem:name>minuto(s)</rem:name>
+</rem:timeUnitValue>
+<rem:timeUnitValue oid = "TUV-0011">
+<rem:name>segundo(s)</rem:name>
+</rem:timeUnitValue>
+<rem:urgencyValue oid = "URV-0004">
+<rem:name>puede esperar</rem:name>
+</rem:urgencyValue>
+<rem:urgencyValue oid = "URV-0002">
+<rem:name>inmediatamente</rem:name>
+</rem:urgencyValue>
+<rem:urgencyValue oid = "URV-0001">
+<rem:name>PD</rem:name>
+</rem:urgencyValue>
+<rem:urgencyValue oid = "URV-0003">
+<rem:name>hay presión</rem:name>
+</rem:urgencyValue>
+</rem:predefinedValues>
+</rem:requirementsProject>

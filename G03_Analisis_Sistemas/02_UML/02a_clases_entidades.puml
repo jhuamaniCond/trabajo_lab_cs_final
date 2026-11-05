@@ -1,0 +1,120 @@
+@startuml 02a_clases_entidades
+!pragma layout smetana
+title Diagrama de clases (1/2): entidades de Condor.Dominio (versión 1.1.0)
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "Entidades" {
+  class Producto {
+    +Id : long
+    +Nombre : string
+    +Precio : decimal
+    +Unidad : string
+    +CodigoBarras : string?
+    +Activo : bool
+  }
+  class Cliente {
+    +Id : long
+    +TipoDocumento : TipoDocumento
+    +NumeroDocumento : string
+    +Nombre : string
+    +Direccion : string?
+  }
+  enum TipoDocumento {
+    SinDocumento = 0
+    Dni = 1
+    Ruc = 6
+  }
+  class Serie {
+    +Codigo : string
+    +TipoComprobante : string
+    +UltimoCorrelativo : long
+    +{static} Formatear(codigo, numero) : string
+  }
+  class Comprobante {
+    +Id : long
+    +TipoComprobante : string
+    +SerieCodigo : string
+    +Numero : long
+    +Fecha : DateTimeOffset
+    +Usuario : string
+    +OpGravada : decimal
+    +Igv : decimal
+    +Total : decimal
+    +EstadoSunat : string
+    +Impresiones : int
+    +ValidaHasta : DateOnly?
+    +ProformaId : long?
+    +EsElectronico : bool
+    +Vencida(hoy) : bool
+  }
+  class DetalleComprobante {
+    +Item : int
+    +Descripcion : string
+    +Cantidad : decimal
+    +PrecioUnitario : decimal
+    +Importe : decimal
+  }
+  class Terminal {
+    +Id : int
+    +Nombre : string
+  }
+  class CuentaUsuario {
+    +NombreUsuario : string
+    +Rol : string
+    +HashClave : string
+    +IntentosFallidos : int
+    +BloqueadoHasta : DateTimeOffset?
+    +EsEncargado : bool
+    +EstaBloqueada(ahora) : bool
+  }
+  class Sesion {
+    +Terminal : Terminal
+    +Cuenta : CuentaUsuario?
+    +Usuario : string
+  }
+  class Proveedor {
+    +Ruc : string
+    +RazonSocial : string
+    +NombreComercial : string?
+    +Activo : bool
+  }
+  class Compra {
+    +TipoDocumento : string
+    +Serie : string
+    +Numero : long
+    +FechaEmision : DateOnly
+    +Total : decimal
+  }
+  class DetalleCompra {
+    +Cantidad : decimal
+    +CostoUnitario : decimal
+    +Importe : decimal
+  }
+  class GuiaRemision {
+    +Numero : long
+    +Motivo : string
+    +Modalidad : string
+    +FechaTraslado : DateOnly
+    +PesoBrutoKg : decimal
+    +EstadoSunat : string
+  }
+}
+
+Cliente --> TipoDocumento
+Comprobante "1" *-- "1..100" DetalleComprobante
+Comprobante "0..*" --> "0..1" Cliente
+Comprobante "0..*" --> "1" Serie : numera >
+Comprobante "0..*" --> "1" Terminal : emitido en >
+Comprobante "0..1" --> "0..1" Comprobante : proforma origen
+DetalleComprobante "0..*" --> "1" Producto
+Compra "1" *-- "1..*" DetalleCompra
+Compra "0..*" --> "1" Proveedor
+DetalleCompra "0..*" --> "1" Producto
+GuiaRemision "0..*" --> "0..1" Comprobante : sustenta
+Sesion --> Terminal
+Sesion --> "0..1" CuentaUsuario
+@enduml

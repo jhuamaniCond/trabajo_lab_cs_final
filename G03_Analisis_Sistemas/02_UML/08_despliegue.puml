@@ -1,0 +1,40 @@
+@startuml 08_despliegue
+!pragma layout smetana
+title Diagrama de despliegue — Ferretería Cóndor Majes (LAN del local)
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+node "PC principal (Windows 11)" as P {
+  artifact "CondorApi.exe\n:5080\n(API + portal web wwwroot)" as API
+  node "Docker Desktop" {
+    database "PostgreSQL 16\ncontenedor Cas_condor :5433\nvolumen cas_condor_datos" as BD
+  }
+  artifact "CondorVentas.exe" as APP1
+  storage "Disco externo\n(respaldos .backup)" as DISCO
+}
+node "PC-2 caja (Windows 10/11)" as C2 {
+  artifact "CondorVentas.exe" as APP2
+  artifact "condor.json\n(Api.Url)" as CFG2
+}
+node "PC-3 mostrador (Windows 10/11)" as C3 {
+  artifact "CondorVentas.exe" as APP3
+}
+node "PC con navegador (G09)" as NAV {
+  artifact "Chrome / Edge\n+ Selenium WebDriver" as BR
+}
+node "Ticketera térmica 80 mm\n(spooler de Windows)" as TIC
+node "Lector de código de barras\n(emula teclado)" as LEC
+cloud "SUNAT\n(sendBill, getStatusCdr,\nAPI de guías)" as SUNAT
+
+APP1 --> API : HTTP + JWT\n(localhost)
+APP2 --> API : HTTP + JWT (LAN)
+APP3 --> API : HTTP + JWT (LAN)
+BR --> API : HTTP :5080\nportal web + /api (JWT)
+API --> BD : Npgsql (TCP 5433)
+API --> DISCO : pg_dump
+APP2 --> TIC : ESC/POS
+LEC --> APP2 : USB (teclado)
+APP1 --> SUNAT : HTTPS
+APP2 --> SUNAT : HTTPS
+@enduml

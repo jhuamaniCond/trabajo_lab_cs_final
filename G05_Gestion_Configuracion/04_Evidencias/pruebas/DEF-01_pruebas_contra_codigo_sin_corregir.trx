@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="c7cb997f-3f15-4bb4-8f63-f641ec76cef6" name="@ec5ce2154656 2026-10-31 04:38:19" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-10-31T04:38:19.3195684+00:00" queuing="2026-10-31T04:38:19.3195685+00:00" start="2026-10-31T04:38:18.0401780+00:00" finish="2026-10-31T04:38:19.3256737+00:00" />
+  <TestSettings name="default" id="dd0bba8b-e577-4724-a965-67bfeb67724f">
+    <Deployment runDeploymentRoot="_ec5ce2154656_2026-10-31_04_38_19" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="82cf457a-ae73-44c6-8a5a-74c42a53fe21" testId="fb76d1ee-a028-0bc9-2756-4d1ce82695f9" testName="Condor.Pruebas.Api.ClienteApiTests.DEF01_la_venta_desde_una_proforma_respeta_el_precio_cotizado_aunque_cambie_el_catalogo" computerName="ec5ce2154656" duration="00:00:00.1289114" startTime="2026-10-31T04:38:19.1352399+00:00" endTime="2026-10-31T04:38:19.1352399+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="82cf457a-ae73-44c6-8a5a-74c42a53fe21">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Values differ
+Expected: 32.50
+Actual:   0.10</Message>
+          <StackTrace>   at Condor.Pruebas.Api.ClienteApiTests.DEF01_la_venta_desde_una_proforma_respeta_el_precio_cotizado_aunque_cambie_el_catalogo() in /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs:line 320
+   at Condor.Pruebas.Api.ClienteApiTests.DEF01_la_venta_desde_una_proforma_respeta_el_precio_cotizado_aunque_cambie_el_catalogo() in /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs:line 321
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a02b2c13-b34f-409c-9f7c-32b67abc7de4" testId="40880b44-7913-5149-3942-af55cab40ac5" testName="Condor.Pruebas.Api.ClienteApiTests.DEF01_el_precio_y_la_descripcion_salen_del_catalogo_no_de_la_PC" computerName="ec5ce2154656" duration="00:00:00.4389012" startTime="2026-10-31T04:38:19.0073426+00:00" endTime="2026-10-31T04:38:19.0073599+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a02b2c13-b34f-409c-9f7c-32b67abc7de4">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Values differ
+Expected: 65.00
+Actual:   0.20</Message>
+          <StackTrace>   at Condor.Pruebas.Api.ClienteApiTests.DEF01_el_precio_y_la_descripcion_salen_del_catalogo_no_de_la_PC() in /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs:line 297
+   at Condor.Pruebas.Api.ClienteApiTests.DEF01_el_precio_y_la_descripcion_salen_del_catalogo_no_de_la_PC() in /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs:line 299
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b4c56cb8-f148-4200-9385-b8d21bdbb85c" testId="b443df85-ea60-4553-f89d-d8f15abf453c" testName="Condor.Pruebas.Api.ClienteApiTests.DEF01_un_producto_que_no_esta_en_el_catalogo_se_rechaza" computerName="ec5ce2154656" duration="00:00:00.1032340" startTime="2026-10-31T04:38:19.2397070+00:00" endTime="2026-10-31T04:38:19.2397070+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b4c56cb8-f148-4200-9385-b8d21bdbb85c">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Throws() Failure: No exception was thrown
+Expected: typeof(Condor.ClienteApi.ErrorServidorException)</Message>
+          <StackTrace>   at Condor.Pruebas.Api.ClienteApiTests.DEF01_un_producto_que_no_esta_en_el_catalogo_se_rechaza() in /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs:line 332
+   at Condor.Pruebas.Api.ClienteApiTests.DEF01_un_producto_que_no_esta_en_el_catalogo_se_rechaza() in /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs:line 335
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Condor.Pruebas.Api.ClienteApiTests.DEF01_un_producto_que_no_esta_en_el_catalogo_se_rechaza" storage="/src/tests/condor.pruebas/bin/debug/net8.0/condor.pruebas.dll" id="b443df85-ea60-4553-f89d-d8f15abf453c">
+      <Execution id="b4c56cb8-f148-4200-9385-b8d21bdbb85c" />
+      <TestMethod codeBase="/src/tests/Condor.Pruebas/bin/Debug/net8.0/Condor.Pruebas.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Condor.Pruebas.Api.ClienteApiTests" name="DEF01_un_producto_que_no_esta_en_el_catalogo_se_rechaza" />
+    </UnitTest>
+    <UnitTest name="Condor.Pruebas.Api.ClienteApiTests.DEF01_la_venta_desde_una_proforma_respeta_el_precio_cotizado_aunque_cambie_el_catalogo" storage="/src/tests/condor.pruebas/bin/debug/net8.0/condor.pruebas.dll" id="fb76d1ee-a028-0bc9-2756-4d1ce82695f9">
+      <Execution id="82cf457a-ae73-44c6-8a5a-74c42a53fe21" />
+      <TestMethod codeBase="/src/tests/Condor.Pruebas/bin/Debug/net8.0/Condor.Pruebas.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Condor.Pruebas.Api.ClienteApiTests" name="DEF01_la_venta_desde_una_proforma_respeta_el_precio_cotizado_aunque_cambie_el_catalogo" />
+    </UnitTest>
+    <UnitTest name="Condor.Pruebas.Api.ClienteApiTests.DEF01_el_precio_y_la_descripcion_salen_del_catalogo_no_de_la_PC" storage="/src/tests/condor.pruebas/bin/debug/net8.0/condor.pruebas.dll" id="40880b44-7913-5149-3942-af55cab40ac5">
+      <Execution id="a02b2c13-b34f-409c-9f7c-32b67abc7de4" />
+      <TestMethod codeBase="/src/tests/Condor.Pruebas/bin/Debug/net8.0/Condor.Pruebas.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Condor.Pruebas.Api.ClienteApiTests" name="DEF01_el_precio_y_la_descripcion_salen_del_catalogo_no_de_la_PC" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="fb76d1ee-a028-0bc9-2756-4d1ce82695f9" executionId="82cf457a-ae73-44c6-8a5a-74c42a53fe21" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="40880b44-7913-5149-3942-af55cab40ac5" executionId="a02b2c13-b34f-409c-9f7c-32b67abc7de4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b443df85-ea60-4553-f89d-d8f15abf453c" executionId="b4c56cb8-f148-4200-9385-b8d21bdbb85c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="3" executed="3" passed="0" failed="3" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 8.0.31)
+[xUnit.net 00:00:00.08]   Discovering: Condor.Pruebas
+[xUnit.net 00:00:00.19]   Discovered:  Condor.Pruebas
+[xUnit.net 00:00:00.20]   Starting:    Condor.Pruebas
+warn: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[60]
+      Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]
+      No XML encryptor configured. Key {f39867e6-882d-4db5-9c0f-e4fc2aecb93e} may be persisted to storage in unencrypted form.
+warn: Microsoft.AspNetCore.Hosting.Diagnostics[15]
+      Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://0.0.0.0:5080'.
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://0.0.0.0:5080
+[xUnit.net 00:00:00.68]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:00.68]       Expected: 65.00
+[xUnit.net 00:00:00.68]       Actual:   0.20
+[xUnit.net 00:00:00.68]       Stack Trace:
+[xUnit.net 00:00:00.68]         /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs(297,0): at Condor.Pruebas.Api.ClienteApiTests.DEF01_el_precio_y_la_descripcion_salen_del_catalogo_no_de_la_PC()
+[xUnit.net 00:00:00.68]         /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs(299,0): at Condor.Pruebas.Api.ClienteApiTests.DEF01_el_precio_y_la_descripcion_salen_del_catalogo_no_de_la_PC()
+[xUnit.net 00:00:00.68]         --- End of stack trace from previous location ---
+warn: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[60]
+      Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+warn: Microsoft.AspNetCore.Hosting.Diagnostics[15]
+      Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://0.0.0.0:5080'.
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://0.0.0.0:5080
+[xUnit.net 00:00:00.80]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:00.80]       Expected: 32.50
+[xUnit.net 00:00:00.80]       Actual:   0.10
+[xUnit.net 00:00:00.80]       Stack Trace:
+[xUnit.net 00:00:00.80]         /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs(320,0): at Condor.Pruebas.Api.ClienteApiTests.DEF01_la_venta_desde_una_proforma_respeta_el_precio_cotizado_aunque_cambie_el_catalogo()
+[xUnit.net 00:00:00.80]         /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs(321,0): at Condor.Pruebas.Api.ClienteApiTests.DEF01_la_venta_desde_una_proforma_respeta_el_precio_cotizado_aunque_cambie_el_catalogo()
+[xUnit.net 00:00:00.80]         --- End of stack trace from previous location ---
+warn: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[60]
+      Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+warn: Microsoft.AspNetCore.Hosting.Diagnostics[15]
+      Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://0.0.0.0:5080'.
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://0.0.0.0:5080
+[xUnit.net 00:00:00.91]       Assert.Throws() Failure: No exception was thrown
+[xUnit.net 00:00:00.91]       Expected: typeof(Condor.ClienteApi.ErrorServidorException)
+[xUnit.net 00:00:00.91]       Stack Trace:
+[xUnit.net 00:00:00.91]         /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs(332,0): at Condor.Pruebas.Api.ClienteApiTests.DEF01_un_producto_que_no_esta_en_el_catalogo_se_rechaza()
+[xUnit.net 00:00:00.91]         /src/tests/Condor.Pruebas/Api/ClienteApiTests.cs(335,0): at Condor.Pruebas.Api.ClienteApiTests.DEF01_un_producto_que_no_esta_en_el_catalogo_se_rechaza()
+[xUnit.net 00:00:00.91]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.91]   Finished:    Condor.Pruebas
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="ec5ce2154656" outcome="Error" timestamp="2026-10-31T04:38:19.0059514+00:00">
+        <Text>[xUnit.net 00:00:00.68]     Condor.Pruebas.Api.ClienteApiTests.DEF01_el_precio_y_la_descripcion_salen_del_catalogo_no_de_la_PC [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="ec5ce2154656" outcome="Error" timestamp="2026-10-31T04:38:19.1353323+00:00">
+        <Text>[xUnit.net 00:00:00.80]     Condor.Pruebas.Api.ClienteApiTests.DEF01_la_venta_desde_una_proforma_respeta_el_precio_cotizado_aunque_cambie_el_catalogo [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="ec5ce2154656" outcome="Error" timestamp="2026-10-31T04:38:19.2400225+00:00">
+        <Text>[xUnit.net 00:00:00.91]     Condor.Pruebas.Api.ClienteApiTests.DEF01_un_producto_que_no_esta_en_el_catalogo_se_rechaza [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

@@ -1,0 +1,18 @@
+{
+  "descripcion": "Horas reales de desarrollo del producto Cóndor registradas por el equipo (hasta la versión 1.1.1). Fuente de la hoja 'Horas reales' del libro.",
+  "fecha_inicio": "2026-10-20",
+  "fecha_fin": "2026-10-30",
+  "registros": [
+    {"fecha": "2026-10-20", "integrantes": [{"nombre": "Condo Zamata, Richard Alberto", "horas": 8}, {"nombre": "Chaisa Fernandez, Leonel Anthony", "horas": 11}, {"nombre": "Huamani Condori, Jeanpiero Sixto", "horas": 7}, {"nombre": "Payehuanca Riquelme, Jhastyn", "horas": 9}]},
+    {"fecha": "2026-10-21", "integrantes": [{"nombre": "Condo Zamata, Richard Alberto", "horas": 12}, {"nombre": "Chaisa Fernandez, Leonel Anthony", "horas": 8}, {"nombre": "Huamani Condori, Jeanpiero Sixto", "horas": 10}, {"nombre": "Payehuanca Riquelme, Jhastyn", "horas": 6}]},
+    {"fecha": "2026-10-22", "integrantes": [{"nombre": "Condo Zamata, Richard Alberto", "horas": 7}, {"nombre": "Chaisa Fernandez, Leonel Anthony", "horas": 13}, {"nombre": "Huamani Condori, Jeanpiero Sixto", "horas": 9}, {"nombre": "Payehuanca Riquelme, Jhastyn", "horas": 11}]},
+    {"fecha": "2026-10-23", "integrantes": [{"nombre": "Condo Zamata, Richard Alberto", "horas": 10}, {"nombre": "Chaisa Fernandez, Leonel Anthony", "horas": 6}, {"nombre": "Huamani Condori, Jeanpiero Sixto", "horas": 12}, {"nombre": "Payehuanca Riquelme, Jhastyn", "horas": 8}]},
+    {"fecha": "2026-10-24", "integrantes": [{"nombre": "Condo Zamata, Richard Alberto", "horas": 9}, {"nombre": "Chaisa Fernandez, Leonel Anthony", "horas": 10}, {"nombre": "Huamani Condori, Jeanpiero Sixto", "horas": 6}, {"nombre": "Payehuanca Riquelme, Jhastyn", "horas": 13}]},
+    {"fecha": "2026-10-25", "integrantes": [{"nombre": "Condo Zamata, Richard Alberto", "horas": 14}, {"nombre": "Chaisa Fernandez, Leonel Anthony", "horas": 7}, {"nombre": "Huamani Condori, Jeanpiero Sixto", "horas": 11}, {"nombre": "Payehuanca Riquelme, Jhastyn", "horas": 9}]},
+    {"fecha": "2026-10-26", "integrantes": [{"nombre": "Condo Zamata, Richard Alberto", "horas": 6}, {"nombre": "Chaisa Fernandez, Leonel Anthony", "horas": 12}, {"nombre": "Huamani Condori, Jeanpiero Sixto", "horas": 8}, {"nombre": "Payehuanca Riquelme, Jhastyn", "horas": 10}]},
+    {"fecha": "2026-10-27", "integrantes": [{"nombre": "Condo Zamata, Richard Alberto", "horas": 11}, {"nombre": "Chaisa Fernandez, Leonel Anthony", "horas": 9}, {"nombre": "Huamani Condori, Jeanpiero Sixto", "horas": 13}, {"nombre": "Payehuanca Riquelme, Jhastyn", "horas": 7}]},
+    {"fecha": "2026-10-28", "integrantes": [{"nombre": "Condo Zamata, Richard Alberto", "horas": 8}, {"nombre": "Chaisa Fernandez, Leonel Anthony", "horas": 14}, {"nombre": "Huamani Condori, Jeanpiero Sixto", "horas": 7}, {"nombre": "Payehuanca Riquelme, Jhastyn", "horas": 12}]},
+    {"fecha": "2026-10-29", "integrantes": [{"nombre": "Condo Zamata, Richard Alberto", "horas": 13}, {"nombre": "Chaisa Fernandez, Leonel Anthony", "horas": 8}, {"nombre": "Huamani Condori, Jeanpiero Sixto", "horas": 10}, {"nombre": "Payehuanca Riquelme, Jhastyn", "horas": 6}]},
+    {"fecha": "2026-10-30", "integrantes": [{"nombre": "Condo Zamata, Richard Alberto", "horas": 9}, {"nombre": "Chaisa Fernandez, Leonel Anthony", "horas": 11}, {"nombre": "Huamani Condori, Jeanpiero Sixto", "horas": 14}, {"nombre": "Payehuanca Riquelme, Jhastyn", "horas": 8}]}
+  ]
+}

@@ -1,0 +1,96 @@
+@startuml 02b_clases_reglas
+!pragma layout smetana
+title Diagrama de clases (2/2): reglas de negocio y contratos de Condor.Dominio (versión 1.1.0)
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+hide empty members
+
+top to bottom direction
+class Comprobante <<entidad>>
+class Compra <<entidad>>
+class Cliente <<entidad>>
+class DetalleComprobante <<entidad>>
+class Empresa <<entidad>>
+class RespuestaSunat
+class Ticket
+package "Reglas de negocio" {
+  class EmisionComprobante <<static>> {
+    +DiasVigenciaProforma = 7
+    +Errores(SolicitudEmision) : IReadOnlyList<ErrorEmision>
+    +Preparar(SolicitudEmision) : Comprobante
+    +VigenciaProforma(emision) : DateOnly
+    +SerieDe(TipoEmision) : string
+  }
+  class SolicitudEmision <<record>> {
+    +Tipo : TipoEmision
+    +Detalle : IReadOnlyList<DetalleComprobante>
+    +Cliente : Cliente?
+    +Proforma : Comprobante?
+  }
+  enum TipoEmision {
+    Boleta
+    Factura
+    NotaVenta
+    Proforma
+  }
+  class CalculadoraVenta <<static>> {
+    +Importe(cantidad, precio) : decimal
+    +Totales(importes) : TotalesVenta
+  }
+  class ValidadorDocumento <<static>> {
+    +EsDniValido(n) : bool
+    +EsRucValido(n) : bool
+  }
+  class ValidadorCompra <<static>> {
+    +Errores(Compra, hoy) : IReadOnlyList<ErrorCompra>
+    +Preparar(Compra, hoy) : Compra
+  }
+  class ServicioAutenticacion {
+    +AutenticarAsync(usuario, clave, terminal) : ResultadoAutenticacion
+  }
+  class HashClave <<static>> {
+    +Iteraciones = 100000
+    +Generar(clave) : string
+    +Verificar(clave, hash) : bool
+  }
+  class ReporteVentas {
+    +{static} Consolidar(desde, hasta, ventas) : ReporteVentas
+  }
+}
+
+package "Contratos (puertos)" {
+  interface IComprobanteRepositorio {
+    +EmitirAsync(Comprobante) : Comprobante
+    +BuscarAsync(FiltroComprobantes)
+    +ListarProformasAsync(texto, limite)
+  }
+  interface ICompraRepositorio {
+    +RegistrarAsync(Compra) : Compra
+  }
+  interface IUsuarioRepositorio
+  interface IEnvioSunat {
+    +EnviarAsync(Empresa, Comprobante) : RespuestaSunat
+  }
+  interface IImpresoraTickets
+}
+
+SolicitudEmision --> TipoEmision
+EmisionComprobante ..> SolicitudEmision
+EmisionComprobante ..> CalculadoraVenta
+EmisionComprobante ..> ValidadorDocumento
+EmisionComprobante ..> Comprobante : crea
+ServicioAutenticacion ..> HashClave
+ServicioAutenticacion --> IUsuarioRepositorio
+ValidadorCompra ..> Compra
+IComprobanteRepositorio ..> Comprobante
+ICompraRepositorio ..> Compra
+SolicitudEmision --> "0..1" Cliente
+SolicitudEmision --> "1..100" DetalleComprobante
+SolicitudEmision --> "0..1" Comprobante : proforma
+IEnvioSunat ..> Empresa
+IEnvioSunat ..> RespuestaSunat
+IImpresoraTickets ..> Ticket : imprime
+ReporteVentas ..> Comprobante : resume ventas
+@enduml

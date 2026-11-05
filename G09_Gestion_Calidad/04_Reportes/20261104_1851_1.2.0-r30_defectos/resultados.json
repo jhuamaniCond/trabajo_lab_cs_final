@@ -1,0 +1,219 @@
+{
+  "etiqueta": "1.2.0-r30_defectos",
+  "entorno": {
+    "fecha": "2026-11-04T18:51:29",
+    "url": "http://localhost:5080/",
+    "python": "3.12.0",
+    "so": "Windows-11-10.0.26300-SP0",
+    "selenium": "4.52.0",
+    "producto": {
+      "estado": "OK",
+      "baseDatos": true,
+      "version": "1.2.0",
+      "terminal": "API-LAPTOP-JPHC"
+    },
+    "navegador": {
+      "navegador": "chrome",
+      "version": "156.0.8078.80",
+      "controlador": "156.0.8078.80 (fb096c0011f9d50f0a264a9376420cdea9c421e3-refs/branch-heads/8078@{#1705})"
+    }
+  },
+  "segundos": 71.4,
+  "casos": [
+    {
+      "id": "test_01_acceso.CP01_AccesoCorrecto.test_encargado_ingresa_y_ve_su_usuario_y_rol",
+      "caso": "CP-01",
+      "requisitos": "RF-01",
+      "descripcion": "encargado ingresa y ve su usuario y rol",
+      "estado": "APROBADO",
+      "segundos": 3.84,
+      "mediciones": {},
+      "capturas": [
+        "CP-01_01_nueva_venta_encargado.png"
+      ],
+      "error": ""
+    },
+    {
+      "id": "test_01_acceso.CP02_CredencialesInvalidas.test_clave_equivocada_muestra_el_mensaje_generico_y_no_entra",
+      "caso": "CP-02",
+      "requisitos": "RF-01, RNF-03",
+      "descripcion": "clave equivocada muestra el mensaje generico y no entra",
+      "estado": "APROBADO",
+      "segundos": 4.7,
+      "mediciones": {},
+      "capturas": [
+        "CP-02_01_credenciales_invalidas.png"
+      ],
+      "error": ""
+    },
+    {
+      "id": "test_01_acceso.CP03_RestriccionPorRol.test_vendedor_no_ve_ni_abre_los_modulos_del_encargado",
+      "caso": "CP-03",
+      "requisitos": "RF-03, RNF-03",
+      "descripcion": "vendedor no ve ni abre los modulos del encargado",
+      "estado": "APROBADO",
+      "segundos": 3.84,
+      "mediciones": {},
+      "capturas": [
+        "CP-03_01_menu_vendedor.png",
+        "CP-03_02_acceso_denegado_por_direccion.png"
+      ],
+      "error": ""
+    },
+    {
+      "id": "test_02_registro.CP04_RegistroValidoCliente.test_registra_un_cliente_con_dni_y_se_encuentra_en_la_venta",
+      "caso": "CP-04",
+      "requisitos": "RF-06",
+      "descripcion": "registra un cliente con dni y se encuentra en la venta",
+      "estado": "APROBADO",
+      "segundos": 4.97,
+      "mediciones": {},
+      "capturas": [
+        "CP-04_01_cliente_registrado.png",
+        "CP-04_02_cliente_en_la_venta.png"
+      ],
+      "error": ""
+    },
+    {
+      "id": "test_02_registro.CP05_DatosInvalidos.test_rechaza_documentos_precio_y_cantidad_invalidos",
+      "caso": "CP-05",
+      "requisitos": "RF-06, RF-04, RF-05",
+      "descripcion": "rechaza documentos precio y cantidad invalidos",
+      "estado": "APROBADO",
+      "segundos": 7.27,
+      "mediciones": {},
+      "capturas": [
+        "CP-05_01_dni_invalido.png",
+        "CP-05_02_ruc_invalido.png",
+        "CP-05_03_precio_invalido.png"
+      ],
+      "error": ""
+    },
+    {
+      "id": "test_02_registro.CP06_RegistroValidoProducto.test_registra_un_producto_y_se_vende_con_su_precio",
+      "caso": "CP-06",
+      "requisitos": "RF-04, RF-05",
+      "descripcion": "registra un producto y se vende con su precio",
+      "estado": "APROBADO",
+      "segundos": 4.84,
+      "mediciones": {},
+      "capturas": [
+        "CP-06_01_producto_registrado.png"
+      ],
+      "error": ""
+    },
+    {
+      "id": "test_03_venta.CP07_VentaBoletaConTeclado.test_boleta_con_teclado_queda_emitida_y_en_el_historial",
+      "caso": "CP-07",
+      "requisitos": "RF-05, RF-07, RF-14, RNF-01, RNF-06",
+      "descripcion": "boleta con teclado queda emitida y en el historial",
+      "estado": "APROBADO",
+      "segundos": 5.03,
+      "mediciones": {
+        "RNF-01 sugerencias (ms)": 578,
+        "RNF-06 venta con teclado (s)": 1.2
+      },
+      "capturas": [
+        "CP-07_01_sugerencias.png",
+        "CP-07_02_boleta_emitida.png",
+        "CP-07_03_boleta_en_historial.png"
+      ],
+      "error": ""
+    },
+    {
+      "id": "test_03_venta.CP08_FacturaConRuc.test_factura_a_un_cliente_con_ruc_recien_registrado",
+      "caso": "CP-08",
+      "requisitos": "RF-06, RF-07",
+      "descripcion": "factura a un cliente con ruc recien registrado",
+      "estado": "APROBADO",
+      "segundos": 6.28,
+      "mediciones": {},
+      "capturas": [
+        "CP-08_01_factura_emitida.png"
+      ],
+      "error": ""
+    },
+    {
+      "id": "test_03_venta.CP09_ReglasDeEmision.test_factura_sin_ruc_y_boleta_mayor_a_700_sin_dni_no_se_emiten",
+      "caso": "CP-09",
+      "requisitos": "RF-07",
+      "descripcion": "factura sin ruc y boleta mayor a 700 sin dni no se emiten",
+      "estado": "APROBADO",
+      "segundos": 4.59,
+      "mediciones": {},
+      "capturas": [
+        "CP-09_01_factura_sin_ruc.png",
+        "CP-09_02_boleta_mayor_700_sin_dni.png"
+      ],
+      "error": ""
+    },
+    {
+      "id": "test_04_proformas_consultas.CP10_CambioDeEstadoProforma.test_proforma_vigente_pasa_a_convertida_y_no_se_convierte_dos_veces",
+      "caso": "CP-10",
+      "requisitos": "RF-08, RF-07",
+      "descripcion": "proforma vigente pasa a convertida y no se convierte dos veces",
+      "estado": "FALLIDO",
+      "segundos": 4.14,
+      "mediciones": {},
+      "capturas": [
+        "CP-10_01_proforma_vigente.png",
+        "CP-10_02_FALLO.png"
+      ],
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\jeanp\\Downloads\\UNIVERSIDAD 2026-B\\Calidad de Software\\Lab\\Trabajo Grupal\\G09_Gestion_Calidad\\02_Suite\\comun.py\", line 85, in _callTestMethod\n    super()._callTestMethod(method)\nAssertionError: True is not false : DEF-04: no debe quedar el aviso de la emisión anterior\n"
+    },
+    {
+      "id": "test_04_proformas_consultas.CP11_ConsultaHistorial.test_filtra_por_tipo_y_rechaza_un_periodo_invertido",
+      "caso": "CP-11",
+      "requisitos": "RF-14",
+      "descripcion": "filtra por tipo y rechaza un periodo invertido",
+      "estado": "APROBADO",
+      "segundos": 3.9,
+      "mediciones": {},
+      "capturas": [
+        "CP-11_01_historial_facturas.png",
+        "CP-11_02_periodo_invertido.png"
+      ],
+      "error": ""
+    },
+    {
+      "id": "test_04_proformas_consultas.CP12_ReporteConsolidado.test_el_encargado_genera_el_reporte_del_periodo",
+      "caso": "CP-12",
+      "requisitos": "RF-15, RF-03",
+      "descripcion": "el encargado genera el reporte del periodo",
+      "estado": "APROBADO",
+      "segundos": 4.38,
+      "mediciones": {},
+      "capturas": [
+        "CP-12_01_reporte_consolidado.png"
+      ],
+      "error": ""
+    },
+    {
+      "id": "test_05_abastecimiento.CP13_ProveedorYCompra.test_registra_proveedor_y_compra_y_rechaza_la_compra_repetida",
+      "caso": "CP-13",
+      "requisitos": "RF-11, RF-12, RF-03",
+      "descripcion": "registra proveedor y compra y rechaza la compra repetida",
+      "estado": "FALLIDO",
+      "segundos": 5.75,
+      "mediciones": {},
+      "capturas": [
+        "CP-13_01_proveedor_registrado.png",
+        "CP-13_02_FALLO.png"
+      ],
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\jeanp\\Downloads\\UNIVERSIDAD 2026-B\\Calidad de Software\\Lab\\Trabajo Grupal\\G09_Gestion_Calidad\\02_Suite\\comun.py\", line 85, in _callTestMethod\n    super()._callTestMethod(method)\nAssertionError: 'S/ 173.73' not found in 'Factura F134-15326665 03/11/2026 20855294339 Distribuidora G09 1104185134 S.A.C. 0 S/ 205.00' : DEF-03: la lista debe mostrar importes correctos de la compra\n"
+    },
+    {
+      "id": "test_01_acceso.CP14_CierreDeSesion.test_cerrar_sesion_vuelve_a_ingresar_y_no_deja_la_sesion_abierta",
+      "caso": "CP-14",
+      "requisitos": "RF-02",
+      "descripcion": "cerrar sesion vuelve a ingresar y no deja la sesion abierta",
+      "estado": "APROBADO",
+      "segundos": 3.5,
+      "mediciones": {},
+      "capturas": [
+        "CP-14_01_sesion_cerrada.png"
+      ],
+      "error": ""
+    }
+  ]
+}

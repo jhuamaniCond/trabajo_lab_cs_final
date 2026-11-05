@@ -1,0 +1,51 @@
+# Peticiones de ejemplo a Condor.Api (CC-01). Ver docs/api.md.
+# VS Code: extensión REST Client. Visual Studio 2022: abrir este archivo.
+
+@api = http://localhost:5080
+
+### Salud (sin token)
+GET {{api}}/api/salud
+
+### Ingresar como vendedor
+# @name login
+POST {{api}}/api/auth/login
+Content-Type: application/json
+
+{ "usuario": "vendedor1", "clave": "Vendedor2026!" }
+
+###
+@token = {{login.response.body.token}}
+
+### Buscar productos
+GET {{api}}/api/productos?texto=cemento
+Authorization: Bearer {{token}}
+
+### Buscar cliente por DNI o RUC
+GET {{api}}/api/clientes/20131312955
+Authorization: Bearer {{token}}
+
+### Emitir una boleta (precio y descripción salen del catálogo)
+POST {{api}}/api/comprobantes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "tipo": "BOLETA", "documentoCliente": null, "detalle": [ { "productoId": 1, "cantidad": 2 } ] }
+
+### Historial del día
+GET {{api}}/api/comprobantes?limite=10
+Authorization: Bearer {{token}}
+
+### Reporte consolidado: el vendedor recibe 403
+GET {{api}}/api/reportes/ventas
+Authorization: Bearer {{token}}
+
+### Ingresar como encargado
+# @name loginEncargado
+POST {{api}}/api/auth/login
+Content-Type: application/json
+
+{ "usuario": "encargado", "clave": "Encargado2026!" }
+
+### Reporte consolidado del encargado
+GET {{api}}/api/reportes/ventas?desde=2026-11-01&hasta=2026-11-30
+Authorization: Bearer {{loginEncargado.response.body.token}}

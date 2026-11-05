@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Cliente HTTP de Condor.Api (CC-01): implementa los repositorios de
+       Condor.Dominio.Contratos llamando al backend, para que las PC del
+       mostrador no se conecten directamente a PostgreSQL. Sin WPF, para
+       probarlo contra la API en memoria. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Condor.ClienteApi</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Condor.Dominio\Condor.Dominio.csproj" />
+  </ItemGroup>
+
+</Project>

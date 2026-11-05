@@ -1,0 +1,130 @@
+@startuml 09_modelo_datos
+!pragma layout smetana
+title Modelo de datos (PostgreSQL 16, migraciones V001–V014)
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+hide circle
+skinparam linetype ortho
+
+entity usuario {
+  * id : bigserial <<PK>>
+  --
+  * nombre_usuario : varchar(20) <<UK>>
+  * nombre_completo : varchar(100)
+  * rol : VENDEDOR | ENCARGADO
+  * hash_clave : varchar(200)
+  activo, intentos_fallidos, bloqueado_hasta
+}
+entity acceso_usuario {
+  * id : bigserial <<PK>>
+  --
+  nombre_usuario, terminal, exitoso, detalle, fecha
+}
+entity terminal {
+  * id : serial <<PK>>
+  --
+  * nombre : varchar <<UK>>
+  registrado_en ; ultimo_acceso
+}
+entity producto {
+  * id : bigserial <<PK>>
+  --
+  * nombre : varchar(150) <<UK>>
+  * precio : numeric (con IGV)
+  unidad, codigo_barras <<UK>>, activo
+}
+entity cliente {
+  * id : bigserial <<PK>>
+  --
+  * tipo_documento, numero_documento <<UK>>
+  * nombre ; direccion
+}
+entity serie {
+  * id : serial <<PK>>
+  --
+  * codigo : B001 F001 NV01 PR01 T001 <<UK>>
+  * tipo_comprobante ; ultimo_correlativo
+}
+entity comprobante {
+  * id : bigserial <<PK>>
+  --
+  * serie_id <<FK>> ; numero  <<UK (serie_id, numero)>>
+  cliente_id <<FK>> ; * terminal_id <<FK>>
+  * usuario ; fecha
+  * op_gravada + igv = total
+  estado_sunat ; impresiones
+  valida_hasta ; proforma_id <<FK, UK>>
+}
+entity comprobante_detalle {
+  * id : bigserial <<PK>>
+  --
+  * comprobante_id <<FK>> ; item
+  * producto_id <<FK>>
+  descripcion, cantidad, precio_unitario, importe
+}
+entity comprobante_sunat {
+  * comprobante_id <<PK, FK>>
+  --
+  nombre_archivo, hash, xml_firmado, cdr_zip
+  codigo, descripcion, intentos, reservado_hasta
+}
+entity proveedor {
+  * id : bigserial <<PK>>
+  --
+  * ruc <<UK>> ; razon_social ; nombre_comercial
+}
+entity compra {
+  * id : bigserial <<PK>>
+  --
+  * proveedor_id <<FK>>
+  * tipo_documento, serie, numero  <<UK con proveedor>>
+  fecha_emision ; terminal_id <<FK>> ; total
+}
+entity compra_detalle {
+  * id <<PK>>
+  --
+  compra_id <<FK>> ; item ; producto_id <<FK>>
+  descripcion ; cantidad ; costo_unitario ; importe
+}
+entity guia_remision {
+  * id : bigserial <<PK>>
+  --
+  * serie_id <<FK>> ; numero
+  comprobante_id <<FK>> ; motivo ; modalidad
+  partida_ubigeo, llegada_ubigeo ; peso_bruto_kg
+  transportista o vehículo y conductor
+  estado_sunat ; ticket
+}
+entity guia_detalle {
+  * id <<PK>>
+  --
+  guia_id <<FK>> ; item
+  producto_id <<FK>> ; descripcion ; cantidad
+}
+entity respaldo {
+  * id : bigserial <<PK>>
+  --
+  archivo ; carpeta ; bytes
+  iniciado_en ; terminado_en ; terminal_id <<FK>>
+}
+
+serie ||--o{ comprobante
+cliente |o--o{ comprobante
+terminal ||--o{ comprobante
+comprobante ||--|{ comprobante_detalle
+producto ||--o{ comprobante_detalle
+comprobante ||--o| comprobante_sunat
+comprobante |o--o| comprobante : proforma_id
+usuario ||..o{ comprobante : usuario (nombre)
+usuario ||..o{ acceso_usuario
+proveedor ||--o{ compra
+terminal ||--o{ compra
+compra ||--|{ compra_detalle
+producto ||--o{ compra_detalle
+serie ||--o{ guia_remision
+comprobante |o--o{ guia_remision
+guia_remision ||--|{ guia_detalle
+producto ||--o{ guia_detalle
+terminal ||--o{ respaldo
+@enduml

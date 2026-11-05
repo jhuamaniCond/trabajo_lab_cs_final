@@ -1,0 +1,34 @@
+@startuml M02_nueva_venta
+skinparam dpi 170
+title M02 · Nueva venta (RF-05, RF-06, RF-07, RF-09; CU-01 Emitir comprobante)
+salt
+{+
+  {/ <b>F1 Nueva venta</b> | F2 Catálogo | F3 Clientes | F5 Historial | F7 Proformas | Cerrar sesión }
+  ==
+  {
+    Producto | "cem                                   " | Cantidad | "2    " | [+ Agregar] | [Nuevo producto]
+    . | {+ Cemento Sol tipo I 42.5 kg - S/ 32.50 | Cemento Andino tipo V 42.5 kg - S/ 36.00 | Cemento Yura IP - S/ 30.90 } | . | . | . | .
+  }
+  {#
+    N.° | Producto                         | Cantidad | Unidad | Precio unit. | Subtotal
+    1   | Cemento Sol tipo I 42.5 kg       | 2.000    | BOL    | 32.50        | 65.00
+    2   | Clavo para madera 3" (kg)        | 1.500    | KG     | 8.00         | 12.00
+    3   | Tubo PVC 1/2" x 5 m              | 3.000    | UND    | 13.67        | 41.01
+  }
+  {
+    {^"Cliente"
+      DNI / RUC | "20123456789  " | [Buscar]
+      Nombre    | CONSTRUCTORA LOS ANDES S.A.C.
+      Dirección | Av. Los Incas 340, Majes
+    } | {^"Resumen"
+      Comprobante | ^Factura^
+      Op. gravada | S/ 100.01
+      IGV 18 %    | S/ 18.00
+      <b>TOTAL</b> | <b>S/ 118.01</b>
+      [ Emitir e imprimir (F10) ]
+    }
+  }
+  --
+  Usuario: vendedor1 (Vendedor) · Terminal PC-2 · SUNAT beta · <color:red>2 pendientes, el más antiguo vence mañana</color>
+}
+@enduml

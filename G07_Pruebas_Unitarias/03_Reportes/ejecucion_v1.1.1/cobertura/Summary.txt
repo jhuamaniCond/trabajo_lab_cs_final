@@ -1,0 +1,71 @@
+Summary - Condor 1.1.1 - ejecucion_v1.1.1
+  Generated on: 11/01/2026 - 18:25:19
+  Coverage date: 11/01/2026 - 18:25:15
+  Parser: Cobertura
+  Assemblies: 1
+  Classes: 51
+  Files: 30
+  Line coverage: 23.0%
+  Covered lines: 207
+  Uncovered lines: 693
+  Coverable lines: 900
+  Total lines: 2640
+  Branch coverage: 17.5% (104 of 594)
+  Covered branches: 104
+  Total branches: 594
+  Method coverage: 31.1% (43 of 138)
+  Covered methods: 43
+  Total methods: 138
+
+Condor.Dominio                                               23.0%
+  Condor.Dominio.Contratos.RespaldoException                  0.0%
+  Condor.Dominio.Contratos.SinConexionException               0.0%
+  Condor.Dominio.Entidades.Cliente                            0.0%
+  Condor.Dominio.Entidades.Compra                             0.0%
+  Condor.Dominio.Entidades.Comprobante                       15.0%
+  Condor.Dominio.Entidades.CuentaUsuario                     50.0%
+  Condor.Dominio.Entidades.GuiaRemision                       0.0%
+  Condor.Dominio.Entidades.ModalidadTraslado                  0.0%
+  Condor.Dominio.Entidades.MotivoTraslado                     0.0%
+  Condor.Dominio.Entidades.Producto                           0.0%
+  Condor.Dominio.Entidades.Proveedor                          0.0%
+  Condor.Dominio.Entidades.Respaldo                           0.0%
+  Condor.Dominio.Entidades.Serie                              5.8%
+  Condor.Dominio.Entidades.Sesion                             0.0%
+  Condor.Dominio.Entidades.TipoComprobante                  100.0%
+  Condor.Dominio.Entidades.TipoDocumentoCompra                0.0%
+  Condor.Dominio.Impresion.FormatoTicket                      0.0%
+  Condor.Dominio.Impresion.ImpresionException                 0.0%
+  Condor.Dominio.Impresion.MontoEnLetras                      0.0%
+  Condor.Dominio.Impresion.Ticket                             0.0%
+  Condor.Dominio.Reportes.ReporteVentas                      95.2%
+  Condor.Dominio.Seguridad.HashClave                         83.3%
+  Condor.Dominio.Seguridad.ResultadoAutenticacion             0.0%
+  Condor.Dominio.Seguridad.Roles                              0.0%
+  Condor.Dominio.Seguridad.ServicioAutenticacion            100.0%
+  Condor.Dominio.Sunat.EstadoSunat                            0.0%
+  Condor.Dominio.Sunat.RespuestaSunat                         0.0%
+  Condor.Dominio.Sunat.ResultadoReenvio                       0.0%
+  Condor.Dominio.Sunat.ResumenPendientes                      0.0%
+  Condor.Dominio.Sunat.SunatNoDisponibleException             0.0%
+  Condor.Dominio.Validacion.ClienteDuplicadoException         0.0%
+  Condor.Dominio.Validacion.ClienteInvalidoException          0.0%
+  Condor.Dominio.Validacion.CodigoBarrasDuplicadoException    0.0%
+  Condor.Dominio.Validacion.CompraDuplicadaException          0.0%
+  Condor.Dominio.Validacion.CompraInvalidaException           0.0%
+  Condor.Dominio.Validacion.GuiaInvalidaException             0.0%
+  Condor.Dominio.Validacion.ProductoDuplicadoException        0.0%
+  Condor.Dominio.Validacion.ProductoInvalidoException         0.0%
+  Condor.Dominio.Validacion.ProveedorDuplicadoException       0.0%
+  Condor.Dominio.Validacion.ProveedorInvalidoException        0.0%
+  Condor.Dominio.Validacion.ValidadorCliente                  0.0%
+  Condor.Dominio.Validacion.ValidadorCompra                   0.0%
+  Condor.Dominio.Validacion.ValidadorDocumento               88.0%
+  Condor.Dominio.Validacion.ValidadorGuia                     0.0%
+  Condor.Dominio.Validacion.ValidadorProducto                 0.0%
+  Condor.Dominio.Validacion.ValidadorProveedor                0.0%
+  Condor.Dominio.Ventas.CalculadoraVenta                     93.7%
+  Condor.Dominio.Ventas.ComprobanteInvalidoException        100.0%
+  Condor.Dominio.Ventas.EmisionComprobante                   80.0%
+  Condor.Dominio.Ventas.ProformaYaConvertidaException         0.0%
+  Condor.Dominio.Ventas.TotalesVenta                        100.0%

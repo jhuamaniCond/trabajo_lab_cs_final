@@ -1,0 +1,28 @@
+@startuml M04_nueva_compra
+skinparam dpi 170
+title M04 · Nueva compra (RF-11, RF-12; CU-03 Registrar compra) — solo Encargado general
+salt
+{+
+  <b>Nueva compra</b>
+  Copie los datos del comprobante que entregó el proveedor. Los costos van con IGV.
+  ==
+  {
+    RUC del proveedor | "20456789012   " | [Buscar] | DISTRIBUIDORA FERRETERA DEL SUR E.I.R.L.
+    Comprobante | (X) Factura | () Boleta | .
+    Serie | "F002 " | Número | "1534    "
+    Fecha | "28/10/2026" | . | .
+  }
+  {
+    Producto | "Cemento Sol tipo I 42.5 kg   " | Cantidad | "100  " | Costo unit. S/ | "27.80 " | [Agregar]
+  }
+  {#
+    N.° | Producto                    | Cantidad | Unidad | Costo unit. | Importe
+    1   | Cemento Sol tipo I 42.5 kg  | 100.000  | BOL    | 27.8000     | 2 780.00
+    2   | Fierro corrugado 1/2" x 9 m | 50.000   | UND    | 31.5000     | 1 575.00
+  }
+  Observación | "Entrega en almacén, guía T001-882      "
+  --
+  { Op. gravada S/ 3 690.68 |    IGV S/ 664.32 |    <b>TOTAL S/ 4 355.00</b> | [Cancelar] | [ Guardar compra ] }
+  <color:red>Esa compra ya se registró (RUC 20456789012, Factura F002-00001534).</color>
+}
+@enduml

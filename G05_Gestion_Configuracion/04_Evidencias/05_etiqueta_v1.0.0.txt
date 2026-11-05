@@ -1,0 +1,27 @@
+### Revisión del trunk que se etiqueta
+Revision: 34
+Last Changed Author: rcondo
+Last Changed Rev: 34
+Last Changed Date: 2026-11-04 19:29:55 -0500
+Versión del producto en trunk@34: 1.2.0 (<Version> de src/Condor.Api/Condor.Api.csproj y src/Condor.Escritorio/Condor.Escritorio.csproj)
+Suite del producto en r32: 944 aprobadas, 0 fallidas, 5 omitidas; Selenium G09 14/14 (regresión final)
+
+### rcondo intenta crear la etiqueta (debe rechazarse por authz)
+Committing transaction...
+svn: E220004: Access denied
+
+### jpayehuanca (responsable de configuración) crea tags/v1.0.0 desde trunk@34
+Committing transaction...
+Committed revision 35.
+
+### Etiquetas
+     35 jpayehuanca              Nov. 04 19:52 ./
+     16 jpayehuanca              Oct. 30 23:43 v0.1.0/
+     35 jpayehuanca              Nov. 04 19:52 v1.0.0/
+
+### Intento de modificar la etiqueta (achaisa): debe rechazarse
+Committing transaction...
+svn: E220004: Access denied
+
+### La etiqueta coincide con trunk@34 (diff vacío)
+Archivos con diferencias: 0

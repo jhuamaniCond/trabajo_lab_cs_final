@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>Condor.Escritorio</RootNamespace>
+    <AssemblyName>CondorVentas</AssemblyName>
+    <Version>1.2.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- CC-01: la app ya no usa Condor.Datos (PostgreSQL); habla con Condor.Api. -->
+    <ProjectReference Include="..\Condor.ClienteApi\Condor.ClienteApi.csproj" />
+    <ProjectReference Include="..\Condor.Impresion\Condor.Impresion.csproj" />
+    <ProjectReference Include="..\Condor.Presentacion\Condor.Presentacion.csproj" />
+    <ProjectReference Include="..\Condor.Sunat\Condor.Sunat.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Cóndor, volcán y greca de la interfaz (recortados de imgs/). -->
+    <Resource Include="Recursos\*.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Plantilla de configuración; el condor.json real de cada PC no se versiona. -->
+    <None Update="condor.ejemplo.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="condor.json" CopyToOutputDirectory="PreserveNewest" Condition="Exists('condor.json')" />
+  </ItemGroup>
+
+</Project>

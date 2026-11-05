@@ -1,0 +1,60 @@
+@startuml 07_componentes
+!pragma layout smetana
+title Diagrama de componentes — arquitectura cliente – API – base de datos (versión 1.2.0)
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+package "CondorVentas.exe (PC-1, PC-2, PC-3)" {
+  [Condor.Escritorio\n(WPF: ventanas y vistas)] as ESC
+  [Condor.Presentacion\n(ViewModels MVVM)] as PRE
+  [Condor.ClienteApi\n(repositorios HTTP)] as CLI
+  [Condor.Sunat\n(XML UBL, firma, SOAP/REST)] as SUN
+  [Condor.Impresion\n(ESC/POS)] as IMP
+}
+package "Navegador (cualquier PC de la LAN)" {
+  [Portal web CC-03\n(HTML + CSS + JS,\nJWT en sessionStorage)] as WEB
+}
+package "CondorApi.exe (PC principal)" {
+  [Condor.Api\n(ASP.NET Core 8, JWT,\npolítica Encargado)] as API
+  [wwwroot\n(archivos estáticos\ndel portal)] as WWW
+  [Condor.Datos\n(Npgsql, repositorios SQL,\nrespaldo pg_dump)] as DAT
+}
+[Condor.Dominio\n(entidades, reglas, contratos)] as DOM
+database "PostgreSQL 16\n(condor)" as BD
+cloud "SUNAT\n(beta / simulada)" as SUNAT
+node "Ticketera 80 mm" as TIC
+
+interface "Contratos IxxxRepositorio\n(IComprobanteRepositorio,\nICompraRepositorio...)" as IREP
+interface "HTTP + JSON + JWT\n/api/escritorio/*  /api/*" as HTTP
+
+ESC --> PRE
+PRE --> DOM
+PRE --> IREP : usa
+CLI ..|> IREP : implementa
+CLI --> HTTP
+API -- HTTP
+API --> WWW : sirve GET /
+WEB --> HTTP : /api/* (fetch)
+API --> DOM
+API --> DAT
+DAT ..|> IREP : implementa
+DAT --> BD
+PRE --> SUN
+SUN --> SUNAT
+PRE --> IMP
+IMP --> TIC
+SUN ..> DOM
+IMP ..> DOM
+note right of HTTP
+  HTTP + JSON + token JWT
+  /api/escritorio/* (app)
+  /api/* (portal web, JMeter, Selenium)
+end note
+note bottom of DOM
+  Sin dependencias de infraestructura:
+  lo usan la app y la API (mismas reglas
+  a ambos lados de la red). Es el paquete
+  de lógica de negocio que mide G07.
+end note
+@enduml

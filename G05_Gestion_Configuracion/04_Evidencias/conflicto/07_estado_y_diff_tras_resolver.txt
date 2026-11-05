@@ -1,0 +1,59 @@
+ M      .
+M       Sistema_Logistico_Condor_final\src\Condor.Api\EndpointsEscritorio.cs
+M       Sistema_Logistico_Condor_final\tests\Condor.Pruebas\Api\ClienteApiTests.cs
+Index: Sistema_Logistico_Condor_final/src/Condor.Api/EndpointsEscritorio.cs
+===================================================================
+--- Sistema_Logistico_Condor_final/src/Condor.Api/EndpointsEscritorio.cs	(revision 10)
++++ Sistema_Logistico_Condor_final/src/Condor.Api/EndpointsEscritorio.cs	(working copy)
+@@ -170,19 +170,47 @@
+     /// El comprobante lo arma la app con EmisionComprobante.Preparar; aquí se
+     /// recalculan los importes y totales (no se confía en los que mande el
+     /// cliente HTTP) y el usuario sale del token, no de la petición.
++    /// DEF-01 (CRQ-07): la descripción y el precio de cada línea tampoco salen
++    /// de la petición. Una venta que viene de una proforma usa los de la
++    /// proforma guardada (HU-09: el precio cotizado vale mientras esté
++    /// vigente); las demás, los del catálogo.
+     /// </summary>
+     private static async Task<IResult> EmitirAsync(Comprobante comprobante, ClaimsPrincipal usuario, IComprobanteRepositorio comprobantes,
+-        CancellationToken ct)
++        IConsultaProductos catalogo, CancellationToken ct)
+     {
+         // CRQ-14 también en el servidor: hasta 100 líneas y cantidades mayores
+         // que cero, de hasta 99 999 y con 3 decimales como máximo.
+         if (comprobante.Detalle.Count > Endpoints.LineasMaximas)
+             throw new ArgumentException($"Un comprobante no puede tener más de {Endpoints.LineasMaximas} líneas.");
++        Dictionary<int, DetalleComprobante>? cotizado = null;
++        Dictionary<long, Producto>? productos = null;
++        if (comprobante.ProformaId is { } idProforma)
++            cotizado = (await comprobantes.ObtenerAsync(idProforma, ct))?.Detalle.ToDictionary(l => l.Item)
++                       ?? throw new ArgumentException($"La proforma {idProforma} no existe.");
++        else
++            productos = (await catalogo.ObtenerAsync(comprobante.Detalle.Select(l => l.ProductoId).Distinct().ToList(), ct))
++                .ToDictionary(p => p.Id);
++
+         foreach (var linea in comprobante.Detalle)
+         {
+-            if (linea.Cantidad <= 0 || linea.Cantidad > 99_999 || decimal.Round(linea.Cantidad, 3) != linea.Cantidad
+-                || linea.PrecioUnitario <= 0)
+-                throw new ArgumentException($"La línea {linea.Item} debe tener una cantidad mayor que cero, hasta 99 999 y con 3 decimales como máximo, y un precio mayor que cero.");
++            if (linea.Cantidad <= 0 || linea.Cantidad > 99_999 || decimal.Round(linea.Cantidad, 3) != linea.Cantidad)
++                throw new ArgumentException($"La línea {linea.Item} debe tener una cantidad mayor que cero, hasta 99 999 y con 3 decimales como máximo.");
++            if (cotizado is not null)
++            {
++                if (!cotizado.TryGetValue(linea.Item, out var origen) || origen.ProductoId != linea.ProductoId)
++                    throw new ArgumentException($"La línea {linea.Item} no corresponde a la proforma.");
++                linea.Descripcion = origen.Descripcion;
++                linea.Unidad = origen.Unidad;
++                linea.PrecioUnitario = origen.PrecioUnitario;
++            }
++            else
++            {
++                if (!productos!.TryGetValue(linea.ProductoId, out var producto))
++                    throw new ArgumentException($"El producto {linea.ProductoId} no existe o ya no está en el catálogo.");
++                linea.Descripcion = producto.Nombre;
++                linea.Unidad = producto.Unidad;
++                linea.PrecioUnitario = producto.Precio;
++            }
+             linea.Importe = CalculadoraVenta.Importe(linea.Cantidad, linea.PrecioUnitario);
+         }
+         var totales = CalculadoraVenta.Totales(comprobante.Detalle.Select(l => l.Importe));

@@ -1,0 +1,69 @@
+@startuml 01_casos_uso
+!pragma layout smetana
+caption Diagrama de casos de uso — Sistema Cóndor (línea base ERS 1.1)
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+left to right direction
+
+actor "Usuario" as U
+actor "Vendedor" as V
+actor "Encargado general" as E
+actor "SUNAT\n(simulada en pruebas)" as S <<sistema>>
+actor "Ticketera" as T <<dispositivo>>
+V --|> U
+E --|> V
+
+rectangle "Sistema Cóndor" {
+  package "Soporte" {
+    usecase "RF-01 Iniciar sesión" as UC01
+    usecase "RF-02 Cerrar sesión" as UC02
+    usecase "RF-03 Restringir módulos\nsegún el rol" as UC03
+    usecase "RF-04 Registrar producto" as UC04
+    usecase "RF-16 Generar respaldo" as UC16
+  }
+  package "PN-01 Venta y facturación" {
+    usecase "RF-05 Buscar producto" as UC05
+    usecase "RF-06 Registrar y buscar\ncliente (DNI/RUC)" as UC06
+    usecase "RF-07 Emitir comprobante\nde venta" as UC07
+    usecase "RF-09 Imprimir ticket" as UC09
+    usecase "RF-10 Enviar a la SUNAT\ny reenviar pendientes" as UC10
+    usecase "RF-13 Emitir guía\nde remisión" as UC13
+  }
+  package "PN-02 Cotización" {
+    usecase "RF-08 Emitir proforma y\nconvertirla en venta" as UC08
+  }
+  package "PN-03 Abastecimiento" {
+    usecase "RF-11 Registrar proveedor" as UC11
+    usecase "RF-12 Registrar compra" as UC12
+  }
+  package "Consultas" {
+    usecase "RF-14 Consultar historial" as UC14
+    usecase "RF-15 Reporte consolidado\nde ventas" as UC15
+  }
+}
+
+U --> UC01
+U --> UC02
+UC01 ..> UC03 : <<include>>
+V --> UC07
+V --> UC08
+V --> UC14
+V --> UC04
+E --> UC11
+E --> UC12
+E --> UC13
+E --> UC15
+E --> UC16
+UC07 ..> UC05 : <<include>>
+UC07 ..> UC09 : <<include>>
+UC07 ..> UC10 : <<include>>
+UC06 .> UC07 : <<extend>>\n(factura o boleta > S/ 700)
+UC08 ..> UC05 : <<include>>
+UC08 ..> UC07 : <<include>>\n(al convertir)
+UC12 ..> UC11 : <<extend>>\n(proveedor nuevo)
+UC13 ..> UC10 : <<include>>
+UC10 --> S
+UC13 --> S
+UC09 --> T
+@enduml

@@ -1,0 +1,29 @@
+﻿{
+    "fecha":  "2026-11-01 13:57:11 -05:00",
+    "equipo":  "ASUSTeK COMPUTER INC. ROG Strix G614JV_G614JV",
+    "procesador":  "13th Gen Intel(R) Core(TM) i7-13650HX (14 núcleos, 20 hilos lógicos)",
+    "memoria_gb":  15.6,
+    "sistema_operativo":  "Microsoft Windows 11 Home 10.0.26300 (compilación 26300)",
+    "red":  "Bucle local (localhost): JMeter, Condor.Api y PostgreSQL en el mismo equipo; adaptador físico Realtek PCIe GbE Family Controller 1 Gbps",
+    "docker":  "29.7.2",
+    "docker_recursos":  "20 CPU, 8125059072 bytes",
+    "postgresql":  "PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "base_datos":  "condor_rendimiento",
+    "producto":  "Sistema Logístico Cóndor 1.1.1 (trunk SVN r22); /api/salud informa 1.1.0 (el .csproj no se había actualizado; corregido en 1.1.2)",
+    "api_exe":  "C:\\Users\\jeanp\\Downloads\\UNIVERSIDAD 2026-B\\Calidad de Software\\Lab\\Trabajo Grupal\\Sistema_Logistico_Condor_final\\.ejecutar\\api\\CondorApi.exe",
+    "api_exe_fecha":  "2026-10-31 00:19",
+    "api_max_conexiones":  20,
+    "api_url":  "http://localhost:5080",
+    "datos":  {
+                  "productos":  3000,
+                  "clientes":  200,
+                  "usuarios":  13,
+                  "comprobantes":  0
+              },
+    "java":  "java version \"26.0.2.1\" 2026-08-18",
+    "jmeter":  "5.6.3 (C:\\Users\\jeanp\\Downloads\\UNIVERSIDAD 2026-B\\Calidad de Software\\Lab\\8\\apache-jmeter-5.6.3)",
+    "escenario":  "estabilidad",
+    "fase":  "1_antes",
+    "propiedades_jmeter":  "estabilidad.usuarios=10",
+    "inicio":  "2026-11-01 14:24:16 -05:00"
+}

@@ -1,0 +1,22 @@
+### Permisos por ruta (política de configuración, G05).
+[groups]
+equipo = jhuamani, jpayehuanca, rcondo, achaisa
+configuracion = jpayehuanca
+
+# Todo el repositorio: el equipo lee; el docente solo lee; el responsable de
+# configuración administra la estructura (trunk, branches, tags).
+[/]
+@equipo = r
+@configuracion = rw
+docente = r
+
+# Línea principal y ramas de cambio: el equipo escribe.
+[/trunk]
+@equipo = rw
+
+[/branches]
+@equipo = rw
+
+# Etiquetas (líneas base): solo el responsable de configuración las crea.
+[/tags]
+@configuracion = rw

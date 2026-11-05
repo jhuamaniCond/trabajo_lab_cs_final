@@ -1,0 +1,219 @@
+using System.Security.Claims;
+using Condor.Api.Infraestructura;
+using Condor.Api.Seguridad;
+using Condor.Dominio.Contratos;
+using Condor.Dominio.Entidades;
+using Condor.Dominio.Sunat;
+using Condor.Dominio.Ventas;
+
+namespace Condor.Api;
+
+public sealed record TerminalPedido(string? Nombre);
+
+public sealed record CodigoPedido(string? Codigo);
+
+public sealed record MotivoPedido(string? Motivo);
+
+public sealed record ReservaPedido(string? Terminal, int EsperaSegundos, int Limite);
+
+public sealed record LiberarPedido(string? Terminal, IReadOnlyCollection<long>? Ids);
+
+public sealed record ConfiguracionRespaldoDto(bool Configurado, string Carpeta, int AvisoHoras);
+
+/// <summary>
+/// Rutas que usa la app de escritorio (CC-01): cada método de los
+/// repositorios de Condor.Dominio.Contratos tiene su ruta y viaja como JSON
+/// con las mismas entidades. Así las tres PC ya no se conectan a PostgreSQL:
+/// solo la API lo hace. Compras, proveedores, emitir guías y generar
+/// respaldos exigen el rol ENCARGADO, igual que los módulos de la app.
+/// </summary>
+public static class EndpointsEscritorio
+{
+    public const string Prefijo = "/api/escritorio";
+
+    public static void Mapear(WebApplication app)
+    {
+        var api = app.MapGroup(Prefijo).RequireAuthorization();
+        var encargado = api.MapGroup("").RequireAuthorization(Endpoints.PoliticaEncargado);
+
+        // Terminal y aviso de cambios del catálogo (HU-14, T-13).
+        api.MapPost("/terminales", async (TerminalPedido pedido, ITerminalRepositorio terminales, CancellationToken ct) =>
+            Results.Ok(await terminales.RegistrarAccesoAsync(pedido.Nombre ?? string.Empty, ct)));
+        api.MapGet("/catalogo/version", (ContextoApi contexto) => Results.Ok(contexto.VersionCatalogo));
+        api.MapGet("/empresa", async (IEmpresaRepositorio empresas, CancellationToken ct) => Results.Ok(await empresas.ObtenerAsync(ct)));
+
+        // Productos (HU-01, HU-02, HU-13).
+        api.MapPost("/productos", async (Producto producto, IProductoRepositorio productos, ContextoApi contexto, CancellationToken ct) =>
+        {
+            var registrado = await productos.RegistrarAsync(producto, ct);
+            contexto.CatalogoCambiado();
+            return Results.Ok(registrado);
+        });
+        api.MapGet("/productos", async (string? texto, int? limite, IProductoRepositorio productos, CancellationToken ct) =>
+            Results.Ok(texto is null ? await productos.ListarAsync(ct) : await productos.BuscarPorNombreAsync(texto, limite ?? 20, ct)));
+        api.MapGet("/productos/codigo/{codigo}", async (string codigo, IProductoRepositorio productos, CancellationToken ct) =>
+            Results.Ok(await productos.BuscarPorCodigoBarrasAsync(codigo, ct)));
+        api.MapPut("/productos/{id:long}/codigo", async (long id, CodigoPedido pedido, IProductoRepositorio productos, ContextoApi contexto,
+            CancellationToken ct) =>
+        {
+            var producto = await productos.AsignarCodigoBarrasAsync(id, pedido.Codigo, ct);
+            contexto.CatalogoCambiado();
+            return Results.Ok(producto);
+        });
+
+        // Clientes (HU-03).
+        api.MapGet("/clientes/documento", async (TipoDocumento tipo, string numero, IClienteRepositorio clientes, CancellationToken ct) =>
+            Results.Ok(await clientes.BuscarPorDocumentoAsync(tipo, numero, ct)));
+        api.MapPost("/clientes", async (Cliente cliente, IClienteRepositorio clientes, CancellationToken ct) =>
+            Results.Ok(await clientes.RegistrarAsync(cliente, ct)));
+        api.MapGet("/clientes", async (string? texto, int? limite, IClienteRepositorio clientes, CancellationToken ct) =>
+            Results.Ok(await clientes.BuscarAsync(texto, limite ?? 200, ct)));
+
+        // Proveedores (HU-04) y compras (HU-11): solo el Encargado general.
+        encargado.MapPost("/proveedores", async (Proveedor proveedor, IProveedorRepositorio proveedores, CancellationToken ct) =>
+            Results.Ok(await proveedores.RegistrarAsync(proveedor, ct)));
+        encargado.MapGet("/proveedores/ruc/{ruc}", async (string ruc, IProveedorRepositorio proveedores, CancellationToken ct) =>
+            Results.Ok(await proveedores.BuscarPorRucAsync(ruc, ct)));
+        encargado.MapGet("/proveedores", async (string? texto, int? limite, IProveedorRepositorio proveedores, CancellationToken ct) =>
+            Results.Ok(await proveedores.BuscarAsync(texto, limite ?? 200, ct)));
+
+        encargado.MapPost("/compras", async (Compra compra, ICompraRepositorio compras, CancellationToken ct) =>
+            Results.Ok(await compras.RegistrarAsync(compra, ct)));
+        encargado.MapGet("/compras/{id:long}", async (long id, ICompraRepositorio compras, CancellationToken ct) =>
+            Results.Ok(await compras.ObtenerAsync(id, ct)));
+        encargado.MapPost("/compras/buscar", async (FiltroCompras filtro, ICompraRepositorio compras, CancellationToken ct) =>
+            Results.Ok(await compras.BuscarAsync(filtro, ct)));
+
+        // Comprobantes (HU-05, HU-06, HU-08, HU-09, HU-12, HU-18).
+        api.MapPost("/comprobantes", EmitirAsync);
+        api.MapGet("/comprobantes/{id:long}", async (long id, IComprobanteRepositorio comprobantes, CancellationToken ct) =>
+            Results.Ok(await comprobantes.ObtenerAsync(id, ct)));
+        api.MapGet("/comprobantes/recientes", async (int? limite, IComprobanteRepositorio comprobantes, CancellationToken ct) =>
+            Results.Ok(await comprobantes.ListarRecientesAsync(limite ?? 30, ct)));
+        api.MapPost("/comprobantes/{id:long}/impresion", async (long id, IComprobanteRepositorio comprobantes, CancellationToken ct) =>
+        {
+            await comprobantes.RegistrarImpresionAsync(id, ct);
+            return Results.NoContent();
+        });
+        api.MapGet("/comprobantes/proformas", async (string? texto, int? limite, IComprobanteRepositorio comprobantes, CancellationToken ct) =>
+            Results.Ok(await comprobantes.ListarProformasAsync(texto, limite ?? 100, ct)));
+        api.MapPost("/comprobantes/buscar", async (FiltroComprobantes filtro, IComprobanteRepositorio comprobantes, CancellationToken ct) =>
+            Results.Ok(await comprobantes.BuscarAsync(filtro, ct)));
+
+        // Envío a la SUNAT (HU-07, HU-17): lo hace la PC con internet y anota aquí el resultado.
+        api.MapPost("/sunat/{id:long}/respuesta", async (long id, RespuestaSunat respuesta, IEnvioSunatRepositorio envios, CancellationToken ct) =>
+        {
+            await envios.RegistrarRespuestaAsync(id, respuesta, ct);
+            return Results.NoContent();
+        });
+        api.MapPost("/sunat/{id:long}/falla", async (long id, MotivoPedido pedido, IEnvioSunatRepositorio envios, CancellationToken ct) =>
+        {
+            await envios.RegistrarFallaAsync(id, pedido.Motivo ?? string.Empty, ct);
+            return Results.NoContent();
+        });
+        api.MapGet("/sunat/pendientes", async (int? limite, IEnvioSunatRepositorio envios, CancellationToken ct) =>
+            Results.Ok(await envios.ListarPendientesAsync(limite ?? 100, ct)));
+        api.MapPost("/sunat/reservar", async (ReservaPedido pedido, IEnvioSunatRepositorio envios, CancellationToken ct) =>
+            Results.Ok(await envios.ReservarPendientesAsync(pedido.Terminal ?? string.Empty, TimeSpan.FromSeconds(pedido.EsperaSegundos),
+                pedido.Limite, ct)));
+        api.MapPost("/sunat/liberar", async (LiberarPedido pedido, IEnvioSunatRepositorio envios, CancellationToken ct) =>
+        {
+            await envios.LiberarAsync(pedido.Terminal ?? string.Empty, pedido.Ids ?? Array.Empty<long>(), ct);
+            return Results.NoContent();
+        });
+        api.MapGet("/sunat/resumen", async (IEnvioSunatRepositorio envios, CancellationToken ct) =>
+            Results.Ok(await envios.ResumenPendientesAsync(ct)));
+
+        // Guías de remisión (HU-10): las emite el Encargado; el reenvío corre en la PC con credenciales.
+        encargado.MapPost("/guias", async (GuiaRemision guia, IGuiaRemisionRepositorio guias, CancellationToken ct) =>
+            Results.Ok(await guias.EmitirAsync(guia, ct)));
+        encargado.MapPost("/guias/buscar", async (FiltroGuias filtro, IGuiaRemisionRepositorio guias, CancellationToken ct) =>
+            Results.Ok(await guias.BuscarAsync(filtro, ct)));
+        api.MapGet("/guias/{id:long}", async (long id, IGuiaRemisionRepositorio guias, CancellationToken ct) =>
+            Results.Ok(await guias.ObtenerAsync(id, ct)));
+        api.MapPost("/guias/{id:long}/respuesta", async (long id, RespuestaSunat respuesta, IGuiaRemisionRepositorio guias, CancellationToken ct) =>
+        {
+            await guias.RegistrarRespuestaAsync(id, respuesta, ct);
+            return Results.NoContent();
+        });
+        api.MapPost("/guias/{id:long}/falla", async (long id, MotivoPedido pedido, IGuiaRemisionRepositorio guias, CancellationToken ct) =>
+        {
+            await guias.RegistrarFallaAsync(id, pedido.Motivo ?? string.Empty, ct);
+            return Results.NoContent();
+        });
+        api.MapGet("/guias/pendientes", async (int? limite, IGuiaRemisionRepositorio guias, CancellationToken ct) =>
+            Results.Ok(await guias.ListarPendientesAsync(limite ?? 50, ct)));
+        api.MapPost("/guias/{id:long}/impresion", async (long id, IGuiaRemisionRepositorio guias, CancellationToken ct) =>
+        {
+            await guias.RegistrarImpresionAsync(id, ct);
+            return Results.NoContent();
+        });
+
+        // Respaldo (HU-15): pg_dump corre en la PC principal, donde está la API y el disco externo.
+        api.MapGet("/respaldos/configuracion", (ServicioRespaldo respaldo) =>
+            Results.Ok(new ConfiguracionRespaldoDto(respaldo.Generador is not null, respaldo.Carpeta, respaldo.AvisoHoras)));
+        api.MapGet("/respaldos/ultimo", async (IRespaldoRepositorio respaldos, CancellationToken ct) =>
+            Results.Ok(await respaldos.UltimoAsync(ct)));
+        encargado.MapGet("/respaldos", async (int? limite, IRespaldoRepositorio respaldos, CancellationToken ct) =>
+            Results.Ok(await respaldos.ListarAsync(limite ?? 10, ct)));
+        encargado.MapPost("/respaldos", async (Respaldo respaldo, IRespaldoRepositorio respaldos, CancellationToken ct) =>
+            Results.Ok(await respaldos.RegistrarAsync(respaldo, ct)));
+        encargado.MapPost("/respaldos/generar", async (ServicioRespaldo respaldo, CancellationToken ct) =>
+        {
+            if (respaldo.Generador is null)
+                throw new RespaldoException("La PC principal no tiene configurado el disco de respaldo: complete la sección Respaldo de appsettings.json de la API.");
+            return Results.Ok(await respaldo.Generador.GenerarAsync(respaldo.Carpeta, null, ct));
+        });
+    }
+
+    /// <summary>
+    /// El comprobante lo arma la app con EmisionComprobante.Preparar; aquí se
+    /// recalculan los importes y totales (no se confía en los que mande el
+    /// cliente HTTP) y el usuario sale del token, no de la petición.
+    /// DEF-01 (CRQ-07): la descripción y el precio de cada línea tampoco salen
+    /// de la petición. Una venta que viene de una proforma usa los de la
+    /// proforma guardada (HU-09: el precio cotizado vale mientras esté
+    /// vigente); las demás, los del catálogo.
+    /// </summary>
+    private static async Task<IResult> EmitirAsync(Comprobante comprobante, ClaimsPrincipal usuario, IComprobanteRepositorio comprobantes,
+        IConsultaProductos catalogo, CancellationToken ct)
+    {
+        Dictionary<int, DetalleComprobante>? cotizado = null;
+        Dictionary<long, Producto>? productos = null;
+        if (comprobante.ProformaId is { } idProforma)
+            cotizado = (await comprobantes.ObtenerAsync(idProforma, ct))?.Detalle.ToDictionary(l => l.Item)
+                       ?? throw new ArgumentException($"La proforma {idProforma} no existe.");
+        else
+            productos = (await catalogo.ObtenerAsync(comprobante.Detalle.Select(l => l.ProductoId).Distinct().ToList(), ct))
+                .ToDictionary(p => p.Id);
+
+        foreach (var linea in comprobante.Detalle)
+        {
+            if (linea.Cantidad <= 0)
+                throw new ArgumentException($"La línea {linea.Item} debe tener una cantidad mayor que cero.");
+            if (cotizado is not null)
+            {
+                if (!cotizado.TryGetValue(linea.Item, out var origen) || origen.ProductoId != linea.ProductoId)
+                    throw new ArgumentException($"La línea {linea.Item} no corresponde a la proforma.");
+                linea.Descripcion = origen.Descripcion;
+                linea.Unidad = origen.Unidad;
+                linea.PrecioUnitario = origen.PrecioUnitario;
+            }
+            else
+            {
+                if (!productos!.TryGetValue(linea.ProductoId, out var producto))
+                    throw new ArgumentException($"El producto {linea.ProductoId} no existe o ya no está en el catálogo.");
+                linea.Descripcion = producto.Nombre;
+                linea.Unidad = producto.Unidad;
+                linea.PrecioUnitario = producto.Precio;
+            }
+            linea.Importe = CalculadoraVenta.Importe(linea.Cantidad, linea.PrecioUnitario);
+        }
+        var totales = CalculadoraVenta.Totales(comprobante.Detalle.Select(l => l.Importe));
+        comprobante.OpGravada = totales.OpGravada;
+        comprobante.Igv = totales.Igv;
+        comprobante.Total = totales.Total;
+        comprobante.Usuario = usuario.FindFirstValue(Reclamos.Usuario)!;
+        return Results.Ok(await comprobantes.EmitirAsync(comprobante, ct));
+    }
+}

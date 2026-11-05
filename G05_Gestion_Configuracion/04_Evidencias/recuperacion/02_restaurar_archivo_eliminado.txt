@@ -1,0 +1,27 @@
+### 1. Eliminación controlada (demostración): achaisa borra docs/api.md por error
+Committed revision 13.
+
+### 2. El archivo ya no está en HEAD
+instalacion_postgresql.md
+modelo_datos.md
+produccion.md
+pruebas.md
+respaldo.md
+seguridad.md
+sunat.md
+ticketera.md
+
+### 3. Restauración con su historia desde la revisión anterior (r12) — jpayehuanca
+Committed revision 14.
+
+### 4. Historial del archivo restaurado: conserva las revisiones anteriores (r2)
+------------------------------------------------------------------------
+r14 | jpayehuanca | 2026-10-30 23:42:25 -0500 (vie, 30 Oct. 2026)
+------------------------------------------------------------------------
+r2 | jpayehuanca | 2026-10-30 23:31:57 -0500 (vie, 30 Oct. 2026)
+------------------------------------------------------------------------
+
+### 5. Contenido idéntico al de r12 (MD5)
+r12:  b60d8859f12a82dec281ac4db39d276f
+HEAD: b60d8859f12a82dec281ac4db39d276f
+La única diferencia que muestra svn diff es la propiedad svn:mergeinfo que la copia hereda del trunk.

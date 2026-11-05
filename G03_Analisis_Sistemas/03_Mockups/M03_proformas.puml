@@ -1,0 +1,20 @@
+@startuml M03_proformas
+skinparam dpi 170
+title M03 · Proformas (RF-08; CU-02 Convertir proforma en venta)
+salt
+{+
+  {/ F1 Nueva venta | F2 Catálogo | F3 Clientes | F5 Historial | <b>F7 Proformas</b> | Cerrar sesión }
+  ==
+  <b>Proformas</b>
+  Busque por número, DNI, RUC o nombre del cliente. Convertir en venta lleva el detalle a la pantalla de venta sin reescribirlo.
+  { "andes                    " | [Buscar] | [Convertir en venta (Enter)] | [Reimprimir (F11)] }
+  {#
+    Número         | Fecha      | Cliente                       | Documento    | Total    | Estado
+    PR01-00000031  | 30/10/2026 | CONSTRUCTORA LOS ANDES S.A.C. | RUC 20123456789 | 1 250.40 | Vigente hasta 05/11/2026
+    PR01-00000027  | 24/10/2026 | CONSTRUCTORA LOS ANDES S.A.C. | RUC 20123456789 | 480.00   | <color:gray>Vencida</color>
+    PR01-00000022  | 21/10/2026 | CONSTRUCTORA LOS ANDES S.A.C. | RUC 20123456789 | 2 015.00 | Convertida en F001-00000045
+  }
+  --
+  <color:red>La proforma PR01-00000027 venció el 30/10/2026: no se puede convertir.</color>
+}
+@enduml

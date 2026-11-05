@@ -1,0 +1,17 @@
+@startuml M01_ingresar
+skinparam dpi 170
+title M01 · Ingresar (RF-01, CU-01 paso previo)
+salt
+{+
+  <b>FERRETERÍA CÓNDOR MAJES</b>
+  Sistema de ventas · Majes, Arequipa
+  ==
+  Usuario      | "vendedor1          "
+  Contraseña   | "****               "
+  .            | .
+  <color:red>Usuario o contraseña incorrectos.</color> | .
+  .            | [   Ingresar (Enter)   ]
+  --
+  Terminal: PC-2 · API: http://pc-principal:5080 ● conectada
+}
+@enduml

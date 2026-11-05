@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    G07 Pruebas unitarias del Sistema Cóndor.
+    Prueba solo el paquete de lógica de negocio Condor.Dominio (sin base de
+    datos, red, ticketera ni SUNAT). Las dependencias externas se reemplazan
+    por los dobles de la carpeta Dobles/.
+
+    Versiones (no se mezclan APIs): xUnit 2.9.2 con su ejecutor 2.8.2,
+    Microsoft.NET.Test.Sdk 17.11.1 y coverlet.collector 6.0.2, las mismas que
+    usa la suite del producto (tests/Condor.Pruebas).
+
+    ProductoVersion elige el código bajo prueba:
+      1.1.1 (por defecto) -> Sistema_Logistico_Condor_final, línea base vigente.
+      1.0.0               -> 05_Regresion/producto_1.0.0, antes de CC-01 (G02).
+    En 1.0.0 no existen ServicioAutenticacion ni ReporteVentas (los agregó
+    CC-01), por eso se excluye la carpeta CC01/.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>Condor.PruebasUnitarias</RootNamespace>
+    <ProductoVersion Condition="'$(ProductoVersion)' == ''">1.1.1</ProductoVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ProductoVersion)' == '1.1.1'">
+    <ProjectReference Include="..\..\..\Sistema_Logistico_Condor_final\src\Condor.Dominio\Condor.Dominio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ProductoVersion)' == '1.0.0'">
+    <ProjectReference Include="..\..\05_Regresion\producto_1.0.0\src\Condor.Dominio\Condor.Dominio.csproj" />
+    <Compile Remove="CC01\**" />
+  </ItemGroup>
+
+</Project>

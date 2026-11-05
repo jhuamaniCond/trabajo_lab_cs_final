@@ -1,0 +1,43 @@
+@startuml 05_actividad_convertir_proforma
+title Diagrama de actividad — PN-02 Cotización y conversión en venta (RF-08)
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+|Vendedor|
+start
+:Arma la cotización en Nueva venta\n(buscar producto RF-05, cantidades);
+:Elige el tipo «Proforma» y pulsa Emitir (F10);
+|Sistema|
+:EmisionComprobante.Preparar:\nserie PR01, ValidaHasta = emisión + 6 días;
+:Guarda la proforma (no va a la SUNAT)\ne imprime el ticket;
+|Cliente de obra|
+:Recibe la proforma y decide;
+if (¿Acepta la cotización?) then (no)
+  stop
+else (sí)
+endif
+|Vendedor|
+:Abre Proformas (F7) y busca por número,\nDNI, RUC o nombre;
+:Pulsa «Convertir en venta» (Enter);
+|Sistema|
+if (¿Proforma vencida o ya convertida?) then (sí)
+  :Muestra «La proforma venció»\no «ya se convirtió en B001-…»;
+  stop
+else (no)
+endif
+:Copia el detalle a Nueva venta\nsin reescribirlo;
+|Vendedor|
+:Elige Boleta o Factura y pulsa Emitir (F10);
+|Sistema|
+:Valida el cliente (CRQ-02, CRQ-03);
+:Emite la venta con ProformaId = proforma\n(trigger ck_proforma y índice único);
+if (¿Otra PC convirtió la misma\nproforma al mismo tiempo?) then (sí)
+  :ProformaYaConvertidaException:\nno se gasta número;
+  stop
+else (no)
+endif
+:Imprime y envía a la SUNAT (RF-09, RF-10);
+:La proforma queda «Convertida en B001-…»\nen la lista de Proformas;
+stop
+@enduml

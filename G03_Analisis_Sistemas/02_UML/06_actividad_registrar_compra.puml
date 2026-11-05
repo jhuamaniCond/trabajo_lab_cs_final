@@ -1,0 +1,47 @@
+@startuml 06_actividad_registrar_compra
+title Diagrama de actividad — PN-03 Abastecimiento: registrar una compra (RF-11, RF-12)
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+|Encargado general|
+start
+:Abre Compras (F4) → Nueva compra;
+:Escribe el RUC del proveedor y pulsa Buscar;
+|Sistema|
+if (¿Proveedor registrado?) then (no)
+  |Encargado general|
+  :Registra el proveedor en Proveedores (F6), RF-11:\nRUC válido y razón social;
+  |Sistema|
+  if (¿RUC repetido o inválido?) then (sí)
+    :Muestra el error y no guarda;
+    stop
+  else (no)
+    :Guarda el proveedor;
+  endif
+else (sí)
+endif
+|Encargado general|
+:Copia tipo, serie, número y fecha\ndel comprobante del proveedor;
+repeat
+  :Agrega producto, cantidad y costo unitario con IGV;
+repeat while (¿Más productos?) is (sí)
+->no;
+:Pulsa «Guardar compra»;
+|Sistema|
+:ValidadorCompra.Errores\n(fecha no futura ni de más de un año,\ncantidades y costos > 0);
+if (¿Errores?) then (sí)
+  :Señala los campos con error;
+  stop
+else (no)
+endif
+:POST /api/escritorio/compras\n(política Encargado: 403 al Vendedor);
+if (¿Mismo RUC + tipo + serie + número\nya registrado? (CRQ-09)) then (sí)
+  :CompraDuplicadaException → 409:\n«esa compra ya se registró»;
+  stop
+else (no)
+  :Guarda cabecera y detalle en una transacción\ncon la terminal y el usuario;
+endif
+:Muestra la compra en la lista con su total;
+stop
+@enduml

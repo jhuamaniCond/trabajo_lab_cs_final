@@ -1,0 +1,63 @@
+@startuml 07_diagrama_actualizacion_version
+' Cuestionario PRAC05 c): actualización de versión luego de un cambio.
+' Revisiones reales del repositorio svn://127.0.0.1/condor (historial_svn.txt).
+skinparam defaultFontName Arial
+skinparam shadowing false
+skinparam ActivityBackgroundColor #FFFFFF
+skinparam ActivityBorderColor #444444
+skinparam ArrowColor #444444
+skinparam PartitionBorderColor #888888
+
+title Actualización de versión luego de un cambio (ejemplo real: DEF-01, producto 1.1.0 → 1.1.1)
+
+|Solicitante / CCB|
+start
+:Cambio aprobado
+(DEF-01, CRQ-07: el servidor
+debe tomar el precio del catálogo);
+
+|Desarrollador (rama)|
+:svn copy ^/trunk ^/branches/DEF-01-precio-catalogo
+**r8**;
+:checkout de la rama,
+corrección y pruebas
+→ commit **r10**;
+
+|Equipo (trunk)|
+:Mientras tanto, otro cambio
+en trunk: CRQ-14
+**r9**;
+
+|Responsable de configuración|
+:svn update del trunk
+y svn merge ^/branches/DEF-01-precio-catalogo;
+if (¿Conflicto?) then (sí: EndpointsEscritorio.cs)
+  :Resolución controlada:
+  se conservan .mine, .merge-left,
+  .merge-right y el archivo con marcas;
+  :Se integran las dos reglas
+  (precio del catálogo + tope de CRQ-14);
+else (no)
+endif
+:Suite completa en verde
+(930 aprobadas, 0 fallidas);
+:commit de la integración en trunk
+**r11**;
+:Versión del producto 1.1.0 → **1.1.1**
+(CHANGELOG, README, SDD) → commit **r12**;
+:svn copy ^/trunk@15 ^/tags/v0.1.0
+(línea base inmutable) **r16**;
+:svnadmin dump → respaldo verificado;
+
+|Solicitante / CCB|
+:Cambio cerrado en Redmine
+con la versión y la revisión;
+stop
+
+legend right
+  Mismo ciclo en los otros cambios:
+  MEJ-01: rama r23 → r24 → integración r25 → producto 1.1.2
+  CC-03:  rama r28 → r29–r31 → integración r32 → producto 1.2.0
+          → tags/v1.0.0 (copia de trunk@34) en r35
+endlegend
+@enduml

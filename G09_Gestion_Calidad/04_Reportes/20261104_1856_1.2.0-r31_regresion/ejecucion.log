@@ -1,0 +1,19 @@
+test_encargado_ingresa_y_ve_su_usuario_y_rol (test_01_acceso.CP01_AccesoCorrecto.test_encargado_ingresa_y_ve_su_usuario_y_rol) ... ok
+test_clave_equivocada_muestra_el_mensaje_generico_y_no_entra (test_01_acceso.CP02_CredencialesInvalidas.test_clave_equivocada_muestra_el_mensaje_generico_y_no_entra) ... ok
+test_vendedor_no_ve_ni_abre_los_modulos_del_encargado (test_01_acceso.CP03_RestriccionPorRol.test_vendedor_no_ve_ni_abre_los_modulos_del_encargado) ... ok
+test_cerrar_sesion_vuelve_a_ingresar_y_no_deja_la_sesion_abierta (test_01_acceso.CP14_CierreDeSesion.test_cerrar_sesion_vuelve_a_ingresar_y_no_deja_la_sesion_abierta) ... ok
+test_registra_un_cliente_con_dni_y_se_encuentra_en_la_venta (test_02_registro.CP04_RegistroValidoCliente.test_registra_un_cliente_con_dni_y_se_encuentra_en_la_venta) ... ok
+test_rechaza_documentos_precio_y_cantidad_invalidos (test_02_registro.CP05_DatosInvalidos.test_rechaza_documentos_precio_y_cantidad_invalidos) ... ok
+test_registra_un_producto_y_se_vende_con_su_precio (test_02_registro.CP06_RegistroValidoProducto.test_registra_un_producto_y_se_vende_con_su_precio) ... ok
+test_boleta_con_teclado_queda_emitida_y_en_el_historial (test_03_venta.CP07_VentaBoletaConTeclado.test_boleta_con_teclado_queda_emitida_y_en_el_historial) ... ok
+test_factura_a_un_cliente_con_ruc_recien_registrado (test_03_venta.CP08_FacturaConRuc.test_factura_a_un_cliente_con_ruc_recien_registrado) ... ok
+test_factura_sin_ruc_y_boleta_mayor_a_700_sin_dni_no_se_emiten (test_03_venta.CP09_ReglasDeEmision.test_factura_sin_ruc_y_boleta_mayor_a_700_sin_dni_no_se_emiten) ... ok
+test_proforma_vigente_pasa_a_convertida_y_no_se_convierte_dos_veces (test_04_proformas_consultas.CP10_CambioDeEstadoProforma.test_proforma_vigente_pasa_a_convertida_y_no_se_convierte_dos_veces) ... ok
+test_filtra_por_tipo_y_rechaza_un_periodo_invertido (test_04_proformas_consultas.CP11_ConsultaHistorial.test_filtra_por_tipo_y_rechaza_un_periodo_invertido) ... ok
+test_el_encargado_genera_el_reporte_del_periodo (test_04_proformas_consultas.CP12_ReporteConsolidado.test_el_encargado_genera_el_reporte_del_periodo) ... ok
+test_registra_proveedor_y_compra_y_rechaza_la_compra_repetida (test_05_abastecimiento.CP13_ProveedorYCompra.test_registra_proveedor_y_compra_y_rechaza_la_compra_repetida) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 76.928s
+
+OK

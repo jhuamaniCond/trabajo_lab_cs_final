@@ -1,0 +1,18 @@
+### svn update (jpayehuanca): llega r9 del trunk (CRQ-14, rcondo)
+At revision 10.
+
+### svn merge svn://127.0.0.1/condor/branches/DEF-01-precio-catalogo (jpayehuanca)
+--- Merging r8 through r10 into '.':
+C    Sistema_Logistico_Condor_final\src\Condor.Api\EndpointsEscritorio.cs
+U    Sistema_Logistico_Condor_final\tests\Condor.Pruebas\Api\ClienteApiTests.cs
+--- Recording mergeinfo for merge of r8 through r10 into '.':
+ U   .
+Summary of conflicts:
+  Text conflicts: 1
+
+### svn status tras la fusión
+ M      .
+C       Sistema_Logistico_Condor_final\src\Condor.Api\EndpointsEscritorio.cs
+M       Sistema_Logistico_Condor_final\tests\Condor.Pruebas\Api\ClienteApiTests.cs
+Summary of conflicts:
+  Text conflicts: 1

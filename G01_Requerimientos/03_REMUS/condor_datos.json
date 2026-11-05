@@ -1,0 +1,2340 @@
+{
+  "_comentario": "Fuente única de la ERS del Sistema Cóndor. Editar aquí y ejecutar: generar_rem.ps1 (crea condor.rem para REMUS) y ..\\01_ERS\\generar_ers.py (crea la ERS en Markdown). Valores válidos -> importancia: PD|vital|importante|quedaría bien | urgencia: PD|inmediatamente|hay presión|puede esperar | estado: PD|en construcción|pendiente de verificación|pendiente de validación|validado | estabilidad: PD|baja|media|alta | unidades de tiempo: PD|año(s)|mes(es)|semana(s)|día(s)|hora(s)|minuto(s)|segundo(s). Los campos codigo, hu, tecnicas, criterios, pruebas, prioridad, indicador y proceso no los usa REMUS: solo el generador de la ERS.",
+  "_patrones": "REMUS completa la frase automáticamente. Escribir como continuación y sin punto final: objetivos y noFuncionales -> 'El sistema deberá <descripción>.' | restricciones -> 'El sistema deberá respetar la siguiente regla de negocio o restricción: <descripción>.' | actores.rol -> 'Este actor representa <rol>.' | requisitosInformacion.conceptoRelevante -> 'El sistema deberá almacenar la información correspondiente a <concepto>. En concreto:' | casosUso.evento -> '... cuando <evento>' | pasos -> 'El actor X <descripción>' / 'El sistema <descripción>' | excepciones -> 'Si <condición>, el sistema <acción>, a continuación este caso de uso <terminación>'.",
+  "documento": {
+    "nombre": "Documento de Requisitos del Sistema",
+    "comentarios": "Sistema de Ventas y Facturación Cóndor - Ferretería Cóndor Majes S.A.C. ERS según IEEE Std 830-1998. Versión 1.1: incorpora la solicitud de cambio CC-01 (ingreso con usuario, contraseña y roles; backend REST).",
+    "versionMajor": 1,
+    "versionMinor": 2,
+    "fecha": "2026-10-30",
+    "preparadoPara": "ORG-01",
+    "preparadoPor": "ORG-02"
+  },
+  "parrafos": [
+    {
+      "seccion": "intro",
+      "titulo": "Propósito",
+      "texto": [
+        "El presente documento especifica los requisitos del **Sistema de Ventas y Facturación Cóndor** para la **Ferretería Cóndor Majes S.A.C.** (Majes, Arequipa).",
+        "",
+        "Sirve de acuerdo entre la ferretería y el equipo de desarrollo sobre lo que el sistema debe hacer, y de línea base para el diseño (G03), la estimación (G04), la gestión de cambios (G02) y las pruebas (G07 a G09). Se redacta tomando como referencia académica la norma _IEEE Std 830-1998_ y las plantillas de requisitos de REMUS."
+      ]
+    },
+    {
+      "seccion": "intro",
+      "titulo": "Ámbito del sistema",
+      "texto": [
+        "Cóndor registra las ventas del mostrador en las tres PC del local, emite boletas, facturas, notas de venta y proformas, imprime el ticket en la ticketera térmica, envía los comprobantes electrónicos a la SUNAT, registra proveedores, compras y guías de remisión, ofrece el historial y un reporte consolidado de ventas, y genera respaldos de la base de datos.",
+        "",
+        "Todas las PC trabajan sobre una base de datos PostgreSQL central a través de un backend REST (_Condor.Api_) instalado en la PC principal, con ingreso por usuario y contraseña y dos roles: **Vendedor** y **Encargado general**.",
+        "",
+        "**Queda fuera de esta versión:** control de stock e inventario valorizado, cuentas por cobrar y crédito a clientes, notas de crédito y débito, pagos con tarjeta integrados, venta por internet y pantalla de administración de usuarios."
+      ]
+    },
+    {
+      "seccion": "intro",
+      "titulo": "Situación actual y problema",
+      "texto": [
+        "La ferretería vende al público y a obras de construcción. Hoy las ventas se anotan en un cuaderno y las boletas se llenan a mano en talonarios; los precios se consultan en una lista impresa que se desactualiza, y la facturación electrónica se hace aparte en el portal de la SUNAT al final del día.",
+        "",
+        "Esto provoca colas en horas punta, errores de precio y de cálculo del IGV, comprobantes que no se informan a tiempo a la SUNAT, compras a proveedores sin registro ordenado y ninguna información consolidada para el gerente. Tampoco se sabe qué vendedor emitió cada comprobante."
+      ]
+    },
+    {
+      "seccion": "intro",
+      "titulo": "Procesos de negocio cubiertos",
+      "texto": [
+        "* **PN-01 Venta y facturación electrónica:** buscar productos, identificar al cliente, emitir boleta, factura o nota de venta, imprimir el ticket y enviar el comprobante a la SUNAT (RF-05, RF-06, RF-07, RF-09, RF-10; opcionalmente RF-13).",
+        "* **PN-02 Cotización y conversión en venta:** emitir una proforma con vigencia de 7 días y convertirla en boleta o factura una sola vez (RF-08, RF-07).",
+        "* **PN-03 Abastecimiento:** registrar al proveedor y registrar sus compras sin duplicar comprobantes (RF-11, RF-12).",
+        "",
+        "Los procesos se apoyan en el ingreso y los roles (RF-01 a RF-03), el catálogo (RF-04), las consultas (RF-14, RF-15) y el respaldo (RF-16)."
+      ]
+    },
+    {
+      "seccion": "intro",
+      "titulo": "Definiciones y acrónimos",
+      "texto": [
+        "* **SUNAT:** Superintendencia Nacional de Aduanas y de Administración Tributaria.",
+        "* **CDR:** Constancia de Recepción que devuelve la SUNAT por cada comprobante electrónico.",
+        "* **IGV:** Impuesto General a las Ventas, 18 % incluido en el precio de venta.",
+        "* **DNI / RUC:** documento de identidad (8 dígitos) / Registro Único de Contribuyentes (11 dígitos).",
+        "* **Boleta, factura:** comprobantes electrónicos de venta (series B001 y F001).",
+        "* **Nota de venta:** documento interno de control, sin valor tributario (serie NV01).",
+        "* **Proforma:** cotización sin valor tributario con vigencia de 7 días (serie PR01).",
+        "* **Guía de remisión:** documento electrónico que sustenta el traslado de bienes (serie T001).",
+        "* **Ticketera:** impresora térmica de 80 mm que recibe comandos ESC/POS.",
+        "* **JWT:** token firmado que identifica al usuario ante la API.",
+        "* **RF / RNF:** requisito funcional / no funcional."
+      ]
+    },
+    {
+      "seccion": "intro",
+      "titulo": "Referencias",
+      "texto": [
+        "* IEEE Std 830-1998, _IEEE Recommended Practice for Software Requirements Specifications_.",
+        "* Guía de laboratorio PRAC01 Requerimientos, Calidad de Software, J. M. Silva Fernández.",
+        "* Product Backlog del proyecto Cóndor: historias HU-01 a HU-18 (CHANGELOG.md del repositorio).",
+        "* Solicitud de cambio CC-01 (G02_Proceso_Requerimientos).",
+        "* SUNAT, Resolución de Superintendencia N.° 097-2012/SUNAT y modificatorias (comprobantes electrónicos)."
+      ]
+    },
+    {
+      "seccion": "intro",
+      "titulo": "Fuentes de elicitación empleadas",
+      "texto": [
+        "Se aplicaron tres técnicas, cuyos instrumentos y resultados están en _G01_Requerimientos/02_Elicitacion_:",
+        "",
+        "* **ENT-01 Entrevista semiestructurada** al gerente general y al encargado general.",
+        "* **CUE-01 Cuestionario** a los vendedores de mostrador.",
+        "* **OBS-01 Observación directa** del proceso de venta actual, con toma de tiempos.",
+        "",
+        "**Declaración:** las sesiones se realizaron con **usuarios representados**: integrantes del equipo asumieron los roles de gerente, encargado y vendedores a partir del conocimiento del negocio recogido en el Product Backlog del proyecto."
+      ]
+    },
+    {
+      "seccion": "matriz",
+      "titulo": "Nota sobre las matrices",
+      "texto": [
+        "Las matrices relacionan cada requisito con los objetivos que satisface. La trazabilidad de cada requisito con su criterio de aceptación y sus pruebas está en la ERS (sección 6) y se completa en la matriz de trazabilidad final del trabajo."
+      ]
+    }
+  ],
+  "organizaciones": [
+    {
+      "id": "ORG-01",
+      "nombre": "Ferretería Cóndor Majes S.A.C.",
+      "direccion": "Majes, Caylloma, Arequipa",
+      "telefono": "PD",
+      "fax": "PD"
+    },
+    {
+      "id": "ORG-02",
+      "nombre": "Equipo de desarrollo - Calidad de Software 2026-B (EPIS - UNSA)",
+      "direccion": "Escuela Profesional de Ingeniería de Sistemas, UNSA, Arequipa",
+      "telefono": "PD",
+      "fax": "PD"
+    }
+  ],
+  "participantes": [
+    {
+      "id": "PAR-01",
+      "nombre": "Gerente general",
+      "rol": "Patrocinador y decisor final; define el alcance, aprueba los cambios y usa el reporte consolidado",
+      "cliente": true,
+      "desarrollador": false,
+      "usuario": true,
+      "organizacion": "ORG-01"
+    },
+    {
+      "id": "PAR-02",
+      "nombre": "Encargado general de tienda",
+      "rol": "Usuario con el rol Encargado general: vende y administra compras, proveedores, guías y respaldos",
+      "cliente": true,
+      "desarrollador": false,
+      "usuario": true,
+      "organizacion": "ORG-01"
+    },
+    {
+      "id": "PAR-03",
+      "nombre": "Vendedores de mostrador",
+      "rol": "Usuarios con el rol Vendedor: atienden al público y emiten los comprobantes",
+      "cliente": false,
+      "desarrollador": false,
+      "usuario": true,
+      "organizacion": "ORG-01"
+    },
+    {
+      "id": "PAR-04",
+      "nombre": "Contador externo",
+      "rol": "Interesado: vela por el cumplimiento tributario (IGV, envío a la SUNAT, conservación de comprobantes)",
+      "cliente": false,
+      "desarrollador": false,
+      "usuario": false,
+      "organizacion": "ORG-01"
+    },
+    {
+      "id": "PAR-05",
+      "nombre": "Equipo de desarrollo (4 integrantes)",
+      "rol": "Cada integrante asume los roles de analista, desarrollador, responsable de configuración y evaluador de calidad",
+      "cliente": false,
+      "desarrollador": true,
+      "usuario": false,
+      "organizacion": "ORG-02"
+    },
+    {
+      "id": "PAR-06",
+      "nombre": "Docente del curso",
+      "rol": "Valida el alcance del producto y evalúa las evidencias de calidad",
+      "cliente": false,
+      "desarrollador": false,
+      "usuario": false,
+      "organizacion": "ORG-02"
+    }
+  ],
+  "objetivos": [
+    {
+      "id": "OBJ-01",
+      "nombre": "Agilizar la venta en mostrador",
+      "descripcion": "permitir que el vendedor arme la venta y entregue el comprobante impreso **en menos de un minuto**, sin cálculos manuales ni consultas a listas impresas",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "fuentes": [
+        "PAR-01",
+        "PAR-03"
+      ]
+    },
+    {
+      "id": "OBJ-02",
+      "nombre": "Cumplir con la facturación electrónica",
+      "descripcion": "emitir boletas, facturas y guías de remisión electrónicas válidas y **enviarlas a la SUNAT dentro del plazo de 3 días**, aunque falle el internet al momento de vender",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "fuentes": [
+        "PAR-01",
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "OBJ-03",
+      "nombre": "Controlar el acceso y la trazabilidad",
+      "descripcion": "identificar a cada persona que usa el sistema, limitar las funciones según su rol y **registrar qué usuario y qué terminal** emitió cada comprobante",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "media",
+      "fuentes": [
+        "PAR-01",
+        "PAR-02"
+      ]
+    },
+    {
+      "id": "OBJ-04",
+      "nombre": "Ordenar el abastecimiento",
+      "descripcion": "registrar a los proveedores y sus compras sin duplicar comprobantes, y conocer el total de egresos de un período",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "fuentes": [
+        "PAR-02",
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "OBJ-05",
+      "nombre": "Disponer de información consolidada",
+      "descripcion": "ofrecer el historial de ventas y un **reporte consolidado por día, tipo de comprobante, terminal y usuario** para las decisiones del gerente",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "media",
+      "fuentes": [
+        "PAR-01"
+      ]
+    },
+    {
+      "id": "OBJ-06",
+      "nombre": "Proteger la información del negocio",
+      "descripcion": "conservar los datos tras reinicios y cortes de energía, evitar números de comprobante repetidos o saltados con tres PC simultáneas y permitir respaldar y restaurar la base de datos",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "fuentes": [
+        "PAR-01",
+        "PAR-02",
+        "PAR-04"
+      ]
+    }
+  ],
+  "actores": [
+    {
+      "id": "ACT-01",
+      "nombre": "Usuario",
+      "rol": "a cualquier persona registrada en el sistema, sea Vendedor o Encargado general, cuando se identifica o cierra su sesión"
+    },
+    {
+      "id": "ACT-02",
+      "nombre": "Vendedor",
+      "rol": "al vendedor de mostrador, que atiende al cliente, arma la venta, emite el comprobante y entrega el ticket"
+    },
+    {
+      "id": "ACT-03",
+      "nombre": "Encargado general",
+      "rol": "al encargado general de la ferretería, que además de vender administra proveedores, compras, guías de remisión y respaldos, y consulta el reporte consolidado"
+    },
+    {
+      "id": "ACT-04",
+      "nombre": "SUNAT",
+      "rol": "al servicio web de la SUNAT (ambiente beta o un servicio simulado en las pruebas) que recibe los comprobantes y guías electrónicos y devuelve el CDR"
+    },
+    {
+      "id": "ACT-05",
+      "nombre": "Ticketera térmica",
+      "rol": "a la impresora térmica de 80 mm conectada a la PC de caja, que imprime el ticket con comandos ESC/POS"
+    }
+  ],
+  "requisitosInformacion": [
+    {
+      "id": "IRQ-01",
+      "nombre": "Información sobre productos",
+      "conceptoRelevante": "los productos del catálogo de la ferretería",
+      "datos": [
+        "Nombre del producto (único, hasta 150 caracteres)",
+        "Precio de venta con IGV (mayor que 0 y hasta S/ 99 999.99, dos decimales)",
+        "Unidad de medida (UND, KG, M, GAL...)",
+        "Código de barras (único, de 4 a 30 caracteres, opcional)",
+        "Indicador de producto activo",
+        "Fecha y hora de registro"
+      ],
+      "vidaMediaValor": 3,
+      "vidaMediaUnidad": "año(s)",
+      "vidaMaxValor": 10,
+      "vidaMaxUnidad": "año(s)",
+      "ocurrenciasMedias": 3000,
+      "ocurrenciasMaximas": 5000,
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-01"
+      ],
+      "fuentes": [
+        "PAR-02"
+      ]
+    },
+    {
+      "id": "IRQ-02",
+      "nombre": "Información sobre clientes",
+      "conceptoRelevante": "los clientes identificados en las ventas",
+      "datos": [
+        "Tipo de documento (1 = DNI, 6 = RUC)",
+        "Número de documento (único)",
+        "Nombre o razón social (hasta 200 caracteres)",
+        "Dirección (hasta 250 caracteres; obligatoria para factura)"
+      ],
+      "vidaMediaValor": 5,
+      "vidaMediaUnidad": "año(s)",
+      "vidaMaxValor": 10,
+      "vidaMaxUnidad": "año(s)",
+      "ocurrenciasMedias": 2000,
+      "ocurrenciasMaximas": 8000,
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-01",
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-03",
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "IRQ-03",
+      "nombre": "Información sobre comprobantes de venta",
+      "conceptoRelevante": "las boletas, facturas, notas de venta y proformas emitidas",
+      "datos": [
+        "Serie (B001, F001, NV01, PR01) y número correlativo",
+        "Fecha y hora de emisión",
+        "Cliente (opcional en boleta hasta S/ 700 y en nota de venta)",
+        "Terminal y usuario que lo emitió",
+        "Operación gravada, IGV y total",
+        "Detalle: ítem, producto, descripción, cantidad, precio unitario e importe",
+        "Estado ante la SUNAT (PENDIENTE, ACEPTADO, OBSERVADO, RECHAZADO)",
+        "Número de impresiones y fecha de la última",
+        "Vigencia (proforma) y proforma de origen (venta convertida)"
+      ],
+      "vidaMediaValor": 5,
+      "vidaMediaUnidad": "año(s)",
+      "vidaMaxValor": 10,
+      "vidaMaxUnidad": "año(s)",
+      "ocurrenciasMedias": 40000,
+      "ocurrenciasMaximas": 60000,
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-01",
+        "OBJ-02",
+        "OBJ-03",
+        "OBJ-05"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "IRQ-04",
+      "nombre": "Información sobre envíos a la SUNAT",
+      "conceptoRelevante": "el envío electrónico de cada comprobante y guía",
+      "datos": [
+        "XML UBL 2.1 firmado",
+        "CDR recibido (ZIP) y código de respuesta",
+        "Descripción del motivo de observación o rechazo",
+        "Número de intentos y fecha del último",
+        "Reserva de reenvío (terminal y vencimiento)"
+      ],
+      "vidaMediaValor": 5,
+      "vidaMediaUnidad": "año(s)",
+      "vidaMaxValor": 10,
+      "vidaMaxUnidad": "año(s)",
+      "ocurrenciasMedias": 35000,
+      "ocurrenciasMaximas": 55000,
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "media",
+      "objetivos": [
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "IRQ-05",
+      "nombre": "Información sobre proveedores",
+      "conceptoRelevante": "los proveedores de la ferretería",
+      "datos": [
+        "RUC (único)",
+        "Razón social y nombre comercial",
+        "Dirección",
+        "Teléfono y correo electrónico",
+        "Persona de contacto"
+      ],
+      "vidaMediaValor": 5,
+      "vidaMediaUnidad": "año(s)",
+      "vidaMaxValor": 10,
+      "vidaMaxUnidad": "año(s)",
+      "ocurrenciasMedias": 60,
+      "ocurrenciasMaximas": 300,
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-04"
+      ],
+      "fuentes": [
+        "PAR-02"
+      ]
+    },
+    {
+      "id": "IRQ-06",
+      "nombre": "Información sobre compras",
+      "conceptoRelevante": "las compras realizadas a los proveedores",
+      "datos": [
+        "Proveedor",
+        "Tipo, serie y número del comprobante del proveedor (únicos por proveedor)",
+        "Fecha del comprobante (no futura ni de más de un año)",
+        "Terminal y usuario que la registró",
+        "Detalle: producto, cantidad y costo unitario",
+        "Total de la compra"
+      ],
+      "vidaMediaValor": 5,
+      "vidaMediaUnidad": "año(s)",
+      "vidaMaxValor": 10,
+      "vidaMaxUnidad": "año(s)",
+      "ocurrenciasMedias": 600,
+      "ocurrenciasMaximas": 1500,
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-04"
+      ],
+      "fuentes": [
+        "PAR-02",
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "IRQ-07",
+      "nombre": "Información sobre guías de remisión",
+      "conceptoRelevante": "las guías de remisión electrónicas emitidas",
+      "datos": [
+        "Serie T001 y número",
+        "Destinatario (DNI o RUC y nombre)",
+        "Motivo y fecha de traslado, peso bruto",
+        "Punto de partida y de llegada (ubigeo y dirección)",
+        "Modalidad de transporte: transportista (RUC y razón social) o vehículo y conductor",
+        "Comprobante que la sustenta (opcional)",
+        "Detalle de productos y cantidades",
+        "Estado ante la SUNAT"
+      ],
+      "vidaMediaValor": 5,
+      "vidaMediaUnidad": "año(s)",
+      "vidaMaxValor": 10,
+      "vidaMaxUnidad": "año(s)",
+      "ocurrenciasMedias": 500,
+      "ocurrenciasMaximas": 1200,
+      "importancia": "importante",
+      "urgencia": "puede esperar",
+      "estado": "validado",
+      "estabilidad": "media",
+      "objetivos": [
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-02",
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "IRQ-08",
+      "nombre": "Información sobre usuarios y accesos",
+      "conceptoRelevante": "las cuentas de usuario y la bitácora de accesos",
+      "datos": [
+        "Nombre de usuario (único) y nombre completo",
+        "Hash de la contraseña (PBKDF2-SHA256 con sal)",
+        "Rol (VENDEDOR o ENCARGADO)",
+        "Indicador de cuenta activa",
+        "Intentos fallidos seguidos y bloqueo hasta",
+        "Bitácora: fecha, usuario, terminal o IP, resultado y motivo de cada intento"
+      ],
+      "vidaMediaValor": 2,
+      "vidaMediaUnidad": "año(s)",
+      "vidaMaxValor": 5,
+      "vidaMaxUnidad": "año(s)",
+      "ocurrenciasMedias": 5,
+      "ocurrenciasMaximas": 20,
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "media",
+      "objetivos": [
+        "OBJ-03"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-02"
+      ]
+    },
+    {
+      "id": "IRQ-09",
+      "nombre": "Información sobre respaldos",
+      "conceptoRelevante": "los respaldos de la base de datos",
+      "datos": [
+        "Fecha y hora",
+        "Terminal que lo generó",
+        "Ruta y nombre del archivo (.backup)",
+        "Tamaño en bytes",
+        "Resultado (correcto o error y su motivo)"
+      ],
+      "vidaMediaValor": 1,
+      "vidaMediaUnidad": "año(s)",
+      "vidaMaxValor": 3,
+      "vidaMaxUnidad": "año(s)",
+      "ocurrenciasMedias": 300,
+      "ocurrenciasMaximas": 1000,
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-06"
+      ],
+      "fuentes": [
+        "PAR-02"
+      ]
+    }
+  ],
+  "restricciones": [
+    {
+      "id": "CRQ-01",
+      "nombre": "IGV incluido en el precio",
+      "descripcion": "el precio de venta incluye el IGV del 18 %; la operación gravada es el total dividido entre 1.18, el IGV es la diferencia, todo redondeado a dos decimales, y operación gravada más IGV debe ser igual al total",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "CRQ-02",
+      "nombre": "Boleta identificada desde S/ 700",
+      "descripcion": "una boleta cuyo total sea mayor que S/ 700.00 exige el DNI del cliente",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "CRQ-03",
+      "nombre": "Factura solo con RUC",
+      "descripcion": "una factura solo se emite a un cliente registrado con RUC válido, razón social y dirección",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "CRQ-04",
+      "nombre": "Validez del DNI y del RUC",
+      "descripcion": "el DNI tiene 8 dígitos; el RUC tiene 11 dígitos, empieza con 10, 15, 16, 17 o 20 y su último dígito cumple el verificador módulo 11 de la SUNAT",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "CRQ-05",
+      "nombre": "Correlativo sin repetidos ni saltos",
+      "descripcion": "cada serie (B001, F001, NV01, PR01, T001) numera sus documentos de uno en uno, sin números repetidos ni saltados, aunque emitan varias PC a la vez o falle una emisión",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-02",
+        "OBJ-06"
+      ],
+      "fuentes": [
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "CRQ-06",
+      "nombre": "Vigencia y conversión única de la proforma",
+      "descripcion": "una proforma vale 7 días contando el de su emisión y se convierte en venta una sola vez; una proforma vencida o ya convertida no se convierte",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-01"
+      ],
+      "fuentes": [
+        "PAR-01"
+      ]
+    },
+    {
+      "id": "CRQ-07",
+      "nombre": "Precio tomado del catálogo",
+      "descripcion": "el precio y la descripción de cada línea de venta se toman del catálogo y el servidor recalcula los importes y totales; no se acepta el precio enviado por la terminal",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-03",
+        "OBJ-06"
+      ],
+      "fuentes": [
+        "PAR-01"
+      ]
+    },
+    {
+      "id": "CRQ-08",
+      "nombre": "Unicidad de productos",
+      "descripcion": "no pueden existir dos productos con el mismo nombre (sin distinguir mayúsculas ni tildes) ni dos productos con el mismo código de barras",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-01"
+      ],
+      "fuentes": [
+        "PAR-02"
+      ]
+    },
+    {
+      "id": "CRQ-09",
+      "nombre": "Compra sin duplicados",
+      "descripcion": "un mismo comprobante de proveedor (RUC, tipo, serie y número) no se registra dos veces",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-04"
+      ],
+      "fuentes": [
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "CRQ-10",
+      "nombre": "Plazo de envío a la SUNAT",
+      "descripcion": "las boletas, facturas y guías se envían a la SUNAT como máximo 3 días después de su emisión; las notas de venta y las proformas no se envían",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "media",
+      "objetivos": [
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "CRQ-11",
+      "nombre": "Autoría del comprobante",
+      "descripcion": "cada comprobante guarda el usuario que lo emitió, tomado de su sesión y no de los datos enviados, y la terminal desde donde se emitió",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-03"
+      ],
+      "fuentes": [
+        "PAR-01"
+      ]
+    },
+    {
+      "id": "CRQ-12",
+      "nombre": "Funciones exclusivas del Encargado general",
+      "descripcion": "solo el Encargado general accede a proveedores, compras, guías de remisión, respaldos y al reporte consolidado de ventas, tanto en la aplicación como en la API",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "media",
+      "objetivos": [
+        "OBJ-03"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-02"
+      ]
+    },
+    {
+      "id": "CRQ-13",
+      "nombre": "Datos obligatorios de la guía de remisión",
+      "descripcion": "la guía exige motivo, fecha de traslado no anterior a hoy, peso bruto, ubigeos de 6 dígitos, punto de llegada distinto del de partida y los datos del transporte según su modalidad (RUC y razón social del transportista, o placa, DNI, nombre y licencia del conductor)",
+      "importancia": "importante",
+      "urgencia": "puede esperar",
+      "estado": "validado",
+      "estabilidad": "media",
+      "objetivos": [
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-02",
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "CRQ-14",
+      "nombre": "Límites de las líneas de venta",
+      "descripcion": "cada línea tiene una cantidad mayor que 0 y hasta 99 999, con tres decimales como máximo, y un comprobante tiene como máximo 100 líneas",
+      "importancia": "importante",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-01"
+      ],
+      "fuentes": [
+        "PAR-02"
+      ]
+    },
+    {
+      "id": "CRQ-15",
+      "nombre": "Período del reporte consolidado",
+      "descripcion": "la fecha final del reporte no es anterior a la inicial y el período no pasa de 366 días; las proformas no suman ventas y los rechazados se muestran aparte",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "media",
+      "objetivos": [
+        "OBJ-05"
+      ],
+      "fuentes": [
+        "PAR-01"
+      ]
+    }
+  ],
+  "casosUso": [
+    {
+      "id": "UC-01",
+      "codigo": "RF-01",
+      "hu": "CC-01",
+      "proceso": "Soporte",
+      "nombre": "Iniciar sesión",
+      "descripcion": "autenticar al usuario con su nombre de usuario y contraseña antes de permitir cualquier operación, bloquear la cuenta 15 minutos tras 5 intentos fallidos seguidos y registrar cada intento en la bitácora",
+      "evento": "una persona del local abre el sistema o necesita identificarse para trabajar",
+      "precondicion": "La persona tiene una cuenta activa y la API de la PC principal está disponible.",
+      "postcondicion": "La sesión queda abierta con el rol del usuario, el pie de la pantalla muestra su nombre y rol, y el intento queda en la bitácora de accesos.",
+      "frecuenciaValor": 12,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "media",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-03"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-02"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-01",
+          "descripcion": "escribe su usuario y su contraseña en la ventana Ingresar y pulsa Ingresar"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "verifica la contraseña contra el hash PBKDF2-SHA256 guardado de la cuenta"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "pone en cero los intentos fallidos y registra el acceso exitoso con la terminal, la fecha y la hora"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "abre la pantalla Nueva venta mostrando solo los módulos permitidos para el rol del usuario"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 1,
+          "condicion": "falta el usuario o la contraseña",
+          "accion": "mantiene deshabilitado el botón Ingresar y no consulta la base de datos",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 2,
+          "condicion": "el usuario no existe, está inactivo o la contraseña es incorrecta",
+          "accion": "muestra el mensaje «Usuario o contraseña incorrectos.», suma un intento fallido y lo registra en la bitácora",
+          "terminacion": "queda sin efecto"
+        },
+        {
+          "paso": 2,
+          "condicion": "la cuenta acumula 5 intentos fallidos seguidos",
+          "accion": "bloquea la cuenta durante 15 minutos e informa el bloqueo, aunque después se escriba la contraseña correcta",
+          "terminacion": "queda sin efecto"
+        },
+        {
+          "paso": 2,
+          "condicion": "la API no responde",
+          "accion": "muestra el aviso de conexión con la opción Reintentar",
+          "terminacion": "queda sin efecto"
+        }
+      ],
+      "criterios": [
+        "Dado `vendedor1` con la contraseña correcta, cuando pulsa Ingresar, entonces se abre Nueva venta y el pie muestra el usuario `vendedor1` y el rol «Vendedor».",
+        "Dado un usuario inexistente o una contraseña equivocada, cuando pulsa Ingresar, entonces se muestra exactamente «Usuario o contraseña incorrectos.» en ambos casos.",
+        "Dado 5 intentos fallidos seguidos, cuando se intenta con la contraseña correcta antes de 15 minutos, entonces el ingreso se rechaza (la API responde 423).",
+        "Cada intento, correcto o fallido, aparece en la tabla `acceso_usuario` con terminal, fecha y motivo."
+      ],
+      "pruebas": [
+        "Dominio/ServicioAutenticacionTests",
+        "Presentacion/LoginViewModelTests",
+        "Datos/UsuarioRepositorioTests",
+        "Api/ApiTests",
+        "G09: acceso correcto y credenciales inválidas"
+      ]
+    },
+    {
+      "id": "UC-02",
+      "codigo": "RF-02",
+      "hu": "CC-01",
+      "proceso": "Soporte",
+      "nombre": "Cerrar sesión",
+      "descripcion": "permitir al usuario cerrar su sesión, descartando la venta en curso y volviendo a la ventana de ingreso",
+      "evento": "el usuario termina su turno o deja la PC",
+      "precondicion": "El usuario tiene una sesión abierta y no se está generando un respaldo.",
+      "postcondicion": "La sesión queda cerrada, la venta en curso se descarta y se muestra otra vez la ventana Ingresar.",
+      "frecuenciaValor": 12,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "importante",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-03"
+      ],
+      "fuentes": [
+        "PAR-02"
+      ],
+      "tecnicas": [
+        "ENT-01",
+        "OBS-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-01",
+          "descripcion": "pulsa Cerrar sesión en el menú"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "descarta la venta en curso y vuelve a Nueva venta"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "oculta la ventana principal y muestra la ventana Ingresar vacía"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 1,
+          "condicion": "se está generando un respaldo",
+          "accion": "no permite cerrar la sesión hasta que el respaldo termine",
+          "terminacion": "queda sin efecto"
+        }
+      ],
+      "criterios": [
+        "Dado un usuario con sesión abierta, cuando pulsa Cerrar sesión, entonces se muestra la ventana Ingresar con los campos vacíos.",
+        "Después de cerrar sesión, la venta que estaba en pantalla no se conserva y el siguiente usuario empieza con una venta vacía."
+      ],
+      "pruebas": [
+        "Aceptacion/CC01_IngresoConRolesTests",
+        "G09: cierre de sesión"
+      ]
+    },
+    {
+      "id": "UC-03",
+      "codigo": "RF-03",
+      "hu": "CC-01",
+      "proceso": "Soporte",
+      "nombre": "Restringir módulos según el rol",
+      "descripcion": "restringir el acceso a los módulos de la aplicación y a las rutas de la API según el rol del usuario (Vendedor o Encargado general)",
+      "evento": "un usuario intenta abrir un módulo desde el menú, con su tecla de función o mediante una ruta de la API",
+      "precondicion": "El usuario tiene una sesión abierta con el rol Vendedor o Encargado general.",
+      "postcondicion": "El usuario solo accede a los módulos de su rol; los intentos no permitidos se rechazan sin cambiar los datos.",
+      "frecuenciaValor": 50,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "media",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-03"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-02"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-01",
+          "descripcion": "elige un módulo (F2 a F9) o invoca una ruta de la API"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "comprueba el rol de la sesión contra los permisos del módulo, en la aplicación y otra vez en la API"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "abre el módulo en el panel derecho de la ventana principal"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 2,
+          "condicion": "un Vendedor elige Compras, Proveedores, Guías o Respaldo",
+          "accion": "se queda en Nueva venta y muestra «Acceso denegado: el módulo … es solo para el Encargado general»",
+          "terminacion": "queda sin efecto"
+        },
+        {
+          "paso": 2,
+          "condicion": "un Vendedor invoca una ruta exclusiva del Encargado en la API",
+          "accion": "responde 403 sin ejecutar la operación",
+          "terminacion": "queda sin efecto"
+        },
+        {
+          "paso": 2,
+          "condicion": "la petición a la API no trae token o el token está alterado o vencido",
+          "accion": "responde 401",
+          "terminacion": "queda sin efecto"
+        }
+      ],
+      "criterios": [
+        "Dado `vendedor1`, la ventana principal no muestra los botones Compras, Proveedores, Guías ni Respaldo.",
+        "Dado `vendedor1`, cuando pulsa F4, entonces permanece en Nueva venta y el pie muestra «Acceso denegado».",
+        "Dado un token de Vendedor, `GET /api/proveedores`, `GET /api/reportes/ventas` y `GET /api/respaldos` responden 403; sin token responden 401.",
+        "Dado `encargado`, los cuatro módulos se abren normalmente."
+      ],
+      "pruebas": [
+        "Aceptacion/CC01_IngresoConRolesTests",
+        "Api/ApiTests",
+        "G09: restricción por rol"
+      ]
+    },
+    {
+      "id": "UC-04",
+      "codigo": "RF-04",
+      "hu": "HU-01, HU-13",
+      "proceso": "Soporte",
+      "nombre": "Registrar producto en el catálogo",
+      "descripcion": "registrar productos en el catálogo central con nombre, precio con IGV, unidad y código de barras, sin nombres ni códigos repetidos",
+      "evento": "llega un producto nuevo o hay que asignar el código de barras a uno existente",
+      "precondicion": "El usuario tiene una sesión abierta.",
+      "postcondicion": "El producto queda en el catálogo central y las demás PC lo ven en sus búsquedas en 3 segundos como máximo.",
+      "frecuenciaValor": 5,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-01"
+      ],
+      "fuentes": [
+        "PAR-02",
+        "PAR-03"
+      ],
+      "tecnicas": [
+        "ENT-01",
+        "CUE-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-02",
+          "descripcion": "abre Nuevo producto (Ctrl+N o desde el Catálogo F2)"
+        },
+        {
+          "tipo": "actor",
+          "actor": "ACT-02",
+          "descripcion": "escribe el nombre, el precio con IGV, la unidad y, si tiene, lee el código de barras con el lector"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "valida los datos contra las reglas del producto y la unicidad de nombre y código de barras"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "guarda el producto en la base central y avisa a las demás PC del cambio en el catálogo"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 3,
+          "condicion": "el nombre está vacío, el precio no es mayor que 0, pasa de S/ 99 999.99 o tiene más de dos decimales",
+          "accion": "señala cada campo con su mensaje y no guarda",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 3,
+          "condicion": "ya existe un producto con el mismo nombre o el mismo código de barras",
+          "accion": "informa el duplicado y no guarda",
+          "terminacion": "continúa"
+        }
+      ],
+      "criterios": [
+        "Dado «Cemento Sol 42.5 kg» a S/ 32.50, cuando se guarda, entonces aparece al buscar «cem» en otra PC en 3 s o menos.",
+        "Dado un precio 0 o 12.345, cuando se guarda, entonces se rechaza con el mensaje de la regla correspondiente.",
+        "Dado un nombre que ya existe escrito con otras mayúsculas o tildes, cuando se guarda, entonces se rechaza como duplicado (la API responde 409)."
+      ],
+      "pruebas": [
+        "Aceptacion/HU01_RegistrarProductoTests",
+        "Aceptacion/HU13_LectorCodigoBarrasTests",
+        "Dominio/ValidadorProducto",
+        "G09: registro válido y datos inválidos"
+      ]
+    },
+    {
+      "id": "UC-05",
+      "codigo": "RF-05",
+      "hu": "HU-02, HU-13",
+      "proceso": "PN-01",
+      "nombre": "Buscar producto para la venta",
+      "descripcion": "buscar productos por nombre desde la tercera letra, sin distinguir mayúsculas ni tildes, o por código de barras, y agregarlos al detalle de la venta",
+      "evento": "el vendedor necesita agregar un producto al detalle de la venta",
+      "precondicion": "El vendedor está en la pantalla Nueva venta.",
+      "postcondicion": "El producto queda agregado al detalle con su precio del catálogo y los totales se recalculan.",
+      "frecuenciaValor": 400,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-01"
+      ],
+      "fuentes": [
+        "PAR-03"
+      ],
+      "tecnicas": [
+        "CUE-01",
+        "OBS-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-02",
+          "descripcion": "escribe al menos tres letras del nombre del producto o lo pasa por el lector de código de barras"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "muestra hasta 15 sugerencias que contienen el texto, sin distinguir mayúsculas ni tildes, con su precio"
+        },
+        {
+          "tipo": "actor",
+          "actor": "ACT-02",
+          "descripcion": "elige la sugerencia con Enter y escribe la cantidad"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "agrega la línea al detalle y recalcula la operación gravada, el IGV y el total"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 1,
+          "condicion": "el código leído no pertenece a ningún producto",
+          "accion": "avisa que el código no está en el catálogo y ofrece registrarlo",
+          "terminacion": "queda sin efecto"
+        },
+        {
+          "paso": 2,
+          "condicion": "ningún producto coincide con el texto",
+          "accion": "no muestra sugerencias y el vendedor puede corregir el texto",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 3,
+          "condicion": "la cantidad no es mayor que 0, pasa de 99 999 o tiene más de tres decimales",
+          "accion": "no agrega la línea y señala la cantidad",
+          "terminacion": "continúa"
+        }
+      ],
+      "criterios": [
+        "Dado un catálogo de 3 000 productos, cuando se escribe «tub», entonces las sugerencias aparecen en menos de 1 s.",
+        "Dado «tuberia» sin tilde, entonces se sugiere «Tubería PVC 1/2\"».",
+        "Dado un código de barras leído con el lector, entonces el producto se agrega con cantidad 1 sin tocar el mouse."
+      ],
+      "pruebas": [
+        "Aceptacion/HU02_BuscarProductoTests",
+        "Aceptacion/HU13_LectorCodigoBarrasTests",
+        "Presentacion/BuscadorProductoViewModel",
+        "G08: consultar productos",
+        "G09: consulta"
+      ]
+    },
+    {
+      "id": "UC-06",
+      "codigo": "RF-06",
+      "hu": "HU-03",
+      "proceso": "PN-01",
+      "nombre": "Registrar y buscar cliente por DNI o RUC",
+      "descripcion": "buscar al cliente por su DNI o RUC validado y registrarlo si no existe",
+      "evento": "el cliente pide un comprobante a su nombre",
+      "precondicion": "El usuario tiene una sesión abierta.",
+      "postcondicion": "El cliente queda identificado en la venta y, si era nuevo, registrado en la base central.",
+      "frecuenciaValor": 80,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-01",
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-03",
+        "PAR-04"
+      ],
+      "tecnicas": [
+        "CUE-01",
+        "OBS-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-02",
+          "descripcion": "escribe el DNI o el RUC en el campo Cliente (Alt+D) y pulsa Enter"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "valida el documento y busca al cliente en la base central"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "completa el nombre o la razón social y la dirección en la venta"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 2,
+          "condicion": "el documento no tiene 8 u 11 dígitos o el RUC no cumple el dígito verificador",
+          "accion": "indica que el documento no es válido",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 2,
+          "condicion": "el cliente no está registrado",
+          "accion": "abre Nuevo cliente con el documento escrito; al guardarlo queda registrado y elegido en la venta",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 2,
+          "condicion": "otra PC registra el mismo documento al mismo tiempo",
+          "accion": "conserva un solo cliente y usa el ya registrado",
+          "terminacion": "continúa"
+        }
+      ],
+      "criterios": [
+        "Dado el DNI de un cliente registrado, cuando se pulsa Enter, entonces se completa su nombre.",
+        "Dado el RUC 20123456780 con dígito verificador incorrecto, entonces se rechaza (la API responde 400).",
+        "Dado un documento ya registrado, cuando se intenta registrarlo otra vez, entonces no se crea un duplicado (409)."
+      ],
+      "pruebas": [
+        "Aceptacion/HU03_ClienteTests",
+        "Dominio/ValidadorDocumento",
+        "G09: registro válido y datos inválidos"
+      ]
+    },
+    {
+      "id": "UC-07",
+      "codigo": "RF-07",
+      "hu": "HU-05, HU-06, HU-08",
+      "proceso": "PN-01",
+      "nombre": "Emitir comprobante de venta",
+      "descripcion": "emitir boletas, facturas y notas de venta con número correlativo por serie, cálculo del IGV y las reglas de identificación del cliente",
+      "evento": "el cliente confirma la compra y pide su comprobante",
+      "precondicion": "La venta en pantalla tiene al menos una línea y el usuario tiene una sesión abierta.",
+      "postcondicion": "El comprobante queda guardado con su serie y número correlativo, el usuario y la terminal; las boletas y facturas quedan pendientes de envío a la SUNAT.",
+      "frecuenciaValor": 150,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-01",
+        "OBJ-02",
+        "OBJ-03"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-03",
+        "PAR-04"
+      ],
+      "tecnicas": [
+        "ENT-01",
+        "CUE-01",
+        "OBS-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-02",
+          "descripcion": "elige el tipo de comprobante (Boleta, Con DNI, Factura o Nota de venta) y pulsa Emitir e imprimir (F10)"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "valida las reglas del tipo elegido y recalcula los importes con los precios del catálogo"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "asigna el siguiente número de la serie y guarda la cabecera y el detalle en una sola transacción"
+        },
+        {
+          "tipo": "incluye",
+          "casoUso": "UC-09"
+        },
+        {
+          "tipo": "incluye",
+          "casoUso": "UC-10"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "deja la pantalla lista para la siguiente venta"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 2,
+          "condicion": "es una boleta de más de S/ 700.00 sin DNI del cliente",
+          "accion": "pide el DNI y no emite",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 2,
+          "condicion": "es una factura sin un cliente con RUC",
+          "accion": "pasa el foco al campo RUC y no emite",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 3,
+          "condicion": "se pierde la conexión con la API o la base de datos",
+          "accion": "no guarda nada, no consume número y conserva la venta en pantalla para reintentar",
+          "terminacion": "queda sin efecto"
+        }
+      ],
+      "criterios": [
+        "Dada una venta de S/ 118.00, cuando se emite boleta, entonces queda B001 con el siguiente número, operación gravada 100.00 e IGV 18.00.",
+        "Dada una boleta de S/ 700.01 sin DNI, entonces no se emite y se pide el DNI; con S/ 700.00 sí se emite.",
+        "Dada una factura sin RUC, entonces no se emite.",
+        "Dada una nota de venta, entonces se emite con serie NV01, sin cliente obligatorio, y no queda pendiente para la SUNAT.",
+        "Dado `vendedor1`, el comprobante guarda `usuario = vendedor1` aunque la petición diga otro usuario."
+      ],
+      "pruebas": [
+        "Aceptacion/HU05_EmitirBoletaTests",
+        "Aceptacion/HU06_EmitirFacturaTests",
+        "Aceptacion/HU08_NotasVentaTests",
+        "Dominio/EmisionComprobante",
+        "Dominio/CalculadoraVenta",
+        "Api/ClienteApiTests",
+        "G08: registrar boleta",
+        "G09: cambio de estado (emitir)"
+      ]
+    },
+    {
+      "id": "UC-08",
+      "codigo": "RF-08",
+      "hu": "HU-09",
+      "proceso": "PN-02",
+      "nombre": "Emitir proforma y convertirla en venta",
+      "descripcion": "emitir proformas con vigencia de 7 días y convertirlas en venta una sola vez",
+      "evento": "un cliente pide una cotización o regresa a comprar lo cotizado",
+      "precondicion": "El usuario tiene una sesión abierta.",
+      "postcondicion": "La proforma queda emitida con su vigencia; al convertirla, la venta queda enlazada a la proforma y la proforma ya no se puede volver a convertir.",
+      "frecuenciaValor": 20,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-01"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-03"
+      ],
+      "tecnicas": [
+        "ENT-01",
+        "CUE-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-02",
+          "descripcion": "arma el detalle, elige Proforma y pulsa Emitir e imprimir"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "emite la proforma con serie PR01 y la fecha «Válida hasta» de 7 días contando el de emisión, e imprime el ticket con la leyenda de cotización"
+        },
+        {
+          "tipo": "actor",
+          "actor": "ACT-02",
+          "descripcion": "cuando el cliente regresa, busca la proforma en Proformas (F7) por número, DNI, RUC o nombre y pulsa Convertir en venta"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "lleva el detalle y el cliente a Nueva venta y propone factura si el cliente tiene RUC o boleta en otro caso"
+        },
+        {
+          "tipo": "incluye",
+          "casoUso": "UC-07"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 3,
+          "condicion": "la proforma está vencida",
+          "accion": "informa la fecha de vencimiento y no la convierte",
+          "terminacion": "queda sin efecto"
+        },
+        {
+          "paso": 3,
+          "condicion": "la proforma ya fue convertida, incluso desde otra PC al mismo tiempo",
+          "accion": "informa el comprobante que la convirtió y no la convierte otra vez",
+          "terminacion": "queda sin efecto"
+        }
+      ],
+      "criterios": [
+        "Dada una proforma emitida el 2026-11-02, entonces su «Válida hasta» es 2026-11-08.",
+        "Dada una proforma vigente, cuando se convierte, entonces la venta emitida queda enlazada a ella y la proforma figura como convertida.",
+        "Dada la misma proforma convertida desde dos PC a la vez, entonces solo una conversión prospera."
+      ],
+      "pruebas": [
+        "Aceptacion/HU09_ProformasTests",
+        "Dominio/EmisionComprobante",
+        "G09: cambio de estado (convertir proforma)"
+      ]
+    },
+    {
+      "id": "UC-09",
+      "codigo": "RF-09",
+      "hu": "HU-12, HU-18",
+      "proceso": "PN-01",
+      "nombre": "Imprimir y reimprimir el ticket",
+      "descripcion": "imprimir el ticket de cada comprobante en la ticketera térmica y permitir reimprimirlo marcado como copia",
+      "evento": "se emite un comprobante o el cliente pide una copia",
+      "precondicion": "El comprobante está emitido.",
+      "postcondicion": "El ticket queda impreso y el comprobante registra el número de impresiones.",
+      "frecuenciaValor": 160,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-01"
+      ],
+      "fuentes": [
+        "PAR-03"
+      ],
+      "tecnicas": [
+        "OBS-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "sistema",
+          "descripcion": "arma el ticket de 80 mm con el RUC de la empresa, tipo y número, cliente, detalle, operación gravada, IGV, total e importe en letras"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "envía el ticket a la Ticketera térmica en comandos ESC/POS por el spooler de Windows"
+        },
+        {
+          "tipo": "actor",
+          "actor": "ACT-05",
+          "descripcion": "imprime el ticket"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "suma una impresión al comprobante"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 2,
+          "condicion": "la PC no tiene ticketera configurada",
+          "accion": "muestra el ticket en pantalla como vista previa",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 3,
+          "condicion": "la ticketera está apagada o sin papel",
+          "accion": "avisa del problema y permite reimprimir con F11 sin volver a emitir",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 1,
+          "condicion": "es una reimpresión desde el Historial o con F11",
+          "accion": "marca el ticket con «*** COPIA - REIMPRESIÓN ***»",
+          "terminacion": "continúa"
+        }
+      ],
+      "criterios": [
+        "El ticket de una boleta de S/ 118.00 muestra «SON: CIENTO DIECIOCHO CON 00/100 SOLES».",
+        "Una reimpresión lleva la marca «COPIA - REIMPRESIÓN» y suma una impresión.",
+        "Con la ticketera apagada, el comprobante queda emitido igual y se avisa del fallo de impresión."
+      ],
+      "pruebas": [
+        "Aceptacion/HU12_ImprimirTicketTests",
+        "Aceptacion/HU18_HistorialTests",
+        "Impresion/*",
+        "Dominio/MontoEnLetras"
+      ]
+    },
+    {
+      "id": "UC-10",
+      "codigo": "RF-10",
+      "hu": "HU-07, HU-17",
+      "proceso": "PN-01",
+      "nombre": "Enviar comprobantes a la SUNAT y reenviar pendientes",
+      "descripcion": "enviar las boletas y facturas a la SUNAT, guardar el CDR y reenviar automáticamente los comprobantes pendientes",
+      "evento": "se emite una boleta o factura, o vence el intervalo de reenvío de pendientes",
+      "precondicion": "La PC tiene configurada la sección Sunat (certificado y usuario SOL) y el comprobante es electrónico.",
+      "postcondicion": "El comprobante queda ACEPTADO, OBSERVADO o RECHAZADO con su CDR guardado, o PENDIENTE para un nuevo intento.",
+      "frecuenciaValor": 140,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "media",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-04"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "sistema",
+          "descripcion": "genera el XML UBL 2.1 del comprobante y lo firma con el certificado digital"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "envía el ZIP a la SUNAT por sendBill en paralelo con la impresión"
+        },
+        {
+          "tipo": "actor",
+          "actor": "ACT-04",
+          "descripcion": "devuelve el CDR con el código de respuesta"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "guarda el XML, el CDR y el estado, y lo muestra bajo el botón Emitir y en el Historial"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "cada ReenvioMinutos aparta los pendientes y los reenvía del más antiguo al más reciente"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 2,
+          "condicion": "no hay internet o la SUNAT no responde",
+          "accion": "deja el comprobante PENDIENTE sin frenar la venta y lo reintenta en el siguiente ciclo",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 3,
+          "condicion": "la SUNAT responde que el comprobante ya fue recibido (código 1033)",
+          "accion": "consulta el CDR con getStatusCdr y lo guarda",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 5,
+          "condicion": "el pendiente más antiguo está por vencer el plazo de 3 días",
+          "accion": "muestra un aviso en rojo en el pie de Nueva venta",
+          "terminacion": "continúa"
+        }
+      ],
+      "criterios": [
+        "Con la SUNAT simulada aceptando, una boleta emitida queda ACEPTADO con su CDR guardado.",
+        "Sin internet, la boleta se emite e imprime igual y queda PENDIENTE; al volver internet se reenvía sola y queda ACEPTADO.",
+        "Dos PC nunca reenvían el mismo comprobante a la vez."
+      ],
+      "pruebas": [
+        "Aceptacion/HU07_EnviarSunatTests",
+        "Aceptacion/HU17_ReenvioAutomaticoTests",
+        "Sunat/*",
+        "Dominio/ReenvioSunat"
+      ]
+    },
+    {
+      "id": "UC-11",
+      "codigo": "RF-11",
+      "hu": "HU-04",
+      "proceso": "PN-03",
+      "nombre": "Registrar proveedor",
+      "descripcion": "permitir al Encargado general registrar proveedores con RUC único",
+      "evento": "la ferretería empieza a comprar a un proveedor nuevo",
+      "precondicion": "El usuario tiene una sesión abierta con el rol Encargado general.",
+      "postcondicion": "El proveedor queda registrado una sola vez por RUC y disponible para registrar compras.",
+      "frecuenciaValor": 2,
+      "frecuenciaUnidad": "semana(s)",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-04"
+      ],
+      "fuentes": [
+        "PAR-02"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-03",
+          "descripcion": "abre Proveedores (F6) y pulsa Nuevo proveedor (Alt+N)"
+        },
+        {
+          "tipo": "actor",
+          "actor": "ACT-03",
+          "descripcion": "escribe el RUC, la razón social, el nombre comercial, la dirección, el teléfono, el correo y el contacto"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "valida el RUC y los formatos de teléfono y correo"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "guarda al proveedor y lo muestra en la lista"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 3,
+          "condicion": "el RUC no es válido, falta la razón social o el correo no tiene un formato válido",
+          "accion": "señala cada campo con su mensaje y no guarda",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 4,
+          "condicion": "ya existe un proveedor con el mismo RUC",
+          "accion": "informa el duplicado y no guarda",
+          "terminacion": "continúa"
+        }
+      ],
+      "criterios": [
+        "Dado un RUC válido y la razón social, cuando se guarda, entonces aparece al buscar por RUC o por razón social sin tildes.",
+        "Dado un correo «ventas@», entonces se rechaza con «El correo no es válido».",
+        "Dado un RUC ya registrado, entonces la API responde 409."
+      ],
+      "pruebas": [
+        "Aceptacion/HU04_ProveedoresTests",
+        "Dominio/ValidadorProveedor"
+      ]
+    },
+    {
+      "id": "UC-12",
+      "codigo": "RF-12",
+      "hu": "HU-11",
+      "proceso": "PN-03",
+      "nombre": "Registrar compra a proveedor",
+      "descripcion": "permitir al Encargado general registrar las compras a proveedores sin duplicar el comprobante del proveedor",
+      "evento": "llega mercadería de un proveedor con su factura o boleta",
+      "precondicion": "El usuario tiene una sesión abierta con el rol Encargado general y el proveedor está registrado.",
+      "postcondicion": "La compra queda registrada con su detalle y suma al total de egresos del período.",
+      "frecuenciaValor": 3,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-04"
+      ],
+      "fuentes": [
+        "PAR-02",
+        "PAR-04"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-03",
+          "descripcion": "abre Compras (F4) y pulsa Nueva compra (Alt+N)"
+        },
+        {
+          "tipo": "actor",
+          "actor": "ACT-03",
+          "descripcion": "busca al proveedor por RUC, indica el tipo, la serie, el número y la fecha de su comprobante y agrega los productos con cantidad y costo"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "valida la compra y que el comprobante del proveedor no esté ya registrado"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "guarda la compra y actualiza el total de egresos del período"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 3,
+          "condicion": "la serie no tiene 4 caracteres, el número no está entre 1 y 99999999, la fecha es futura o de hace más de un año, o una línea no tiene cantidad y costo mayores que cero",
+          "accion": "señala el campo con su mensaje y no guarda",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 3,
+          "condicion": "el mismo comprobante del proveedor ya está registrado, aunque lo intente otra PC a la vez",
+          "accion": "informa el duplicado y no lo registra otra vez",
+          "terminacion": "queda sin efecto"
+        }
+      ],
+      "criterios": [
+        "Dada la factura F001-123 del proveedor con RUC 20100070970, cuando se registra, entonces suma al total de egresos del mes.",
+        "Dada la misma F001-123 otra vez, entonces se rechaza como duplicada.",
+        "Dada una fecha de mañana, entonces se rechaza con «La fecha del comprobante no puede ser posterior a hoy»."
+      ],
+      "pruebas": [
+        "Aceptacion/HU11_ComprasTests",
+        "Dominio/ValidadorCompra"
+      ]
+    },
+    {
+      "id": "UC-13",
+      "codigo": "RF-13",
+      "hu": "HU-10",
+      "proceso": "PN-01",
+      "nombre": "Emitir guía de remisión electrónica",
+      "descripcion": "permitir al Encargado general emitir guías de remisión electrónicas y enviarlas a la SUNAT",
+      "evento": "hay que trasladar la mercadería vendida a una obra o a otro establecimiento",
+      "precondicion": "El usuario tiene una sesión abierta con el rol Encargado general.",
+      "postcondicion": "La guía queda emitida con serie T001, impresa y enviada a la SUNAT, o pendiente de envío.",
+      "frecuenciaValor": 2,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "importante",
+      "urgencia": "puede esperar",
+      "estado": "validado",
+      "estabilidad": "media",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-02",
+        "PAR-04"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-03",
+          "descripcion": "abre Guías (F8) y crea una guía desde una factura o boleta, o a mano"
+        },
+        {
+          "tipo": "actor",
+          "actor": "ACT-03",
+          "descripcion": "completa el destinatario, el motivo y la fecha de traslado, el peso, los puntos de partida y llegada y el transporte"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "valida los datos obligatorios según la modalidad de transporte"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "emite la guía, la imprime y la envía a la SUNAT por la API de guías"
+        },
+        {
+          "tipo": "actor",
+          "actor": "ACT-04",
+          "descripcion": "devuelve el ticket y luego el CDR de la guía"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 3,
+          "condicion": "falta un dato obligatorio o el punto de llegada es igual al de partida",
+          "accion": "señala el campo con su mensaje y no emite",
+          "terminacion": "continúa"
+        },
+        {
+          "paso": 4,
+          "condicion": "la SUNAT no responde",
+          "accion": "deja la guía pendiente y la reenvía o consulta sola más tarde",
+          "terminacion": "continúa"
+        }
+      ],
+      "criterios": [
+        "Dada una guía con transporte privado sin placa, entonces se rechaza con el mensaje de la placa.",
+        "Dada una guía creada desde una factura, entonces hereda el destinatario y el detalle de la factura.",
+        "Con la API de guías simulada, la guía queda aceptada con su CDR."
+      ],
+      "pruebas": [
+        "Aceptacion/HU10_GuiasRemisionTests",
+        "Dominio/ValidadorGuia"
+      ]
+    },
+    {
+      "id": "UC-14",
+      "codigo": "RF-14",
+      "hu": "HU-18",
+      "proceso": "Consulta",
+      "nombre": "Consultar historial de ventas",
+      "descripcion": "consultar el historial de comprobantes por período, tipo, cliente o número, con el total de ventas del período",
+      "evento": "el usuario necesita ubicar un comprobante o conocer las ventas de un período",
+      "precondicion": "El usuario tiene una sesión abierta.",
+      "postcondicion": "Se muestran los comprobantes que cumplen los filtros y el total del período.",
+      "frecuenciaValor": 30,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-05"
+      ],
+      "fuentes": [
+        "PAR-02",
+        "PAR-03"
+      ],
+      "tecnicas": [
+        "ENT-01",
+        "CUE-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-02",
+          "descripcion": "abre Historial (F5) y elige el período (Hoy, Este mes, Todo o fechas), el tipo, el cliente o el número"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "lista los comprobantes con su estado ante la SUNAT, usando los días de la hora de Perú"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "muestra el total de ventas del período sin contar proformas ni rechazados"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 2,
+          "condicion": "ningún comprobante cumple los filtros",
+          "accion": "muestra la lista vacía con total S/ 0.00",
+          "terminacion": "continúa"
+        }
+      ],
+      "criterios": [
+        "Dadas 2 boletas de S/ 50.00 y 1 proforma de S/ 30.00 hoy, cuando se filtra Hoy, entonces el total es S/ 100.00.",
+        "Las notas de venta muestran «No aplica» en la columna SUNAT."
+      ],
+      "pruebas": [
+        "Aceptacion/HU18_HistorialTests",
+        "G09: consulta"
+      ]
+    },
+    {
+      "id": "UC-15",
+      "codigo": "RF-15",
+      "hu": "CC-01",
+      "proceso": "Consulta",
+      "nombre": "Generar reporte consolidado de ventas",
+      "descripcion": "generar para el Encargado general un reporte consolidado de ventas por día, tipo de comprobante, terminal y usuario",
+      "evento": "el gerente o el encargado necesitan analizar las ventas de un período",
+      "precondicion": "El usuario tiene una sesión abierta con el rol Encargado general.",
+      "postcondicion": "Se obtiene el reporte con los totales por día, por tipo de comprobante, por terminal y por usuario.",
+      "frecuenciaValor": 1,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "media",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-05"
+      ],
+      "fuentes": [
+        "PAR-01"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-03",
+          "descripcion": "solicita el reporte de ventas indicando la fecha inicial y la final"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "valida el período"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "agrupa las ventas por día, tipo, terminal y usuario, sin proformas, y muestra los rechazados aparte"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 2,
+          "condicion": "la fecha final es anterior a la inicial o el período pasa de 366 días",
+          "accion": "rechaza la consulta con el motivo (400)",
+          "terminacion": "queda sin efecto"
+        },
+        {
+          "paso": 1,
+          "condicion": "el usuario tiene el rol Vendedor",
+          "accion": "responde 403",
+          "terminacion": "queda sin efecto"
+        }
+      ],
+      "criterios": [
+        "Dadas ventas de `vendedor1` y `vendedor2` en dos terminales, el reporte suma correctamente por usuario y por terminal y el total general coincide con el Historial.",
+        "Un período de 400 días se rechaza con 400."
+      ],
+      "pruebas": [
+        "Dominio/ReporteVentasTests",
+        "Api/ApiTests",
+        "Datos/UsuarioRepositorioTests"
+      ]
+    },
+    {
+      "id": "UC-16",
+      "codigo": "RF-16",
+      "hu": "HU-15",
+      "proceso": "Soporte",
+      "nombre": "Generar respaldo de la base de datos",
+      "descripcion": "permitir al Encargado general generar un respaldo de la base de datos en un disco externo",
+      "evento": "termina el día de trabajo o el sistema avisa que el último respaldo tiene más de 24 horas",
+      "precondicion": "El usuario tiene una sesión abierta con el rol Encargado general y el disco externo está conectado a la PC principal.",
+      "postcondicion": "Queda un archivo .backup con la fecha y la hora en el nombre y el respaldo registrado en la base.",
+      "frecuenciaValor": 1,
+      "frecuenciaUnidad": "día(s)",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "abstracto": false,
+      "objetivos": [
+        "OBJ-06"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-02"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "pasos": [
+        {
+          "tipo": "actor",
+          "actor": "ACT-03",
+          "descripcion": "abre Respaldo (F9), confirma la carpeta del disco externo y pulsa Generar respaldo"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "ejecuta pg_dump en formato personalizado y muestra el avance tabla por tabla"
+        },
+        {
+          "tipo": "sistema",
+          "descripcion": "registra el respaldo con su tamaño y confirma el resultado"
+        }
+      ],
+      "excepciones": [
+        {
+          "paso": 2,
+          "condicion": "falla pg_dump o el disco se desconecta",
+          "accion": "borra el archivo incompleto, registra el error y lo informa",
+          "terminacion": "queda sin efecto"
+        }
+      ],
+      "criterios": [
+        "Al generar el respaldo queda un archivo `condor_AAAAMMDD_HHMM.backup` que pg_restore puede restaurar en una base vacía.",
+        "Si falla a la mitad, no queda ningún archivo a medias.",
+        "Si el último respaldo tiene más de 24 h, el Encargado ve un aviso al abrir el sistema; el Vendedor no."
+      ],
+      "pruebas": [
+        "Aceptacion/HU15_RespaldoTests",
+        "G06: control respaldo y restauración"
+      ]
+    }
+  ],
+  "noFuncionales": [
+    {
+      "id": "NFR-01",
+      "codigo": "RNF-01",
+      "atributo": "Rendimiento",
+      "nombre": "Tiempo de respuesta de la búsqueda de productos",
+      "descripcion": "mostrar las sugerencias de productos en **menos de 1 segundo** desde que se escribe la tercera letra, con un catálogo de **3 000 productos**",
+      "indicador": "Tiempo entre la tercera letra y la lista de sugerencias (ms), medido en la prueba automatizada",
+      "meta": "< 1 000 ms",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-01"
+      ],
+      "fuentes": [
+        "PAR-03"
+      ],
+      "tecnicas": [
+        "CUE-01",
+        "OBS-01"
+      ],
+      "criterios": [
+        "La prueba HU02 con 3 000 productos registra un tiempo menor que 1 s."
+      ],
+      "pruebas": [
+        "Aceptacion/HU02_BuscarProductoTests"
+      ]
+    },
+    {
+      "id": "NFR-02",
+      "codigo": "RNF-02",
+      "atributo": "Rendimiento",
+      "nombre": "Capacidad de la API bajo carga esperada",
+      "descripcion": "atender las transacciones críticas consultar productos y emitir boleta con un **percentil 95 menor o igual a 2 segundos** y una **tasa de error menor o igual a 1 %**, con **10 usuarios concurrentes durante 5 minutos**",
+      "indicador": "p95 por transacción (s) y porcentaje de respuestas con error en JMeter",
+      "meta": "p95 ≤ 2 s; error ≤ 1 %",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "pendiente de verificación",
+      "estabilidad": "media",
+      "objetivos": [
+        "OBJ-01"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-06"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "criterios": [
+        "El reporte HTML de JMeter del escenario de carga esperada cumple ambos umbrales por transacción."
+      ],
+      "pruebas": [
+        "G08: escenario de carga esperada"
+      ]
+    },
+    {
+      "id": "NFR-03",
+      "codigo": "RNF-03",
+      "atributo": "Seguridad",
+      "nombre": "Protección de credenciales y del acceso",
+      "descripcion": "guardar las contraseñas solo como hash **PBKDF2-SHA256 con 100 000 iteraciones y sal de 16 bytes**, bloquear la cuenta **15 minutos tras 5 intentos fallidos seguidos** y rechazar el **100 %** de los accesos a funciones del Encargado general por usuarios sin ese rol",
+      "indicador": "Iteraciones y longitud de sal del hash; intentos hasta el bloqueo; porcentaje de rutas exclusivas que responden 403 al Vendedor y 401 sin token",
+      "meta": "100 000 iteraciones; bloqueo al 5.º intento; 100 % de rutas protegidas",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "media",
+      "objetivos": [
+        "OBJ-03"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-06"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "criterios": [
+        "Las pruebas de hash, autenticación y API pasan; ninguna contraseña aparece en texto plano en la base ni en la bitácora."
+      ],
+      "pruebas": [
+        "Dominio/HashClaveTests",
+        "Dominio/ServicioAutenticacionTests",
+        "Api/ApiTests"
+      ]
+    },
+    {
+      "id": "NFR-04",
+      "codigo": "RNF-04",
+      "atributo": "Fiabilidad (integridad)",
+      "nombre": "Integridad con trabajo simultáneo",
+      "descripcion": "permitir que **3 terminales** emitan comprobantes al mismo tiempo sin producir **ningún** número de comprobante repetido ni saltado",
+      "indicador": "Números repetidos o saltados en la serie tras la emisión simultánea",
+      "meta": "0 repetidos y 0 saltados",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-06"
+      ],
+      "fuentes": [
+        "PAR-02",
+        "PAR-04"
+      ],
+      "tecnicas": [
+        "ENT-01",
+        "OBS-01"
+      ],
+      "criterios": [
+        "La prueba de concurrencia con tres terminales emitiendo a la vez obtiene la serie completa sin huecos ni repetidos."
+      ],
+      "pruebas": [
+        "Aceptacion/HU16_ConcurrenciaTests",
+        "Aceptacion/HU05_EmitirBoletaTests"
+      ]
+    },
+    {
+      "id": "NFR-05",
+      "codigo": "RNF-05",
+      "atributo": "Disponibilidad",
+      "nombre": "Tolerancia a la caída de internet",
+      "descripcion": "seguir emitiendo e imprimiendo comprobantes sin internet y reenviar automáticamente el **100 %** de los pendientes cuando vuelva la conexión, avisando cuando el más antiguo esté por vencer el plazo de **3 días**",
+      "indicador": "Ventas emitidas sin internet; porcentaje de pendientes aceptados tras recuperar la conexión",
+      "meta": "100 % de ventas emitidas; 100 % de pendientes reenviados",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "media",
+      "objetivos": [
+        "OBJ-02"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-04"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "criterios": [
+        "Con la SUNAT simulada sin internet a mitad del envío, todas las ventas se emiten y, al restablecerse, todos los pendientes quedan aceptados."
+      ],
+      "pruebas": [
+        "Aceptacion/HU07_EnviarSunatTests",
+        "Aceptacion/HU17_ReenvioAutomaticoTests"
+      ]
+    },
+    {
+      "id": "NFR-06",
+      "codigo": "RNF-06",
+      "atributo": "Usabilidad",
+      "nombre": "Venta operable solo con teclado",
+      "descripcion": "permitir completar una venta de **3 productos con boleta** usando **solo el teclado** (atajos F1 a F11, Enter y Esc) en **60 segundos o menos** para un vendedor con una hora de capacitación",
+      "indicador": "Tiempo cronometrado por venta en la observación; uso del mouse durante la venta",
+      "meta": "≤ 60 s; 0 clics",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "pendiente de verificación",
+      "estabilidad": "media",
+      "objetivos": [
+        "OBJ-01"
+      ],
+      "fuentes": [
+        "PAR-03"
+      ],
+      "tecnicas": [
+        "OBS-01",
+        "CUE-01"
+      ],
+      "criterios": [
+        "En 5 ventas cronometradas con la ficha de observación, la mediana es de 60 s o menos sin usar el mouse."
+      ],
+      "pruebas": [
+        "G01: ficha OBS-01 (línea base manual)",
+        "G09: prueba de aceptación cronometrada"
+      ]
+    },
+    {
+      "id": "NFR-07",
+      "codigo": "RNF-07",
+      "atributo": "Fiabilidad (recuperabilidad)",
+      "nombre": "Persistencia y recuperación de los datos",
+      "descripcion": "conservar el **100 %** de los registros tras reiniciar la aplicación, la API o la PC principal, y permitir **restaurar un respaldo** en una base vacía; avisar al Encargado si el último respaldo tiene **más de 24 horas**",
+      "indicador": "Registros antes y después del reinicio; restauración correcta de un respaldo",
+      "meta": "0 registros perdidos; restauración exitosa",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "validado",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-06"
+      ],
+      "fuentes": [
+        "PAR-01",
+        "PAR-02"
+      ],
+      "tecnicas": [
+        "ENT-01"
+      ],
+      "criterios": [
+        "Tras reiniciar la API, los comprobantes emitidos siguen en el Historial.",
+        "Un respaldo generado se restaura con pg_restore y conserva los mismos conteos por tabla."
+      ],
+      "pruebas": [
+        "Aceptacion/HU15_RespaldoTests",
+        "Datos/* ([FactConBD])",
+        "G06: control de respaldo"
+      ]
+    },
+    {
+      "id": "NFR-08",
+      "codigo": "RNF-08",
+      "atributo": "Mantenibilidad",
+      "nombre": "Cobertura de la lógica de negocio",
+      "descripcion": "mantener una cobertura de líneas de **al menos 80 %** en el paquete de lógica de negocio `Condor.Dominio`, con la suite automatizada en verde",
+      "indicador": "Porcentaje de líneas cubiertas de Condor.Dominio (coverlet + ReportGenerator)",
+      "meta": "≥ 80 %",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "pendiente de verificación",
+      "estabilidad": "alta",
+      "objetivos": [
+        "OBJ-06"
+      ],
+      "fuentes": [
+        "PAR-06"
+      ],
+      "tecnicas": [],
+      "criterios": [
+        "El reporte de cobertura de G07 muestra 80 % o más de líneas en Condor.Dominio."
+      ],
+      "pruebas": [
+        "G07: reporte de cobertura"
+      ]
+    }
+  ],
+  "conflictos": [
+    {
+      "id": "CFL-01",
+      "nombre": "Rapidez del ingreso frente a control de acceso",
+      "descripcion": "Los vendedores pidieron que el sistema abra **directo en Nueva venta, sin usuario ni contraseña** (HU-14, perfil único MAESTRO). El gerente necesita saber **quién emitió cada comprobante** y que los vendedores no vean compras ni respaldos; el curso exige autenticación y roles.",
+      "solucion": "Se aprobó la solicitud de cambio **CC-01**: ingreso con usuario y contraseña **una vez por turno** (el token dura 480 minutos) y dos roles. Se mantiene la apertura directa en Nueva venta tras el ingreso, de modo que el vendedor no pierde rapidez.",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "resuelto",
+      "participantes": [
+        "PAR-01",
+        "PAR-03"
+      ]
+    },
+    {
+      "id": "CFL-02",
+      "nombre": "Venta sin internet frente a la obligación de informar a la SUNAT",
+      "descripcion": "El internet del local se corta con frecuencia y los vendedores **no pueden dejar de vender**; el contador exige que **todo comprobante llegue a la SUNAT** dentro del plazo.",
+      "solucion": "El comprobante se emite e imprime sin esperar a la SUNAT y queda PENDIENTE; un proceso en segundo plano lo reenvía solo y el pie avisa en rojo cuando el más antiguo está por vencer el plazo de 3 días (RF-10, RNF-05).",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "resuelto",
+      "participantes": [
+        "PAR-03",
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "CFL-03",
+      "nombre": "Ajuste de precio por el vendedor frente al control de precios",
+      "descripcion": "Algunos vendedores quieren **cambiar el precio en la venta** para hacer descuentos; el gerente quiere que **los precios los fije solo el catálogo**.",
+      "solucion": "El precio de cada línea sale del catálogo y el servidor recalcula los totales (CRQ-07). Los descuentos quedan fuera del alcance de esta versión y se registran como posible cambio futuro.",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "resuelto",
+      "participantes": [
+        "PAR-01",
+        "PAR-03"
+      ]
+    },
+    {
+      "id": "CFL-04",
+      "nombre": "Boleta rápida sin datos frente a la norma de identificación",
+      "descripcion": "Los vendedores prefieren **no pedir el DNI** para no demorar; la norma de la SUNAT obliga a identificar al comprador en boletas desde cierto monto.",
+      "solucion": "Se pide el DNI **solo en boletas de más de S/ 700.00** (CRQ-02); por debajo, la boleta se emite sin cliente.",
+      "importancia": "vital",
+      "urgencia": "inmediatamente",
+      "estado": "resuelto",
+      "participantes": [
+        "PAR-03",
+        "PAR-04"
+      ]
+    },
+    {
+      "id": "CFL-05",
+      "nombre": "Respaldo automático frente a la infraestructura disponible",
+      "descripcion": "El gerente quiere **respaldos automáticos en la nube**; la ferretería no tiene servidor dedicado ni presupuesto para un servicio en la nube y solo cuenta con un disco externo.",
+      "solucion": "Respaldo **manual** con pg_dump en el disco externo desde la PC principal y **aviso si el último tiene más de 24 horas** (RF-16, RNF-07). El respaldo automático queda como mejora futura.",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "resuelto",
+      "participantes": [
+        "PAR-01",
+        "PAR-02"
+      ]
+    },
+    {
+      "id": "CFL-06",
+      "nombre": "Visibilidad de compras para todos frente a confidencialidad",
+      "descripcion": "El encargado propuso que todos vean las compras para consultar costos; el gerente no quiere que los vendedores conozcan **costos ni egresos**.",
+      "solucion": "Compras, proveedores, guías, respaldos y el reporte consolidado son exclusivos del Encargado general (CRQ-12, RF-03).",
+      "importancia": "importante",
+      "urgencia": "hay presión",
+      "estado": "resuelto",
+      "participantes": [
+        "PAR-01",
+        "PAR-02"
+      ]
+    }
+  ],
+  "matrices": [
+    {
+      "nombre": "Objetivos frente a requisitos de información",
+      "filas": [
+        "InformationRequirement"
+      ],
+      "columnas": [
+        "Objective"
+      ]
+    },
+    {
+      "nombre": "Objetivos frente a reglas de negocio",
+      "filas": [
+        "ConstraintRequirement"
+      ],
+      "columnas": [
+        "Objective"
+      ]
+    },
+    {
+      "nombre": "Objetivos frente a casos de uso",
+      "filas": [
+        "UseCase"
+      ],
+      "columnas": [
+        "Objective"
+      ]
+    },
+    {
+      "nombre": "Objetivos frente a requisitos no funcionales",
+      "filas": [
+        "NonFunctionalRequirement"
+      ],
+      "columnas": [
+        "Objective"
+      ]
+    },
+    {
+      "nombre": "Matriz general de rastreabilidad",
+      "filas": [
+        "InformationRequirement",
+        "ConstraintRequirement",
+        "UseCase",
+        "NonFunctionalRequirement"
+      ],
+      "columnas": [
+        "Objective"
+      ]
+    }
+  ]
+}

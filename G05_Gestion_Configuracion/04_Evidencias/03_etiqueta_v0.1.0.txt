@@ -1,0 +1,14 @@
+### rcondo intenta crear la etiqueta (debe rechazarse por authz)
+Committing transaction...
+svn: E220004: Access denied
+
+### jpayehuanca crea tags/v0.1.0 desde trunk@15 (suite integrada en verde: 930 aprobadas)
+Committed revision 16.
+
+### Etiquetas
+     16 jpayehuanca              Oct. 30 23:43 ./
+     16 jpayehuanca              Oct. 30 23:43 v0.1.0/
+
+### Intento de modificar la etiqueta (achaisa): debe rechazarse
+Committing transaction...
+svn: E220004: Access denied

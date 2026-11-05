@@ -1,0 +1,61 @@
+@startuml 03_secuencia_emitir_comprobante
+title Secuencia del proceso crítico: emitir una boleta (RF-07, RF-09, RF-10) — versión 1.1.0
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+autonumber
+
+actor Vendedor
+participant "MainWindow\n+ EmisionViewModel" as VM
+participant "EmisionComprobante\n(Condor.Dominio)" as DOM
+participant "ComprobanteRepositorioApi\n(Condor.ClienteApi)" as CLI
+participant "Condor.Api\nPOST /api/escritorio/comprobantes" as API
+participant "ComprobanteRepositorio\n(Condor.Datos)" as REP
+database "PostgreSQL 16" as BD
+participant "ImpresoraWindows\n(ticketera 80 mm)" as IMP
+participant "ServicioEnvioSunat\n(Condor.Sunat)" as SUN
+participant "SUNAT" as SUNAT
+
+Vendedor -> VM : F10 Emitir e imprimir (detalle, tipo, cliente)
+VM -> DOM : Errores(SolicitudEmision)
+alt hay errores (CRQ-02, CRQ-03, CRQ-14)
+  DOM --> VM : lista de ErrorEmision
+  VM --> Vendedor : señala el campo DNI/RUC y no emite
+else sin errores
+  VM -> DOM : Preparar(solicitud)
+  DOM --> VM : Comprobante (serie B001, importes, totales)
+  VM -> CLI : EmitirAsync(comprobante)
+  CLI -> API : POST JSON + token JWT
+  API -> API : valida el token (401 si falta o venció)\nrecalcula importes y totales (CalculadoraVenta)\nUsuario = reclamo del token (CRQ-11)
+  API -> REP : EmitirAsync(comprobante)
+  REP -> BD : BEGIN
+  REP -> BD : UPDATE serie SET ultimo_correlativo + 1\nRETURNING (bloquea la fila de la serie)
+  REP -> BD : INSERT comprobante + comprobante_detalle
+  REP -> BD : COMMIT
+  BD --> REP : id, número, fecha
+  REP --> API : comprobante emitido
+  API --> CLI : 200 OK
+  CLI --> VM : comprobante (B001-00000124)
+  VM --> Vendedor : «Boleta B001-00000124 emitida»
+  par impresión (RF-09)
+    VM -> IMP : imprimir ticket ESC/POS
+    VM -> API : POST /comprobantes/{id}/impresion
+  else envío a la SUNAT (RF-10)
+    VM -> SUN : EnviarAsync(empresa, comprobante)
+    SUN -> SUNAT : sendBill (XML UBL 2.1 firmado)
+    alt la SUNAT responde
+      SUNAT --> SUN : CDR (aceptado / observado / rechazado)
+      SUN -> API : POST /sunat/{id}/respuesta
+    else sin internet o SUNAT no disponible
+      SUN -> API : POST /sunat/{id}/falla
+      note right : queda PENDIENTE; ReenvioPendientes\nlo reintenta cada ReenvioMinutos (RNF-05)
+    end
+  end
+end
+
+== Excepción: la PC principal no responde ==
+CLI --> VM : SinConexionException
+VM --> Vendedor : «el comprobante NO se emitió; la venta se conserva»
+note over BD : la transacción no llegó a COMMIT:\nno queda comprobante ni número usado (RNF-04)
+@enduml

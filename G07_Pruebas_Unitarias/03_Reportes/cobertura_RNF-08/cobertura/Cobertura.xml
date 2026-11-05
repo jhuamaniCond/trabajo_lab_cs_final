@@ -1,0 +1,2673 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+<coverage line-rate="0.9566666666666667" branch-rate="0.8855218855218855" lines-covered="861" lines-valid="900" branches-covered="526" branches-valid="594" complexity="653" version="0" timestamp="1793557563">
+  <sources>
+    <source>/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/</source>
+  </sources>
+  <packages>
+    <package name="Condor.Dominio" line-rate="0.9566666666666667" branch-rate="0.8855218855218855" complexity="653">
+      <classes>
+        <class name="Condor.Dominio.Contratos.RespaldoException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Contratos/IGeneradorRespaldo.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.String,System.Exception)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="27" hits="7" branch="false" />
+                <line number="28" hits="7" branch="false" />
+                <line number="29" hits="7" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="27" hits="7" branch="false" />
+            <line number="28" hits="7" branch="false" />
+            <line number="29" hits="7" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Contratos.SinConexionException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Contratos/SinConexionException.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.Exception)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="25" branch="false" />
+                <line number="12" hits="25" branch="false" />
+                <line number="13" hits="25" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="11" hits="25" branch="false" />
+            <line number="12" hits="25" branch="false" />
+            <line number="13" hits="25" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.Cliente" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/Cliente.cs" line-rate="0.75" branch-rate="0.75" complexity="6">
+          <methods>
+            <method name="get_Documento" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="30" hits="8" branch="false" />
+              </lines>
+            </method>
+            <method name="Etiqueta" signature="(Condor.Dominio.Entidades.TipoDocumento)" line-rate="0.8333333333333334" branch-rate="0.75" complexity="4">
+              <lines>
+                <line number="32" hits="50" branch="true" condition-coverage="75% (3/4)" />
+                <line number="33" hits="50" branch="false" />
+                <line number="34" hits="25" branch="false" />
+                <line number="35" hits="25" branch="false" />
+                <line number="36" hits="0" branch="false" />
+                <line number="37" hits="50" branch="false" />
+              </lines>
+            </method>
+            <method name="ToString" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="39" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="30" hits="8" branch="false" />
+            <line number="32" hits="50" branch="true" condition-coverage="75% (3/4)" />
+            <line number="33" hits="50" branch="false" />
+            <line number="34" hits="25" branch="false" />
+            <line number="35" hits="25" branch="false" />
+            <line number="36" hits="0" branch="false" />
+            <line number="37" hits="50" branch="false" />
+            <line number="39" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.Compra" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/Compra.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="get_Documento" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="69" hits="25" branch="false" />
+              </lines>
+            </method>
+            <method name="get_DocumentoCompleto" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="72" hits="18" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="69" hits="25" branch="false" />
+            <line number="72" hits="18" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.Comprobante" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/Comprobante.cs" line-rate="0.9" branch-rate="0.85" complexity="23">
+          <methods>
+            <method name="get_Convertida" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="63" hits="70" branch="false" />
+              </lines>
+            </method>
+            <method name="Vencida" signature="(System.DateOnly)" line-rate="1" branch-rate="0.75" complexity="4">
+              <lines>
+                <line number="66" hits="19" branch="true" condition-coverage="75% (3/4)" />
+              </lines>
+            </method>
+            <method name="get_NumeroCompleto" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="72" hits="385" branch="false" />
+              </lines>
+            </method>
+            <method name="get_EsElectronico" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="78" hits="190" branch="false" />
+              </lines>
+            </method>
+            <method name="get_TipoCorto" signature="()" line-rate="0.875" branch-rate="0.875" complexity="8">
+              <lines>
+                <line number="81" hits="33" branch="true" condition-coverage="88% (7/8)" />
+                <line number="82" hits="33" branch="false" />
+                <line number="83" hits="24" branch="false" />
+                <line number="84" hits="4" branch="false" />
+                <line number="85" hits="3" branch="false" />
+                <line number="86" hits="2" branch="false" />
+                <line number="87" hits="0" branch="false" />
+                <line number="88" hits="33" branch="false" />
+              </lines>
+            </method>
+            <method name="get_NombreTipo" signature="()" line-rate="0.875" branch-rate="0.875" complexity="8">
+              <lines>
+                <line number="91" hits="297" branch="true" condition-coverage="88% (7/8)" />
+                <line number="92" hits="297" branch="false" />
+                <line number="93" hits="213" branch="false" />
+                <line number="94" hits="41" branch="false" />
+                <line number="95" hits="23" branch="false" />
+                <line number="96" hits="20" branch="false" />
+                <line number="97" hits="0" branch="false" />
+                <line number="98" hits="297" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="63" hits="70" branch="false" />
+            <line number="66" hits="19" branch="true" condition-coverage="75% (3/4)" />
+            <line number="72" hits="385" branch="false" />
+            <line number="78" hits="190" branch="false" />
+            <line number="81" hits="33" branch="true" condition-coverage="88% (7/8)" />
+            <line number="82" hits="33" branch="false" />
+            <line number="83" hits="24" branch="false" />
+            <line number="84" hits="4" branch="false" />
+            <line number="85" hits="3" branch="false" />
+            <line number="86" hits="2" branch="false" />
+            <line number="87" hits="0" branch="false" />
+            <line number="88" hits="33" branch="false" />
+            <line number="91" hits="297" branch="true" condition-coverage="88% (7/8)" />
+            <line number="92" hits="297" branch="false" />
+            <line number="93" hits="213" branch="false" />
+            <line number="94" hits="41" branch="false" />
+            <line number="95" hits="23" branch="false" />
+            <line number="96" hits="20" branch="false" />
+            <line number="97" hits="0" branch="false" />
+            <line number="98" hits="297" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.CuentaUsuario" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/CuentaUsuario.cs" line-rate="1" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_EsEncargado" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="33" hits="1" branch="false" />
+              </lines>
+            </method>
+            <method name="EstaBloqueada" signature="(System.DateTimeOffset)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="35" hits="118" branch="true" condition-coverage="100% (2/2)" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="33" hits="1" branch="false" />
+            <line number="35" hits="118" branch="true" condition-coverage="100% (2/2)" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.GuiaRemision" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/GuiaRemision.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="get_NumeroCompleto" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="140" hits="30" branch="false" />
+              </lines>
+            </method>
+            <method name="get_EsPublico" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="142" hits="72" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="140" hits="30" branch="false" />
+            <line number="142" hits="72" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.ModalidadTraslado" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/GuiaRemision.cs" line-rate="0.8333333333333334" branch-rate="0.75" complexity="4">
+          <methods>
+            <method name="Nombre" signature="(System.String)" line-rate="0.8333333333333334" branch-rate="0.75" complexity="4">
+              <lines>
+                <line number="34" hits="16" branch="true" condition-coverage="75% (3/4)" />
+                <line number="35" hits="16" branch="false" />
+                <line number="36" hits="2" branch="false" />
+                <line number="37" hits="14" branch="false" />
+                <line number="38" hits="0" branch="false" />
+                <line number="39" hits="16" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="34" hits="16" branch="true" condition-coverage="75% (3/4)" />
+            <line number="35" hits="16" branch="false" />
+            <line number="36" hits="2" branch="false" />
+            <line number="37" hits="14" branch="false" />
+            <line number="38" hits="0" branch="false" />
+            <line number="39" hits="16" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.MotivoTraslado" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/GuiaRemision.cs" line-rate="0.875" branch-rate="0.875" complexity="8">
+          <methods>
+            <method name="Nombre" signature="(System.String)" line-rate="0.875" branch-rate="0.875" complexity="8">
+              <lines>
+                <line number="15" hits="36" branch="true" condition-coverage="88% (7/8)" />
+                <line number="16" hits="36" branch="false" />
+                <line number="17" hits="32" branch="false" />
+                <line number="18" hits="1" branch="false" />
+                <line number="19" hits="1" branch="false" />
+                <line number="20" hits="2" branch="false" />
+                <line number="21" hits="0" branch="false" />
+                <line number="22" hits="36" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="15" hits="36" branch="true" condition-coverage="88% (7/8)" />
+            <line number="16" hits="36" branch="false" />
+            <line number="17" hits="32" branch="false" />
+            <line number="18" hits="1" branch="false" />
+            <line number="19" hits="1" branch="false" />
+            <line number="20" hits="2" branch="false" />
+            <line number="21" hits="0" branch="false" />
+            <line number="22" hits="36" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.Producto" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/Producto.cs" line-rate="0" branch-rate="1" complexity="1">
+          <methods>
+            <method name="ToString" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="28" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="28" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.Proveedor" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/Proveedor.cs" line-rate="0.5" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Nombre" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="32" hits="6" branch="true" condition-coverage="100% (2/2)" />
+              </lines>
+            </method>
+            <method name="ToString" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="34" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="32" hits="6" branch="true" condition-coverage="100% (2/2)" />
+            <line number="34" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.Respaldo" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/Respaldo.cs" line-rate="1" branch-rate="1" complexity="4">
+          <methods>
+            <method name="get_Ruta" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="34" hits="5" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Tamano" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="37" hits="22" branch="true" condition-coverage="100% (2/2)" />
+                <line number="38" hits="22" branch="false" />
+                <line number="39" hits="21" branch="false" />
+                <line number="40" hits="1" branch="false" />
+                <line number="41" hits="22" branch="false" />
+              </lines>
+            </method>
+            <method name="NombreArchivo" signature="(System.DateTimeOffset,System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="48" hits="39" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="34" hits="5" branch="false" />
+            <line number="37" hits="22" branch="true" condition-coverage="100% (2/2)" />
+            <line number="38" hits="22" branch="false" />
+            <line number="39" hits="21" branch="false" />
+            <line number="40" hits="1" branch="false" />
+            <line number="41" hits="22" branch="false" />
+            <line number="48" hits="39" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.Serie" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/Serie.cs" line-rate="1" branch-rate="0.9444444444444444" complexity="19">
+          <methods>
+            <method name="Formatear" signature="(System.String,System.Int64)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="35" hits="539" branch="false" />
+              </lines>
+            </method>
+            <method name="IntentarLeerNumero" signature="(System.String,System.String&amp;,System.Int64&amp;)" line-rate="1" branch-rate="0.9444444444444444" complexity="18">
+              <lines>
+                <line number="43" hits="79" branch="false" />
+                <line number="44" hits="79" branch="false" />
+                <line number="45" hits="79" branch="false" />
+                <line number="46" hits="79" branch="true" condition-coverage="50% (1/2)" />
+                <line number="47" hits="79" branch="false" />
+                <line number="48" hits="79" branch="true" condition-coverage="100% (10/10)" />
+                <line number="49" hits="53" branch="false" />
+                <line number="50" hits="26" branch="true" condition-coverage="100% (2/2)" />
+                <line number="51" hits="15" branch="false" />
+                <line number="52" hits="15" branch="true" condition-coverage="100% (4/4)" />
+                <line number="53" hits="1" branch="false" />
+                <line number="54" hits="14" branch="false" />
+                <line number="55" hits="14" branch="false" />
+                <line number="56" hits="25" branch="false" />
+                <line number="57" hits="25" branch="false" />
+                <line number="58" hits="79" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="35" hits="539" branch="false" />
+            <line number="43" hits="79" branch="false" />
+            <line number="44" hits="79" branch="false" />
+            <line number="45" hits="79" branch="false" />
+            <line number="46" hits="79" branch="true" condition-coverage="50% (1/2)" />
+            <line number="47" hits="79" branch="false" />
+            <line number="48" hits="79" branch="true" condition-coverage="100% (10/10)" />
+            <line number="49" hits="53" branch="false" />
+            <line number="50" hits="26" branch="true" condition-coverage="100% (2/2)" />
+            <line number="51" hits="15" branch="false" />
+            <line number="52" hits="15" branch="true" condition-coverage="100% (4/4)" />
+            <line number="53" hits="1" branch="false" />
+            <line number="54" hits="14" branch="false" />
+            <line number="55" hits="14" branch="false" />
+            <line number="56" hits="25" branch="false" />
+            <line number="57" hits="25" branch="false" />
+            <line number="58" hits="79" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.Sesion" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/Sesion.cs" line-rate="1" branch-rate="0.75" complexity="12">
+          <methods>
+            <method name="get_Usuario" signature="()" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="33" hits="94" branch="true" condition-coverage="100% (4/4)" />
+              </lines>
+            </method>
+            <method name="get_Rol" signature="()" line-rate="1" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="36" hits="12" branch="true" condition-coverage="50% (1/2)" />
+              </lines>
+            </method>
+            <method name="get_Autenticada" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="39" hits="29" branch="false" />
+              </lines>
+            </method>
+            <method name="get_EsEncargado" signature="()" line-rate="1" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="41" hits="1" branch="true" condition-coverage="50% (1/2)" />
+              </lines>
+            </method>
+            <method name="Local" signature="(System.String,Condor.Dominio.Entidades.CuentaUsuario)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="44" hits="3" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Registrada" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="47" hits="129" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(Condor.Dominio.Entidades.Terminal,Condor.Dominio.Entidades.CuentaUsuario)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="21" hits="157" branch="false" />
+                <line number="22" hits="157" branch="false" />
+                <line number="23" hits="157" branch="false" />
+                <line number="24" hits="157" branch="false" />
+                <line number="25" hits="157" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="21" hits="157" branch="false" />
+            <line number="22" hits="157" branch="false" />
+            <line number="23" hits="157" branch="false" />
+            <line number="24" hits="157" branch="false" />
+            <line number="25" hits="157" branch="false" />
+            <line number="33" hits="94" branch="true" condition-coverage="100% (4/4)" />
+            <line number="36" hits="12" branch="true" condition-coverage="50% (1/2)" />
+            <line number="39" hits="29" branch="false" />
+            <line number="41" hits="1" branch="true" condition-coverage="50% (1/2)" />
+            <line number="44" hits="3" branch="false" />
+            <line number="47" hits="129" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.TipoComprobante" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/Serie.cs" line-rate="1" branch-rate="1" complexity="4">
+          <methods>
+            <method name="EsElectronico" signature="(System.String)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="17" hits="209" branch="true" condition-coverage="100% (4/4)" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="17" hits="209" branch="true" condition-coverage="100% (4/4)" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Entidades.TipoDocumentoCompra" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Entidades/Compra.cs" line-rate="0.8333333333333334" branch-rate="0.75" complexity="4">
+          <methods>
+            <method name="Nombre" signature="(System.String)" line-rate="0.8333333333333334" branch-rate="0.75" complexity="4">
+              <lines>
+                <line number="14" hits="18" branch="true" condition-coverage="75% (3/4)" />
+                <line number="15" hits="18" branch="false" />
+                <line number="16" hits="17" branch="false" />
+                <line number="17" hits="1" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="18" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="14" hits="18" branch="true" condition-coverage="75% (3/4)" />
+            <line number="15" hits="18" branch="false" />
+            <line number="16" hits="17" branch="false" />
+            <line number="17" hits="1" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="18" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Impresion.FormatoTicket" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Impresion/FormatoTicket.cs" line-rate="0.9652777777777778" branch-rate="0.890625" complexity="69">
+          <methods>
+            <method name="Generar" signature="(Condor.Dominio.Entidades.Empresa,Condor.Dominio.Entidades.Comprobante,System.Int32)" line-rate="1" branch-rate="0.9411764705882353" complexity="34">
+              <lines>
+                <line number="34" hits="98" branch="false" />
+                <line number="35" hits="98" branch="false" />
+                <line number="36" hits="98" branch="false" />
+                <line number="38" hits="98" branch="false" />
+                <line number="41" hits="98" branch="false" />
+                <line number="42" hits="98" branch="false" />
+                <line number="44" hits="98" branch="true" condition-coverage="100% (2/2)" />
+                <line number="45" hits="4" branch="false" />
+                <line number="46" hits="98" branch="false" />
+                <line number="48" hits="98" branch="false" />
+                <line number="51" hits="98" branch="false" />
+                <line number="52" hits="98" branch="true" condition-coverage="100% (2/2)" />
+                <line number="53" hits="98" branch="true" condition-coverage="83% (5/6)" />
+                <line number="54" hits="11" branch="false" />
+                <line number="55" hits="98" branch="true" condition-coverage="100% (4/4)" />
+                <line number="56" hits="11" branch="false" />
+                <line number="59" hits="11" branch="false" />
+                <line number="60" hits="11" branch="false" />
+                <line number="61" hits="11" branch="true" condition-coverage="100% (2/2)" />
+                <line number="62" hits="11" branch="false" />
+                <line number="63" hits="11" branch="false" />
+                <line number="64" hits="11" branch="false" />
+                <line number="65" hits="87" branch="true" condition-coverage="100% (2/2)" />
+                <line number="66" hits="18" branch="false" />
+                <line number="67" hits="18" branch="false" />
+                <line number="68" hits="18" branch="false" />
+                <line number="69" hits="18" branch="true" condition-coverage="100% (2/2)" />
+                <line number="70" hits="18" branch="false" />
+                <line number="71" hits="18" branch="false" />
+                <line number="73" hits="69" branch="false" />
+                <line number="74" hits="69" branch="false" />
+                <line number="75" hits="69" branch="false" />
+                <line number="76" hits="98" branch="false" />
+                <line number="79" hits="98" branch="false" />
+                <line number="80" hits="98" branch="false" />
+                <line number="81" hits="620" branch="true" condition-coverage="100% (2/2)" />
+                <line number="82" hits="163" branch="false" />
+                <line number="83" hits="163" branch="false" />
+                <line number="84" hits="163" branch="false" />
+                <line number="85" hits="163" branch="false" />
+                <line number="86" hits="163" branch="false" />
+                <line number="87" hits="98" branch="false" />
+                <line number="91" hits="98" branch="true" condition-coverage="100% (2/2)" />
+                <line number="92" hits="87" branch="false" />
+                <line number="93" hits="87" branch="false" />
+                <line number="94" hits="87" branch="false" />
+                <line number="95" hits="87" branch="false" />
+                <line number="96" hits="98" branch="false" />
+                <line number="97" hits="98" branch="false" />
+                <line number="98" hits="98" branch="false" />
+                <line number="99" hits="98" branch="false" />
+                <line number="102" hits="98" branch="true" condition-coverage="100% (2/2)" />
+                <line number="103" hits="76" branch="false" />
+                <line number="104" hits="22" branch="true" condition-coverage="100% (2/2)" />
+                <line number="105" hits="11" branch="false" />
+                <line number="106" hits="11" branch="true" condition-coverage="100% (2/2)" />
+                <line number="107" hits="11" branch="false" />
+                <line number="108" hits="11" branch="true" condition-coverage="75% (3/4)" />
+                <line number="109" hits="11" branch="false" />
+                <line number="110" hits="11" branch="false" />
+                <line number="111" hits="11" branch="false" />
+                <line number="112" hits="98" branch="false" />
+                <line number="113" hits="98" branch="false" />
+                <line number="114" hits="98" branch="false" />
+              </lines>
+            </method>
+            <method name="GenerarGuia" signature="(Condor.Dominio.Entidades.Empresa,Condor.Dominio.Entidades.GuiaRemision,System.Int32)" line-rate="0.9245283018867925" branch-rate="0.8333333333333334" complexity="18">
+              <lines>
+                <line number="122" hits="16" branch="false" />
+                <line number="123" hits="16" branch="false" />
+                <line number="124" hits="16" branch="false" />
+                <line number="126" hits="16" branch="false" />
+                <line number="127" hits="16" branch="false" />
+                <line number="128" hits="16" branch="false" />
+                <line number="129" hits="16" branch="true" condition-coverage="100% (2/2)" />
+                <line number="130" hits="2" branch="false" />
+                <line number="131" hits="16" branch="false" />
+                <line number="133" hits="16" branch="false" />
+                <line number="134" hits="16" branch="true" condition-coverage="50% (1/2)" />
+                <line number="135" hits="16" branch="false" />
+                <line number="136" hits="16" branch="true" condition-coverage="100% (2/2)" />
+                <line number="137" hits="16" branch="true" condition-coverage="100% (2/2)" />
+                <line number="138" hits="8" branch="true" condition-coverage="50% (1/2)" />
+                <line number="139" hits="16" branch="false" />
+                <line number="141" hits="16" branch="false" />
+                <line number="142" hits="16" branch="false" />
+                <line number="143" hits="16" branch="false" />
+                <line number="144" hits="16" branch="false" />
+                <line number="145" hits="16" branch="false" />
+                <line number="147" hits="16" branch="false" />
+                <line number="148" hits="16" branch="true" condition-coverage="100% (2/2)" />
+                <line number="149" hits="2" branch="false" />
+                <line number="150" hits="2" branch="false" />
+                <line number="151" hits="2" branch="false" />
+                <line number="152" hits="2" branch="false" />
+                <line number="154" hits="14" branch="false" />
+                <line number="155" hits="14" branch="false" />
+                <line number="156" hits="14" branch="false" />
+                <line number="157" hits="14" branch="false" />
+                <line number="158" hits="14" branch="false" />
+                <line number="159" hits="16" branch="false" />
+                <line number="160" hits="16" branch="false" />
+                <line number="163" hits="16" branch="false" />
+                <line number="164" hits="16" branch="false" />
+                <line number="165" hits="98" branch="true" condition-coverage="100% (2/2)" />
+                <line number="166" hits="25" branch="false" />
+                <line number="167" hits="25" branch="false" />
+                <line number="168" hits="25" branch="false" />
+                <line number="169" hits="25" branch="false" />
+                <line number="170" hits="97" branch="true" condition-coverage="100% (2/2)" />
+                <line number="171" hits="11" branch="false" />
+                <line number="172" hits="25" branch="false" />
+                <line number="173" hits="16" branch="true" condition-coverage="50% (1/2)" />
+                <line number="174" hits="0" branch="false" />
+                <line number="175" hits="0" branch="false" />
+                <line number="176" hits="0" branch="false" />
+                <line number="177" hits="0" branch="false" />
+                <line number="178" hits="16" branch="false" />
+                <line number="179" hits="16" branch="false" />
+                <line number="180" hits="16" branch="false" />
+                <line number="181" hits="16" branch="false" />
+              </lines>
+            </method>
+            <method name="Cabecera" signature="(Condor.Dominio.Impresion.Ticket,Condor.Dominio.Entidades.Empresa)" line-rate="0.9166666666666666" branch-rate="0.75" complexity="8">
+              <lines>
+                <line number="185" hits="114" branch="false" />
+                <line number="186" hits="114" branch="true" condition-coverage="50% (1/2)" />
+                <line number="187" hits="570" branch="true" condition-coverage="100% (2/2)" />
+                <line number="188" hits="114" branch="false" />
+                <line number="189" hits="114" branch="true" condition-coverage="100% (2/2)" />
+                <line number="190" hits="114" branch="false" />
+                <line number="191" hits="114" branch="false" />
+                <line number="192" hits="114" branch="false" />
+                <line number="193" hits="114" branch="true" condition-coverage="50% (1/2)" />
+                <line number="194" hits="0" branch="false" />
+                <line number="195" hits="114" branch="false" />
+                <line number="196" hits="114" branch="false" />
+              </lines>
+            </method>
+            <method name="Dia" signature="(System.DateOnly)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="199" hits="55" branch="false" />
+              </lines>
+            </method>
+            <method name="Monto" signature="(System.Decimal)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="202" hits="600" branch="false" />
+              </lines>
+            </method>
+            <method name="DosColumnas" signature="(System.String,System.String,System.Int32)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="206" hits="430" branch="false" />
+                <line number="207" hits="430" branch="false" />
+                <line number="208" hits="430" branch="true" condition-coverage="100% (2/2)" />
+                <line number="209" hits="6" branch="false" />
+                <line number="210" hits="430" branch="false" />
+                <line number="211" hits="430" branch="false" />
+              </lines>
+            </method>
+            <method name="Total" signature="(System.String,System.Decimal)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="246" hits="272" branch="false" />
+              </lines>
+            </method>
+            <method name="Agregar" signature="(Condor.Dominio.Impresion.Ticket,System.String,Condor.Dominio.Impresion.Alineacion,System.Boolean)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="249" hits="896" branch="false" />
+                <line number="250" hits="4824" branch="true" condition-coverage="100% (2/2)" />
+                <line number="251" hits="1068" branch="false" />
+                <line number="252" hits="896" branch="false" />
+              </lines>
+            </method>
+            <method name="Separador" signature="(Condor.Dominio.Impresion.Ticket,System.Char)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="254" hits="798" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="31" hits="1" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="31" hits="1" branch="false" />
+            <line number="34" hits="98" branch="false" />
+            <line number="35" hits="98" branch="false" />
+            <line number="36" hits="98" branch="false" />
+            <line number="38" hits="98" branch="false" />
+            <line number="41" hits="98" branch="false" />
+            <line number="42" hits="98" branch="false" />
+            <line number="44" hits="98" branch="true" condition-coverage="100% (2/2)" />
+            <line number="45" hits="4" branch="false" />
+            <line number="46" hits="98" branch="false" />
+            <line number="48" hits="98" branch="false" />
+            <line number="51" hits="98" branch="false" />
+            <line number="52" hits="98" branch="true" condition-coverage="100% (2/2)" />
+            <line number="53" hits="98" branch="true" condition-coverage="83% (5/6)" />
+            <line number="54" hits="11" branch="false" />
+            <line number="55" hits="98" branch="true" condition-coverage="100% (4/4)" />
+            <line number="56" hits="11" branch="false" />
+            <line number="59" hits="11" branch="false" />
+            <line number="60" hits="11" branch="false" />
+            <line number="61" hits="11" branch="true" condition-coverage="100% (2/2)" />
+            <line number="62" hits="11" branch="false" />
+            <line number="63" hits="11" branch="false" />
+            <line number="64" hits="11" branch="false" />
+            <line number="65" hits="87" branch="true" condition-coverage="100% (2/2)" />
+            <line number="66" hits="18" branch="false" />
+            <line number="67" hits="18" branch="false" />
+            <line number="68" hits="18" branch="false" />
+            <line number="69" hits="18" branch="true" condition-coverage="100% (2/2)" />
+            <line number="70" hits="18" branch="false" />
+            <line number="71" hits="18" branch="false" />
+            <line number="73" hits="69" branch="false" />
+            <line number="74" hits="69" branch="false" />
+            <line number="75" hits="69" branch="false" />
+            <line number="76" hits="98" branch="false" />
+            <line number="79" hits="98" branch="false" />
+            <line number="80" hits="98" branch="false" />
+            <line number="81" hits="620" branch="true" condition-coverage="100% (2/2)" />
+            <line number="82" hits="163" branch="false" />
+            <line number="83" hits="163" branch="false" />
+            <line number="84" hits="163" branch="false" />
+            <line number="85" hits="163" branch="false" />
+            <line number="86" hits="163" branch="false" />
+            <line number="87" hits="98" branch="false" />
+            <line number="91" hits="98" branch="true" condition-coverage="100% (2/2)" />
+            <line number="92" hits="87" branch="false" />
+            <line number="93" hits="87" branch="false" />
+            <line number="94" hits="87" branch="false" />
+            <line number="95" hits="87" branch="false" />
+            <line number="96" hits="98" branch="false" />
+            <line number="97" hits="98" branch="false" />
+            <line number="98" hits="98" branch="false" />
+            <line number="99" hits="98" branch="false" />
+            <line number="102" hits="98" branch="true" condition-coverage="100% (2/2)" />
+            <line number="103" hits="76" branch="false" />
+            <line number="104" hits="22" branch="true" condition-coverage="100% (2/2)" />
+            <line number="105" hits="11" branch="false" />
+            <line number="106" hits="11" branch="true" condition-coverage="100% (2/2)" />
+            <line number="107" hits="11" branch="false" />
+            <line number="108" hits="11" branch="true" condition-coverage="75% (3/4)" />
+            <line number="109" hits="11" branch="false" />
+            <line number="110" hits="11" branch="false" />
+            <line number="111" hits="11" branch="false" />
+            <line number="112" hits="98" branch="false" />
+            <line number="113" hits="98" branch="false" />
+            <line number="114" hits="98" branch="false" />
+            <line number="122" hits="16" branch="false" />
+            <line number="123" hits="16" branch="false" />
+            <line number="124" hits="16" branch="false" />
+            <line number="126" hits="16" branch="false" />
+            <line number="127" hits="16" branch="false" />
+            <line number="128" hits="16" branch="false" />
+            <line number="129" hits="16" branch="true" condition-coverage="100% (2/2)" />
+            <line number="130" hits="2" branch="false" />
+            <line number="131" hits="16" branch="false" />
+            <line number="133" hits="16" branch="false" />
+            <line number="134" hits="16" branch="true" condition-coverage="50% (1/2)" />
+            <line number="135" hits="16" branch="false" />
+            <line number="136" hits="16" branch="true" condition-coverage="100% (2/2)" />
+            <line number="137" hits="16" branch="true" condition-coverage="100% (2/2)" />
+            <line number="138" hits="8" branch="true" condition-coverage="50% (1/2)" />
+            <line number="139" hits="16" branch="false" />
+            <line number="141" hits="16" branch="false" />
+            <line number="142" hits="16" branch="false" />
+            <line number="143" hits="16" branch="false" />
+            <line number="144" hits="16" branch="false" />
+            <line number="145" hits="16" branch="false" />
+            <line number="147" hits="16" branch="false" />
+            <line number="148" hits="16" branch="true" condition-coverage="100% (2/2)" />
+            <line number="149" hits="2" branch="false" />
+            <line number="150" hits="2" branch="false" />
+            <line number="151" hits="2" branch="false" />
+            <line number="152" hits="2" branch="false" />
+            <line number="154" hits="14" branch="false" />
+            <line number="155" hits="14" branch="false" />
+            <line number="156" hits="14" branch="false" />
+            <line number="157" hits="14" branch="false" />
+            <line number="158" hits="14" branch="false" />
+            <line number="159" hits="16" branch="false" />
+            <line number="160" hits="16" branch="false" />
+            <line number="163" hits="16" branch="false" />
+            <line number="164" hits="16" branch="false" />
+            <line number="165" hits="98" branch="true" condition-coverage="100% (2/2)" />
+            <line number="166" hits="25" branch="false" />
+            <line number="167" hits="25" branch="false" />
+            <line number="168" hits="25" branch="false" />
+            <line number="169" hits="25" branch="false" />
+            <line number="170" hits="97" branch="true" condition-coverage="100% (2/2)" />
+            <line number="171" hits="11" branch="false" />
+            <line number="172" hits="25" branch="false" />
+            <line number="173" hits="16" branch="true" condition-coverage="50% (1/2)" />
+            <line number="174" hits="0" branch="false" />
+            <line number="175" hits="0" branch="false" />
+            <line number="176" hits="0" branch="false" />
+            <line number="177" hits="0" branch="false" />
+            <line number="178" hits="16" branch="false" />
+            <line number="179" hits="16" branch="false" />
+            <line number="180" hits="16" branch="false" />
+            <line number="181" hits="16" branch="false" />
+            <line number="185" hits="114" branch="false" />
+            <line number="186" hits="114" branch="true" condition-coverage="50% (1/2)" />
+            <line number="187" hits="570" branch="true" condition-coverage="100% (2/2)" />
+            <line number="188" hits="114" branch="false" />
+            <line number="189" hits="114" branch="true" condition-coverage="100% (2/2)" />
+            <line number="190" hits="114" branch="false" />
+            <line number="191" hits="114" branch="false" />
+            <line number="192" hits="114" branch="false" />
+            <line number="193" hits="114" branch="true" condition-coverage="50% (1/2)" />
+            <line number="194" hits="0" branch="false" />
+            <line number="195" hits="114" branch="false" />
+            <line number="196" hits="114" branch="false" />
+            <line number="199" hits="55" branch="false" />
+            <line number="202" hits="600" branch="false" />
+            <line number="206" hits="430" branch="false" />
+            <line number="207" hits="430" branch="false" />
+            <line number="208" hits="430" branch="true" condition-coverage="100% (2/2)" />
+            <line number="209" hits="6" branch="false" />
+            <line number="210" hits="430" branch="false" />
+            <line number="211" hits="430" branch="false" />
+            <line number="246" hits="272" branch="false" />
+            <line number="249" hits="896" branch="false" />
+            <line number="250" hits="4824" branch="true" condition-coverage="100% (2/2)" />
+            <line number="251" hits="1068" branch="false" />
+            <line number="252" hits="896" branch="false" />
+            <line number="254" hits="798" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Impresion.ImpresionException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Impresion/IImpresoraTickets.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.String,System.Exception)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="23" hits="5" branch="false" />
+                <line number="24" hits="5" branch="false" />
+                <line number="25" hits="5" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="23" hits="5" branch="false" />
+            <line number="24" hits="5" branch="false" />
+            <line number="25" hits="5" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Impresion.MontoEnLetras" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Impresion/MontoEnLetras.cs" line-rate="0.9846153846153847" branch-rate="0.9285714285714286" complexity="43">
+          <methods>
+            <method name="Soles" signature="(System.Decimal)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="30" hits="139" branch="false" />
+                <line number="31" hits="139" branch="true" condition-coverage="100% (4/4)" />
+                <line number="32" hits="1" branch="false" />
+                <line number="34" hits="138" branch="false" />
+                <line number="35" hits="138" branch="false" />
+                <line number="36" hits="138" branch="false" />
+                <line number="37" hits="138" branch="false" />
+                <line number="38" hits="138" branch="false" />
+              </lines>
+            </method>
+            <method name="Numero" signature="(System.Int64)" line-rate="0.9523809523809523" branch-rate="0.8333333333333334" complexity="18">
+              <lines>
+                <line number="42" hits="156" branch="false" />
+                <line number="43" hits="156" branch="true" condition-coverage="50% (3/6)" />
+                <line number="44" hits="0" branch="false" />
+                <line number="45" hits="156" branch="true" condition-coverage="100% (2/2)" />
+                <line number="46" hits="1" branch="false" />
+                <line number="48" hits="155" branch="false" />
+                <line number="49" hits="155" branch="false" />
+                <line number="50" hits="155" branch="false" />
+                <line number="51" hits="155" branch="false" />
+                <line number="53" hits="155" branch="true" condition-coverage="100% (2/2)" />
+                <line number="54" hits="2" branch="false" />
+                <line number="55" hits="153" branch="true" condition-coverage="100% (2/2)" />
+                <line number="56" hits="2" branch="false" />
+                <line number="58" hits="155" branch="true" condition-coverage="100% (2/2)" />
+                <line number="59" hits="12" branch="false" />
+                <line number="60" hits="143" branch="true" condition-coverage="100% (2/2)" />
+                <line number="61" hits="8" branch="false" />
+                <line number="63" hits="155" branch="true" condition-coverage="100% (2/2)" />
+                <line number="64" hits="148" branch="false" />
+                <line number="66" hits="155" branch="false" />
+                <line number="67" hits="156" branch="false" />
+              </lines>
+            </method>
+            <method name="HastaMil" signature="(System.Int32,System.Boolean)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="74" hits="158" branch="false" />
+                <line number="75" hits="158" branch="true" condition-coverage="100% (2/2)" />
+                <line number="76" hits="2" branch="false" />
+                <line number="78" hits="156" branch="false" />
+                <line number="79" hits="156" branch="false" />
+                <line number="80" hits="156" branch="false" />
+                <line number="81" hits="158" branch="false" />
+              </lines>
+            </method>
+            <method name="HastaCien" signature="(System.Int32,System.Boolean)" line-rate="1" branch-rate="1" complexity="18">
+              <lines>
+                <line number="84" hits="156" branch="false" />
+                <line number="85" hits="156" branch="true" condition-coverage="100% (2/2)" />
+                <line number="86" hits="2" branch="false" />
+                <line number="87" hits="154" branch="true" condition-coverage="100% (4/4)" />
+                <line number="88" hits="1" branch="false" />
+                <line number="89" hits="153" branch="true" condition-coverage="100% (4/4)" />
+                <line number="90" hits="1" branch="false" />
+                <line number="91" hits="152" branch="true" condition-coverage="100% (2/2)" />
+                <line number="92" hits="43" branch="false" />
+                <line number="94" hits="109" branch="false" />
+                <line number="95" hits="109" branch="true" condition-coverage="100% (2/2)" />
+                <line number="96" hits="14" branch="false" />
+                <line number="97" hits="95" branch="true" condition-coverage="100% (4/4)" />
+                <line number="98" hits="156" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="1" branch="false" />
+                <line number="11" hits="1" branch="false" />
+                <line number="12" hits="1" branch="false" />
+                <line number="13" hits="1" branch="false" />
+                <line number="14" hits="1" branch="false" />
+                <line number="15" hits="1" branch="false" />
+                <line number="16" hits="1" branch="false" />
+                <line number="17" hits="1" branch="false" />
+                <line number="19" hits="1" branch="false" />
+                <line number="20" hits="1" branch="false" />
+                <line number="22" hits="1" branch="false" />
+                <line number="23" hits="1" branch="false" />
+                <line number="24" hits="1" branch="false" />
+                <line number="25" hits="1" branch="false" />
+                <line number="26" hits="1" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="9" hits="1" branch="false" />
+            <line number="11" hits="1" branch="false" />
+            <line number="12" hits="1" branch="false" />
+            <line number="13" hits="1" branch="false" />
+            <line number="14" hits="1" branch="false" />
+            <line number="15" hits="1" branch="false" />
+            <line number="16" hits="1" branch="false" />
+            <line number="17" hits="1" branch="false" />
+            <line number="19" hits="1" branch="false" />
+            <line number="20" hits="1" branch="false" />
+            <line number="22" hits="1" branch="false" />
+            <line number="23" hits="1" branch="false" />
+            <line number="24" hits="1" branch="false" />
+            <line number="25" hits="1" branch="false" />
+            <line number="26" hits="1" branch="false" />
+            <line number="30" hits="139" branch="false" />
+            <line number="31" hits="139" branch="true" condition-coverage="100% (4/4)" />
+            <line number="32" hits="1" branch="false" />
+            <line number="34" hits="138" branch="false" />
+            <line number="35" hits="138" branch="false" />
+            <line number="36" hits="138" branch="false" />
+            <line number="37" hits="138" branch="false" />
+            <line number="38" hits="138" branch="false" />
+            <line number="42" hits="156" branch="false" />
+            <line number="43" hits="156" branch="true" condition-coverage="50% (3/6)" />
+            <line number="44" hits="0" branch="false" />
+            <line number="45" hits="156" branch="true" condition-coverage="100% (2/2)" />
+            <line number="46" hits="1" branch="false" />
+            <line number="48" hits="155" branch="false" />
+            <line number="49" hits="155" branch="false" />
+            <line number="50" hits="155" branch="false" />
+            <line number="51" hits="155" branch="false" />
+            <line number="53" hits="155" branch="true" condition-coverage="100% (2/2)" />
+            <line number="54" hits="2" branch="false" />
+            <line number="55" hits="153" branch="true" condition-coverage="100% (2/2)" />
+            <line number="56" hits="2" branch="false" />
+            <line number="58" hits="155" branch="true" condition-coverage="100% (2/2)" />
+            <line number="59" hits="12" branch="false" />
+            <line number="60" hits="143" branch="true" condition-coverage="100% (2/2)" />
+            <line number="61" hits="8" branch="false" />
+            <line number="63" hits="155" branch="true" condition-coverage="100% (2/2)" />
+            <line number="64" hits="148" branch="false" />
+            <line number="66" hits="155" branch="false" />
+            <line number="67" hits="156" branch="false" />
+            <line number="74" hits="158" branch="false" />
+            <line number="75" hits="158" branch="true" condition-coverage="100% (2/2)" />
+            <line number="76" hits="2" branch="false" />
+            <line number="78" hits="156" branch="false" />
+            <line number="79" hits="156" branch="false" />
+            <line number="80" hits="156" branch="false" />
+            <line number="81" hits="158" branch="false" />
+            <line number="84" hits="156" branch="false" />
+            <line number="85" hits="156" branch="true" condition-coverage="100% (2/2)" />
+            <line number="86" hits="2" branch="false" />
+            <line number="87" hits="154" branch="true" condition-coverage="100% (4/4)" />
+            <line number="88" hits="1" branch="false" />
+            <line number="89" hits="153" branch="true" condition-coverage="100% (4/4)" />
+            <line number="90" hits="1" branch="false" />
+            <line number="91" hits="152" branch="true" condition-coverage="100% (2/2)" />
+            <line number="92" hits="43" branch="false" />
+            <line number="94" hits="109" branch="false" />
+            <line number="95" hits="109" branch="true" condition-coverage="100% (2/2)" />
+            <line number="96" hits="14" branch="false" />
+            <line number="97" hits="95" branch="true" condition-coverage="100% (4/4)" />
+            <line number="98" hits="156" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Impresion.Ticket" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Impresion/Ticket.cs" line-rate="0.9545454545454546" branch-rate="0.7857142857142857" complexity="14">
+          <methods>
+            <method name="ComoTexto" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="39" hits="36" branch="false" />
+                <line number="40" hits="36" branch="false" />
+                <line number="41" hits="2230" branch="true" condition-coverage="100% (2/2)" />
+                <line number="42" hits="1061" branch="false" />
+                <line number="43" hits="36" branch="false" />
+                <line number="44" hits="36" branch="false" />
+              </lines>
+            </method>
+            <method name="Alinear" signature="(System.String,Condor.Dominio.Impresion.Alineacion,System.Int32)" line-rate="1" branch-rate="1" complexity="6">
+              <lines>
+                <line number="47" hits="1090" branch="false" />
+                <line number="48" hits="1090" branch="true" condition-coverage="100% (2/2)" />
+                <line number="49" hits="437" branch="false" />
+                <line number="50" hits="653" branch="true" condition-coverage="100% (4/4)" />
+                <line number="51" hits="653" branch="false" />
+                <line number="52" hits="336" branch="false" />
+                <line number="53" hits="76" branch="false" />
+                <line number="54" hits="241" branch="false" />
+                <line number="55" hits="653" branch="false" />
+                <line number="56" hits="1090" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(System.Int32)" line-rate="0.8333333333333334" branch-rate="0.5" complexity="6">
+              <lines>
+                <line number="25" hits="117" branch="false" />
+                <line number="26" hits="117" branch="false" />
+                <line number="27" hits="117" branch="true" condition-coverage="50% (3/6)" />
+                <line number="28" hits="0" branch="false" />
+                <line number="29" hits="117" branch="false" />
+                <line number="30" hits="117" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="25" hits="117" branch="false" />
+            <line number="26" hits="117" branch="false" />
+            <line number="27" hits="117" branch="true" condition-coverage="50% (3/6)" />
+            <line number="28" hits="0" branch="false" />
+            <line number="29" hits="117" branch="false" />
+            <line number="30" hits="117" branch="false" />
+            <line number="39" hits="36" branch="false" />
+            <line number="40" hits="36" branch="false" />
+            <line number="41" hits="2230" branch="true" condition-coverage="100% (2/2)" />
+            <line number="42" hits="1061" branch="false" />
+            <line number="43" hits="36" branch="false" />
+            <line number="44" hits="36" branch="false" />
+            <line number="47" hits="1090" branch="false" />
+            <line number="48" hits="1090" branch="true" condition-coverage="100% (2/2)" />
+            <line number="49" hits="437" branch="false" />
+            <line number="50" hits="653" branch="true" condition-coverage="100% (4/4)" />
+            <line number="51" hits="653" branch="false" />
+            <line number="52" hits="336" branch="false" />
+            <line number="53" hits="76" branch="false" />
+            <line number="54" hits="241" branch="false" />
+            <line number="55" hits="653" branch="false" />
+            <line number="56" hits="1090" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Reportes.ReporteVentas" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Reportes/ReporteVentas.cs" line-rate="0.9761904761904762" branch-rate="0.9285714285714286" complexity="17">
+          <methods>
+            <method name="get_OpGravada" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="38" hits="2" branch="false" />
+              </lines>
+            </method>
+            <method name="get_TicketPromedio" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="41" hits="5" branch="true" condition-coverage="100% (2/2)" />
+              </lines>
+            </method>
+            <method name="ValidarPeriodo" signature="(System.DateOnly,System.DateOnly)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="59" hits="19" branch="false" />
+                <line number="60" hits="19" branch="true" condition-coverage="100% (2/2)" />
+                <line number="61" hits="2" branch="false" />
+                <line number="62" hits="17" branch="true" condition-coverage="100% (2/2)" />
+                <line number="63" hits="3" branch="false" />
+                <line number="64" hits="14" branch="false" />
+              </lines>
+            </method>
+            <method name="Consolidar" signature="(System.DateOnly,System.DateOnly,System.Collections.Generic.IEnumerable`1&lt;Condor.Dominio.Reportes.VentaResumida&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="71" hits="11" branch="false" />
+                <line number="72" hits="11" branch="false" />
+                <line number="74" hits="9" branch="false" />
+                <line number="75" hits="9" branch="false" />
+                <line number="76" hits="9" branch="false" />
+                <line number="77" hits="9" branch="false" />
+                <line number="78" hits="9" branch="false" />
+                <line number="80" hits="9" branch="false" />
+                <line number="81" hits="9" branch="false" />
+                <line number="82" hits="9" branch="false" />
+                <line number="83" hits="9" branch="false" />
+                <line number="84" hits="9" branch="false" />
+                <line number="85" hits="9" branch="false" />
+                <line number="86" hits="9" branch="false" />
+                <line number="87" hits="9" branch="false" />
+                <line number="88" hits="9" branch="false" />
+                <line number="89" hits="9" branch="false" />
+                <line number="90" hits="9" branch="false" />
+                <line number="91" hits="9" branch="false" />
+                <line number="92" hits="9" branch="false" />
+              </lines>
+            </method>
+            <method name="NombreTipo" signature="(System.String)" line-rate="0.8571428571428571" branch-rate="0.8333333333333334" complexity="6">
+              <lines>
+                <line number="94" hits="14" branch="true" condition-coverage="83% (5/6)" />
+                <line number="95" hits="14" branch="false" />
+                <line number="96" hits="8" branch="false" />
+                <line number="97" hits="3" branch="false" />
+                <line number="98" hits="3" branch="false" />
+                <line number="99" hits="0" branch="false" />
+                <line number="100" hits="14" branch="false" />
+              </lines>
+            </method>
+            <method name="Agrupar" signature="(System.Collections.Generic.IEnumerable`1&lt;Condor.Dominio.Reportes.VentaResumida&gt;,System.Func`2&lt;Condor.Dominio.Reportes.VentaResumida,System.String&gt;,System.Boolean)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="105" hits="36" branch="false" />
+                <line number="106" hits="36" branch="false" />
+                <line number="107" hits="36" branch="true" condition-coverage="100% (2/2)" />
+                <line number="108" hits="36" branch="false" />
+                <line number="109" hits="36" branch="false" />
+                <line number="110" hits="36" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(System.DateOnly,System.DateOnly)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="26" hits="18" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="26" hits="18" branch="false" />
+            <line number="38" hits="2" branch="false" />
+            <line number="41" hits="5" branch="true" condition-coverage="100% (2/2)" />
+            <line number="59" hits="19" branch="false" />
+            <line number="60" hits="19" branch="true" condition-coverage="100% (2/2)" />
+            <line number="61" hits="2" branch="false" />
+            <line number="62" hits="17" branch="true" condition-coverage="100% (2/2)" />
+            <line number="63" hits="3" branch="false" />
+            <line number="64" hits="14" branch="false" />
+            <line number="71" hits="11" branch="false" />
+            <line number="72" hits="11" branch="false" />
+            <line number="74" hits="9" branch="false" />
+            <line number="75" hits="9" branch="false" />
+            <line number="76" hits="9" branch="false" />
+            <line number="77" hits="9" branch="false" />
+            <line number="78" hits="9" branch="false" />
+            <line number="80" hits="9" branch="false" />
+            <line number="81" hits="9" branch="false" />
+            <line number="82" hits="9" branch="false" />
+            <line number="83" hits="9" branch="false" />
+            <line number="84" hits="9" branch="false" />
+            <line number="85" hits="9" branch="false" />
+            <line number="86" hits="9" branch="false" />
+            <line number="87" hits="9" branch="false" />
+            <line number="88" hits="9" branch="false" />
+            <line number="89" hits="9" branch="false" />
+            <line number="90" hits="9" branch="false" />
+            <line number="91" hits="9" branch="false" />
+            <line number="92" hits="9" branch="false" />
+            <line number="94" hits="14" branch="true" condition-coverage="83% (5/6)" />
+            <line number="95" hits="14" branch="false" />
+            <line number="96" hits="8" branch="false" />
+            <line number="97" hits="3" branch="false" />
+            <line number="98" hits="3" branch="false" />
+            <line number="99" hits="0" branch="false" />
+            <line number="100" hits="14" branch="false" />
+            <line number="105" hits="36" branch="false" />
+            <line number="106" hits="36" branch="false" />
+            <line number="107" hits="36" branch="true" condition-coverage="100% (2/2)" />
+            <line number="108" hits="36" branch="false" />
+            <line number="109" hits="36" branch="false" />
+            <line number="110" hits="36" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Seguridad.HashClave" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Seguridad/HashClave.cs" line-rate="1" branch-rate="0.95" complexity="22">
+          <methods>
+            <method name="Generar" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="19" hits="6" branch="false" />
+              </lines>
+            </method>
+            <method name="Generar" signature="(System.String,System.Byte[],System.Int32)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="23" hits="185" branch="false" />
+                <line number="24" hits="185" branch="false" />
+                <line number="25" hits="185" branch="true" condition-coverage="100% (2/2)" />
+                <line number="26" hits="1" branch="false" />
+                <line number="27" hits="184" branch="true" condition-coverage="100% (2/2)" />
+                <line number="28" hits="1" branch="false" />
+                <line number="30" hits="183" branch="false" />
+                <line number="31" hits="183" branch="false" />
+                <line number="32" hits="183" branch="false" />
+              </lines>
+            </method>
+            <method name="Verificar" signature="(System.String,System.String)" line-rate="1" branch-rate="0.9375" complexity="16">
+              <lines>
+                <line number="39" hits="133" branch="false" />
+                <line number="40" hits="133" branch="true" condition-coverage="75% (3/4)" />
+                <line number="41" hits="2" branch="false" />
+                <line number="43" hits="131" branch="false" />
+                <line number="44" hits="131" branch="true" condition-coverage="100% (8/8)" />
+                <line number="45" hits="4" branch="false" />
+                <line number="49" hits="127" branch="false" />
+                <line number="50" hits="127" branch="false" />
+                <line number="51" hits="125" branch="false" />
+                <line number="52" hits="125" branch="false" />
+                <line number="53" hits="2" branch="false" />
+                <line number="54" hits="2" branch="false" />
+                <line number="55" hits="2" branch="false" />
+                <line number="58" hits="125" branch="true" condition-coverage="100% (4/4)" />
+                <line number="59" hits="1" branch="false" />
+                <line number="61" hits="124" branch="false" />
+                <line number="62" hits="124" branch="false" />
+                <line number="63" hits="124" branch="false" />
+                <line number="64" hits="133" branch="false" />
+              </lines>
+            </method>
+            <method name="Derivar" signature="(System.String,System.Byte[],System.Int32)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="67" hits="183" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="19" hits="6" branch="false" />
+            <line number="23" hits="185" branch="false" />
+            <line number="24" hits="185" branch="false" />
+            <line number="25" hits="185" branch="true" condition-coverage="100% (2/2)" />
+            <line number="26" hits="1" branch="false" />
+            <line number="27" hits="184" branch="true" condition-coverage="100% (2/2)" />
+            <line number="28" hits="1" branch="false" />
+            <line number="30" hits="183" branch="false" />
+            <line number="31" hits="183" branch="false" />
+            <line number="32" hits="183" branch="false" />
+            <line number="39" hits="133" branch="false" />
+            <line number="40" hits="133" branch="true" condition-coverage="75% (3/4)" />
+            <line number="41" hits="2" branch="false" />
+            <line number="43" hits="131" branch="false" />
+            <line number="44" hits="131" branch="true" condition-coverage="100% (8/8)" />
+            <line number="45" hits="4" branch="false" />
+            <line number="49" hits="127" branch="false" />
+            <line number="50" hits="127" branch="false" />
+            <line number="51" hits="125" branch="false" />
+            <line number="52" hits="125" branch="false" />
+            <line number="53" hits="2" branch="false" />
+            <line number="54" hits="2" branch="false" />
+            <line number="55" hits="2" branch="false" />
+            <line number="58" hits="125" branch="true" condition-coverage="100% (4/4)" />
+            <line number="59" hits="1" branch="false" />
+            <line number="61" hits="124" branch="false" />
+            <line number="62" hits="124" branch="false" />
+            <line number="63" hits="124" branch="false" />
+            <line number="64" hits="133" branch="false" />
+            <line number="67" hits="183" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Seguridad.ResultadoAutenticacion" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Seguridad/ServicioAutenticacion.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="get_Exitoso" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="33" hits="94" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="33" hits="94" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Seguridad.Roles" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Seguridad/Roles.cs" line-rate="0.7142857142857143" branch-rate="0.3" complexity="10">
+          <methods>
+            <method name="EsValido" signature="(System.String)" line-rate="0" branch-rate="0" complexity="4">
+              <lines>
+                <line number="15" hits="0" branch="true" condition-coverage="0% (0/4)" />
+              </lines>
+            </method>
+            <method name="Nombre" signature="(System.String)" line-rate="0.8333333333333334" branch-rate="0.5" complexity="6">
+              <lines>
+                <line number="18" hits="5" branch="true" condition-coverage="75% (3/4)" />
+                <line number="19" hits="5" branch="false" />
+                <line number="20" hits="1" branch="false" />
+                <line number="21" hits="4" branch="false" />
+                <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="23" hits="5" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="15" hits="0" branch="true" condition-coverage="0% (0/4)" />
+            <line number="18" hits="5" branch="true" condition-coverage="75% (3/4)" />
+            <line number="19" hits="5" branch="false" />
+            <line number="20" hits="1" branch="false" />
+            <line number="21" hits="4" branch="false" />
+            <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="23" hits="5" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Seguridad.ServicioAutenticacion" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Seguridad/ServicioAutenticacion.cs" line-rate="1" branch-rate="1" complexity="9">
+          <methods>
+            <method name="Normalizar" signature="(System.String)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="65" hits="135" branch="true" condition-coverage="100% (4/4)" />
+              </lines>
+            </method>
+            <method name="Invalidas" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="118" hits="48" branch="false" />
+              </lines>
+            </method>
+            <method name="Bloqueada" signature="(System.DateTimeOffset)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="120" hits="14" branch="false" />
+                <line number="121" hits="14" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(Condor.Dominio.Contratos.IUsuarioRepositorio,System.Func`1&lt;System.DateTimeOffset&gt;)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="58" hits="94" branch="false" />
+                <line number="59" hits="94" branch="false" />
+                <line number="60" hits="94" branch="false" />
+                <line number="61" hits="94" branch="true" condition-coverage="100% (2/2)" />
+                <line number="62" hits="94" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="51" hits="2" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="51" hits="2" branch="false" />
+            <line number="58" hits="94" branch="false" />
+            <line number="59" hits="94" branch="false" />
+            <line number="60" hits="94" branch="false" />
+            <line number="61" hits="94" branch="true" condition-coverage="100% (2/2)" />
+            <line number="62" hits="94" branch="false" />
+            <line number="65" hits="135" branch="true" condition-coverage="100% (4/4)" />
+            <line number="118" hits="48" branch="false" />
+            <line number="120" hits="14" branch="false" />
+            <line number="121" hits="14" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Sunat.EstadoSunat" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Sunat/EnvioSunat.cs" line-rate="1" branch-rate="1" complexity="6">
+          <methods>
+            <method name="EsDefinitivo" signature="(System.String)" line-rate="1" branch-rate="1" complexity="6">
+              <lines>
+                <line number="23" hits="134" branch="true" condition-coverage="100% (6/6)" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="23" hits="134" branch="true" condition-coverage="100% (6/6)" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Sunat.RespuestaSunat" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Sunat/EnvioSunat.cs" line-rate="1" branch-rate="1" complexity="10">
+          <methods>
+            <method name="get_Aceptado" signature="()" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="60" hits="3" branch="true" condition-coverage="100% (4/4)" />
+              </lines>
+            </method>
+            <method name="get_Resumen" signature="()" line-rate="1" branch-rate="1" complexity="6">
+              <lines>
+                <line number="63" hits="30" branch="true" condition-coverage="100% (6/6)" />
+                <line number="64" hits="30" branch="false" />
+                <line number="65" hits="24" branch="false" />
+                <line number="66" hits="1" branch="false" />
+                <line number="67" hits="3" branch="false" />
+                <line number="68" hits="2" branch="false" />
+                <line number="69" hits="30" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="60" hits="3" branch="true" condition-coverage="100% (4/4)" />
+            <line number="63" hits="30" branch="true" condition-coverage="100% (6/6)" />
+            <line number="64" hits="30" branch="false" />
+            <line number="65" hits="24" branch="false" />
+            <line number="66" hits="1" branch="false" />
+            <line number="67" hits="3" branch="false" />
+            <line number="68" hits="2" branch="false" />
+            <line number="69" hits="30" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Sunat.ResultadoReenvio" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Sunat/ReenvioSunat.cs" line-rate="0.9285714285714286" branch-rate="0.8" complexity="21">
+          <methods>
+            <method name="get_Cortado" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="14" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Resumen" signature="()" line-rate="0.9230769230769231" branch-rate="0.8" complexity="20">
+              <lines>
+                <line number="15" hits="9" branch="false" />
+                <line number="16" hits="9" branch="true" condition-coverage="100% (4/4)" />
+                <line number="17" hits="1" branch="false" />
+                <line number="18" hits="8" branch="false" />
+                <line number="19" hits="8" branch="true" condition-coverage="100% (2/2)" />
+                <line number="20" hits="6" branch="true" condition-coverage="100% (2/2)" />
+                <line number="21" hits="8" branch="true" condition-coverage="50% (1/2)" />
+                <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="23" hits="8" branch="true" condition-coverage="100% (2/2)" />
+                <line number="24" hits="2" branch="true" condition-coverage="50% (1/2)" />
+                <line number="25" hits="8" branch="true" condition-coverage="100% (2/2)" />
+                <line number="26" hits="8" branch="true" condition-coverage="100% (2/2)" />
+                <line number="27" hits="9" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="9" hits="14" branch="false" />
+            <line number="15" hits="9" branch="false" />
+            <line number="16" hits="9" branch="true" condition-coverage="100% (4/4)" />
+            <line number="17" hits="1" branch="false" />
+            <line number="18" hits="8" branch="false" />
+            <line number="19" hits="8" branch="true" condition-coverage="100% (2/2)" />
+            <line number="20" hits="6" branch="true" condition-coverage="100% (2/2)" />
+            <line number="21" hits="8" branch="true" condition-coverage="50% (1/2)" />
+            <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="23" hits="8" branch="true" condition-coverage="100% (2/2)" />
+            <line number="24" hits="2" branch="true" condition-coverage="50% (1/2)" />
+            <line number="25" hits="8" branch="true" condition-coverage="100% (2/2)" />
+            <line number="26" hits="8" branch="true" condition-coverage="100% (2/2)" />
+            <line number="27" hits="9" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Sunat.ResumenPendientes" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Sunat/EnvioSunat.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="PorVencer" signature="(System.DateTimeOffset)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="84" hits="14" branch="true" condition-coverage="100% (2/2)" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="84" hits="14" branch="true" condition-coverage="100% (2/2)" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Sunat.SunatNoDisponibleException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Sunat/EnvioSunat.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.String,System.Exception)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="130" hits="36" branch="false" />
+                <line number="131" hits="36" branch="false" />
+                <line number="132" hits="36" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="130" hits="36" branch="false" />
+            <line number="131" hits="36" branch="false" />
+            <line number="132" hits="36" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ClienteDuplicadoException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorCliente.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(Condor.Dominio.Entidades.TipoDocumento,System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="75" hits="4" branch="false" />
+                <line number="76" hits="4" branch="false" />
+                <line number="77" hits="4" branch="false" />
+                <line number="78" hits="4" branch="false" />
+                <line number="79" hits="4" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="75" hits="4" branch="false" />
+            <line number="76" hits="4" branch="false" />
+            <line number="77" hits="4" branch="false" />
+            <line number="78" hits="4" branch="false" />
+            <line number="79" hits="4" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ClienteInvalidoException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorCliente.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.Collections.Generic.IReadOnlyList`1&lt;System.String&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="66" hits="6" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="66" hits="6" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.CodigoBarrasDuplicadoException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorProducto.cs" line-rate="1" branch-rate="0.5" complexity="2">
+          <methods>
+            <method name=".ctor" signature="(System.String,System.String)" line-rate="1" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="117" hits="10" branch="true" condition-coverage="50% (1/2)" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="117" hits="10" branch="true" condition-coverage="50% (1/2)" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.CompraDuplicadaException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorCompra.cs" line-rate="1" branch-rate="0.5" complexity="2">
+          <methods>
+            <method name=".ctor" signature="(System.String,System.String)" line-rate="1" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="104" hits="8" branch="true" condition-coverage="50% (1/2)" />
+                <line number="105" hits="8" branch="false" />
+                <line number="106" hits="8" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="104" hits="8" branch="true" condition-coverage="50% (1/2)" />
+            <line number="105" hits="8" branch="false" />
+            <line number="106" hits="8" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.CompraInvalidaException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorCompra.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.Collections.Generic.IReadOnlyList`1&lt;Condor.Dominio.Validacion.ErrorCompra&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="92" hits="2" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="92" hits="2" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.GuiaInvalidaException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorGuia.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.Collections.Generic.IReadOnlyList`1&lt;Condor.Dominio.Validacion.ErrorGuia&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="193" hits="2" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="193" hits="2" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ProductoDuplicadoException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorProducto.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="126" hits="8" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="126" hits="8" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ProductoInvalidoException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorProducto.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.Collections.Generic.IReadOnlyList`1&lt;System.String&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="108" hits="12" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="108" hits="12" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ProveedorDuplicadoException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorProveedor.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="112" hits="14" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="112" hits="14" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ProveedorInvalidoException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorProveedor.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.Collections.Generic.IReadOnlyList`1&lt;System.String&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="103" hits="4" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="103" hits="4" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ValidadorCliente" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorCliente.cs" line-rate="0.9333333333333333" branch-rate="0.85" complexity="20">
+          <methods>
+            <method name="Normalizar" signature="(Condor.Dominio.Entidades.Cliente)" line-rate="1" branch-rate="0.75" complexity="4">
+              <lines>
+                <line number="17" hits="343" branch="false" />
+                <line number="18" hits="343" branch="false" />
+                <line number="19" hits="343" branch="true" condition-coverage="50% (1/2)" />
+                <line number="20" hits="343" branch="true" condition-coverage="100% (2/2)" />
+                <line number="21" hits="343" branch="false" />
+                <line number="22" hits="343" branch="false" />
+                <line number="23" hits="343" branch="false" />
+                <line number="24" hits="343" branch="false" />
+              </lines>
+            </method>
+            <method name="Errores" signature="(Condor.Dominio.Entidades.Cliente)" line-rate="0.8666666666666667" branch-rate="0.8571428571428571" complexity="14">
+              <lines>
+                <line number="28" hits="346" branch="false" />
+                <line number="29" hits="346" branch="false" />
+                <line number="31" hits="346" branch="true" condition-coverage="100% (2/2)" />
+                <line number="32" hits="1" branch="false" />
+                <line number="33" hits="345" branch="true" condition-coverage="100% (2/2)" />
+                <line number="34" hits="5" branch="false" />
+                <line number="36" hits="346" branch="true" condition-coverage="100% (2/2)" />
+                <line number="37" hits="346" branch="true" condition-coverage="100% (2/2)" />
+                <line number="38" hits="1" branch="false" />
+                <line number="39" hits="345" branch="true" condition-coverage="50% (1/2)" />
+                <line number="40" hits="0" branch="false" />
+                <line number="42" hits="346" branch="true" condition-coverage="75% (3/4)" />
+                <line number="43" hits="0" branch="false" />
+                <line number="45" hits="346" branch="false" />
+                <line number="46" hits="346" branch="false" />
+              </lines>
+            </method>
+            <method name="Validar" signature="(Condor.Dominio.Entidades.Cliente)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="50" hits="335" branch="false" />
+                <line number="51" hits="335" branch="false" />
+                <line number="52" hits="335" branch="false" />
+                <line number="53" hits="335" branch="true" condition-coverage="100% (2/2)" />
+                <line number="54" hits="3" branch="false" />
+                <line number="55" hits="332" branch="false" />
+                <line number="56" hits="332" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="17" hits="343" branch="false" />
+            <line number="18" hits="343" branch="false" />
+            <line number="19" hits="343" branch="true" condition-coverage="50% (1/2)" />
+            <line number="20" hits="343" branch="true" condition-coverage="100% (2/2)" />
+            <line number="21" hits="343" branch="false" />
+            <line number="22" hits="343" branch="false" />
+            <line number="23" hits="343" branch="false" />
+            <line number="24" hits="343" branch="false" />
+            <line number="28" hits="346" branch="false" />
+            <line number="29" hits="346" branch="false" />
+            <line number="31" hits="346" branch="true" condition-coverage="100% (2/2)" />
+            <line number="32" hits="1" branch="false" />
+            <line number="33" hits="345" branch="true" condition-coverage="100% (2/2)" />
+            <line number="34" hits="5" branch="false" />
+            <line number="36" hits="346" branch="true" condition-coverage="100% (2/2)" />
+            <line number="37" hits="346" branch="true" condition-coverage="100% (2/2)" />
+            <line number="38" hits="1" branch="false" />
+            <line number="39" hits="345" branch="true" condition-coverage="50% (1/2)" />
+            <line number="40" hits="0" branch="false" />
+            <line number="42" hits="346" branch="true" condition-coverage="75% (3/4)" />
+            <line number="43" hits="0" branch="false" />
+            <line number="45" hits="346" branch="false" />
+            <line number="46" hits="346" branch="false" />
+            <line number="50" hits="335" branch="false" />
+            <line number="51" hits="335" branch="false" />
+            <line number="52" hits="335" branch="false" />
+            <line number="53" hits="335" branch="true" condition-coverage="100% (2/2)" />
+            <line number="54" hits="3" branch="false" />
+            <line number="55" hits="332" branch="false" />
+            <line number="56" hits="332" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ValidadorCompra" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorCompra.cs" line-rate="1" branch-rate="0.9411764705882353" complexity="34">
+          <methods>
+            <method name="Errores" signature="(Condor.Dominio.Entidades.Compra,System.DateOnly)" line-rate="1" branch-rate="0.9615384615384616" complexity="26">
+              <lines>
+                <line number="30" hits="85" branch="false" />
+                <line number="31" hits="85" branch="false" />
+                <line number="33" hits="85" branch="true" condition-coverage="100% (2/2)" />
+                <line number="34" hits="3" branch="false" />
+                <line number="36" hits="85" branch="true" condition-coverage="100% (6/6)" />
+                <line number="37" hits="1" branch="false" />
+                <line number="38" hits="85" branch="true" condition-coverage="75% (3/4)" />
+                <line number="39" hits="6" branch="false" />
+                <line number="40" hits="85" branch="true" condition-coverage="100% (6/6)" />
+                <line number="41" hits="4" branch="false" />
+                <line number="43" hits="85" branch="true" condition-coverage="100% (2/2)" />
+                <line number="44" hits="2" branch="false" />
+                <line number="45" hits="83" branch="true" condition-coverage="100% (2/2)" />
+                <line number="46" hits="1" branch="false" />
+                <line number="48" hits="85" branch="true" condition-coverage="100% (2/2)" />
+                <line number="49" hits="2" branch="false" />
+                <line number="50" hits="83" branch="true" condition-coverage="100% (2/2)" />
+                <line number="51" hits="1" branch="false" />
+                <line number="53" hits="85" branch="false" />
+                <line number="54" hits="85" branch="false" />
+              </lines>
+            </method>
+            <method name="Preparar" signature="(Condor.Dominio.Entidades.Compra,System.DateOnly)" line-rate="1" branch-rate="0.875" complexity="8">
+              <lines>
+                <line number="62" hits="51" branch="false" />
+                <line number="63" hits="51" branch="true" condition-coverage="50% (1/2)" />
+                <line number="64" hits="51" branch="true" condition-coverage="100% (2/2)" />
+                <line number="66" hits="51" branch="false" />
+                <line number="67" hits="51" branch="true" condition-coverage="100% (2/2)" />
+                <line number="68" hits="1" branch="false" />
+                <line number="70" hits="50" branch="false" />
+                <line number="71" hits="312" branch="true" condition-coverage="100% (2/2)" />
+                <line number="72" hits="81" branch="false" />
+                <line number="73" hits="81" branch="false" />
+                <line number="74" hits="81" branch="false" />
+                <line number="75" hits="81" branch="false" />
+                <line number="77" hits="50" branch="false" />
+                <line number="78" hits="50" branch="false" />
+                <line number="79" hits="50" branch="false" />
+                <line number="80" hits="50" branch="false" />
+                <line number="81" hits="50" branch="false" />
+                <line number="82" hits="50" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="30" hits="85" branch="false" />
+            <line number="31" hits="85" branch="false" />
+            <line number="33" hits="85" branch="true" condition-coverage="100% (2/2)" />
+            <line number="34" hits="3" branch="false" />
+            <line number="36" hits="85" branch="true" condition-coverage="100% (6/6)" />
+            <line number="37" hits="1" branch="false" />
+            <line number="38" hits="85" branch="true" condition-coverage="75% (3/4)" />
+            <line number="39" hits="6" branch="false" />
+            <line number="40" hits="85" branch="true" condition-coverage="100% (6/6)" />
+            <line number="41" hits="4" branch="false" />
+            <line number="43" hits="85" branch="true" condition-coverage="100% (2/2)" />
+            <line number="44" hits="2" branch="false" />
+            <line number="45" hits="83" branch="true" condition-coverage="100% (2/2)" />
+            <line number="46" hits="1" branch="false" />
+            <line number="48" hits="85" branch="true" condition-coverage="100% (2/2)" />
+            <line number="49" hits="2" branch="false" />
+            <line number="50" hits="83" branch="true" condition-coverage="100% (2/2)" />
+            <line number="51" hits="1" branch="false" />
+            <line number="53" hits="85" branch="false" />
+            <line number="54" hits="85" branch="false" />
+            <line number="62" hits="51" branch="false" />
+            <line number="63" hits="51" branch="true" condition-coverage="50% (1/2)" />
+            <line number="64" hits="51" branch="true" condition-coverage="100% (2/2)" />
+            <line number="66" hits="51" branch="false" />
+            <line number="67" hits="51" branch="true" condition-coverage="100% (2/2)" />
+            <line number="68" hits="1" branch="false" />
+            <line number="70" hits="50" branch="false" />
+            <line number="71" hits="312" branch="true" condition-coverage="100% (2/2)" />
+            <line number="72" hits="81" branch="false" />
+            <line number="73" hits="81" branch="false" />
+            <line number="74" hits="81" branch="false" />
+            <line number="75" hits="81" branch="false" />
+            <line number="77" hits="50" branch="false" />
+            <line number="78" hits="50" branch="false" />
+            <line number="79" hits="50" branch="false" />
+            <line number="80" hits="50" branch="false" />
+            <line number="81" hits="50" branch="false" />
+            <line number="82" hits="50" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ValidadorDocumento" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorDocumento.cs" line-rate="0.9761904761904762" branch-rate="0.925" complexity="42">
+          <methods>
+            <method name="Limpiar" signature="(System.String)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="25" hits="2218" branch="true" condition-coverage="100% (2/2)" />
+              </lines>
+            </method>
+            <method name="TipoSegunLargo" signature="(System.String)" line-rate="1" branch-rate="1" complexity="10">
+              <lines>
+                <line number="31" hits="91" branch="true" condition-coverage="100% (6/6)" />
+                <line number="32" hits="91" branch="false" />
+                <line number="33" hits="69" branch="true" condition-coverage="100% (2/2)" />
+                <line number="34" hits="88" branch="true" condition-coverage="100% (2/2)" />
+                <line number="35" hits="13" branch="false" />
+                <line number="36" hits="91" branch="false" />
+              </lines>
+            </method>
+            <method name="EsDniValido" signature="(System.String)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="39" hits="332" branch="false" />
+                <line number="40" hits="332" branch="false" />
+                <line number="41" hits="332" branch="true" condition-coverage="100% (2/2)" />
+                <line number="42" hits="332" branch="false" />
+              </lines>
+            </method>
+            <method name="EsRucValido" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="44" hits="162" branch="false" />
+              </lines>
+            </method>
+            <method name="Error" signature="(Condor.Dominio.Entidades.TipoDocumento,System.String)" line-rate="0.9" branch-rate="0.8" complexity="10">
+              <lines>
+                <line number="48" hits="768" branch="false" />
+                <line number="49" hits="768" branch="false" />
+                <line number="50" hits="768" branch="true" condition-coverage="83% (5/6)" />
+                <line number="51" hits="768" branch="false" />
+                <line number="52" hits="206" branch="true" condition-coverage="100% (2/2)" />
+                <line number="53" hits="565" branch="false" />
+                <line number="54" hits="0" branch="true" condition-coverage="50% (1/2)" />
+                <line number="55" hits="200" branch="false" />
+                <line number="56" hits="768" branch="false" />
+                <line number="57" hits="768" branch="false" />
+              </lines>
+            </method>
+            <method name="DigitoVerificadorRuc" signature="(System.String)" line-rate="1" branch-rate="1" complexity="6">
+              <lines>
+                <line number="61" hits="808" branch="false" />
+                <line number="62" hits="808" branch="true" condition-coverage="100% (4/4)" />
+                <line number="63" hits="3" branch="false" />
+                <line number="65" hits="805" branch="false" />
+                <line number="66" hits="17710" branch="true" condition-coverage="100% (2/2)" />
+                <line number="67" hits="8050" branch="false" />
+                <line number="70" hits="805" branch="false" />
+                <line number="71" hits="805" branch="false" />
+              </lines>
+            </method>
+            <method name="ErrorRuc" signature="(System.String)" line-rate="1" branch-rate="1" complexity="8">
+              <lines>
+                <line number="74" hits="727" branch="false" />
+                <line number="75" hits="727" branch="true" condition-coverage="100% (4/4)" />
+                <line number="76" hits="16" branch="false" />
+                <line number="77" hits="711" branch="true" condition-coverage="100% (2/2)" />
+                <line number="78" hits="3" branch="false" />
+                <line number="79" hits="708" branch="true" condition-coverage="100% (2/2)" />
+                <line number="80" hits="16" branch="false" />
+                <line number="81" hits="692" branch="false" />
+                <line number="82" hits="727" branch="false" />
+              </lines>
+            </method>
+            <method name="SoloDigitos" signature="(System.String)" line-rate="1" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="84" hits="1919" branch="true" condition-coverage="50% (1/2)" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="2" branch="false" />
+                <line number="21" hits="2" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="15" hits="2" branch="false" />
+            <line number="21" hits="2" branch="false" />
+            <line number="25" hits="2218" branch="true" condition-coverage="100% (2/2)" />
+            <line number="31" hits="91" branch="true" condition-coverage="100% (6/6)" />
+            <line number="32" hits="91" branch="false" />
+            <line number="33" hits="69" branch="true" condition-coverage="100% (2/2)" />
+            <line number="34" hits="88" branch="true" condition-coverage="100% (2/2)" />
+            <line number="35" hits="13" branch="false" />
+            <line number="36" hits="91" branch="false" />
+            <line number="39" hits="332" branch="false" />
+            <line number="40" hits="332" branch="false" />
+            <line number="41" hits="332" branch="true" condition-coverage="100% (2/2)" />
+            <line number="42" hits="332" branch="false" />
+            <line number="44" hits="162" branch="false" />
+            <line number="48" hits="768" branch="false" />
+            <line number="49" hits="768" branch="false" />
+            <line number="50" hits="768" branch="true" condition-coverage="83% (5/6)" />
+            <line number="51" hits="768" branch="false" />
+            <line number="52" hits="206" branch="true" condition-coverage="100% (2/2)" />
+            <line number="53" hits="565" branch="false" />
+            <line number="54" hits="0" branch="true" condition-coverage="50% (1/2)" />
+            <line number="55" hits="200" branch="false" />
+            <line number="56" hits="768" branch="false" />
+            <line number="57" hits="768" branch="false" />
+            <line number="61" hits="808" branch="false" />
+            <line number="62" hits="808" branch="true" condition-coverage="100% (4/4)" />
+            <line number="63" hits="3" branch="false" />
+            <line number="65" hits="805" branch="false" />
+            <line number="66" hits="17710" branch="true" condition-coverage="100% (2/2)" />
+            <line number="67" hits="8050" branch="false" />
+            <line number="70" hits="805" branch="false" />
+            <line number="71" hits="805" branch="false" />
+            <line number="74" hits="727" branch="false" />
+            <line number="75" hits="727" branch="true" condition-coverage="100% (4/4)" />
+            <line number="76" hits="16" branch="false" />
+            <line number="77" hits="711" branch="true" condition-coverage="100% (2/2)" />
+            <line number="78" hits="3" branch="false" />
+            <line number="79" hits="708" branch="true" condition-coverage="100% (2/2)" />
+            <line number="80" hits="16" branch="false" />
+            <line number="81" hits="692" branch="false" />
+            <line number="82" hits="727" branch="false" />
+            <line number="84" hits="1919" branch="true" condition-coverage="50% (1/2)" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ValidadorGuia" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorGuia.cs" line-rate="0.9391304347826087" branch-rate="0.8783783783783784" complexity="74">
+          <methods>
+            <method name="Errores" signature="(Condor.Dominio.Entidades.GuiaRemision,System.DateOnly)" line-rate="0.8653846153846154" branch-rate="0.88" complexity="50">
+              <lines>
+                <line number="30" hits="49" branch="false" />
+                <line number="31" hits="49" branch="false" />
+                <line number="34" hits="49" branch="true" condition-coverage="100% (2/2)" />
+                <line number="35" hits="1" branch="false" />
+                <line number="36" hits="49" branch="true" condition-coverage="100% (2/2)" />
+                <line number="37" hits="1" branch="false" />
+                <line number="40" hits="49" branch="true" condition-coverage="50% (1/2)" />
+                <line number="41" hits="0" branch="false" />
+                <line number="42" hits="49" branch="true" condition-coverage="100% (4/4)" />
+                <line number="43" hits="1" branch="false" />
+                <line number="44" hits="49" branch="true" condition-coverage="100% (2/2)" />
+                <line number="45" hits="1" branch="false" />
+                <line number="46" hits="49" branch="true" condition-coverage="100% (2/2)" />
+                <line number="47" hits="2" branch="false" />
+                <line number="50" hits="49" branch="true" condition-coverage="100% (2/2)" />
+                <line number="51" hits="1" branch="false" />
+                <line number="52" hits="49" branch="true" condition-coverage="50% (1/2)" />
+                <line number="53" hits="0" branch="false" />
+                <line number="54" hits="49" branch="true" condition-coverage="100% (2/2)" />
+                <line number="55" hits="2" branch="false" />
+                <line number="56" hits="49" branch="true" condition-coverage="50% (1/2)" />
+                <line number="57" hits="0" branch="false" />
+                <line number="58" hits="49" branch="true" condition-coverage="100% (4/4)" />
+                <line number="59" hits="49" branch="false" />
+                <line number="60" hits="1" branch="false" />
+                <line number="63" hits="49" branch="true" condition-coverage="100% (2/2)" />
+                <line number="64" hits="7" branch="false" />
+                <line number="65" hits="7" branch="true" condition-coverage="100% (2/2)" />
+                <line number="66" hits="2" branch="false" />
+                <line number="67" hits="7" branch="true" condition-coverage="100% (2/2)" />
+                <line number="68" hits="2" branch="false" />
+                <line number="69" hits="7" branch="false" />
+                <line number="70" hits="42" branch="true" condition-coverage="50% (1/2)" />
+                <line number="71" hits="42" branch="false" />
+                <line number="72" hits="42" branch="true" condition-coverage="100% (2/2)" />
+                <line number="73" hits="3" branch="false" />
+                <line number="74" hits="42" branch="true" condition-coverage="100% (2/2)" />
+                <line number="75" hits="2" branch="false" />
+                <line number="76" hits="42" branch="true" condition-coverage="100% (4/4)" />
+                <line number="77" hits="2" branch="false" />
+                <line number="78" hits="42" branch="true" condition-coverage="75% (3/4)" />
+                <line number="79" hits="2" branch="false" />
+                <line number="80" hits="42" branch="false" />
+                <line number="82" hits="0" branch="false" />
+                <line number="83" hits="0" branch="false" />
+                <line number="84" hits="0" branch="false" />
+                <line number="87" hits="49" branch="true" condition-coverage="100% (2/2)" />
+                <line number="88" hits="1" branch="false" />
+                <line number="89" hits="48" branch="true" condition-coverage="50% (1/2)" />
+                <line number="90" hits="0" branch="false" />
+                <line number="92" hits="49" branch="false" />
+                <line number="93" hits="49" branch="false" />
+              </lines>
+            </method>
+            <method name="Preparar" signature="(Condor.Dominio.Entidades.GuiaRemision,System.DateOnly)" line-rate="1" branch-rate="0.9" complexity="10">
+              <lines>
+                <line number="102" hits="24" branch="false" />
+                <line number="103" hits="24" branch="false" />
+                <line number="104" hits="24" branch="false" />
+                <line number="105" hits="24" branch="false" />
+                <line number="106" hits="24" branch="false" />
+                <line number="107" hits="24" branch="false" />
+                <line number="108" hits="24" branch="true" condition-coverage="100% (2/2)" />
+                <line number="109" hits="24" branch="false" />
+                <line number="110" hits="24" branch="true" condition-coverage="100% (2/2)" />
+                <line number="111" hits="3" branch="false" />
+                <line number="112" hits="3" branch="false" />
+                <line number="113" hits="3" branch="false" />
+                <line number="114" hits="3" branch="false" />
+                <line number="115" hits="3" branch="false" />
+                <line number="117" hits="21" branch="false" />
+                <line number="118" hits="21" branch="false" />
+                <line number="119" hits="21" branch="false" />
+                <line number="120" hits="21" branch="false" />
+                <line number="121" hits="21" branch="false" />
+                <line number="122" hits="21" branch="true" condition-coverage="50% (1/2)" />
+                <line number="123" hits="21" branch="false" />
+                <line number="124" hits="21" branch="false" />
+                <line number="126" hits="24" branch="false" />
+                <line number="127" hits="24" branch="true" condition-coverage="100% (2/2)" />
+                <line number="128" hits="1" branch="false" />
+                <line number="130" hits="23" branch="false" />
+                <line number="131" hits="139" branch="true" condition-coverage="100% (2/2)" />
+                <line number="132" hits="35" branch="false" />
+                <line number="133" hits="23" branch="false" />
+                <line number="134" hits="23" branch="false" />
+              </lines>
+            </method>
+            <method name="DesdeComprobante" signature="(Condor.Dominio.Entidades.Comprobante,Condor.Dominio.Entidades.Empresa,System.DateOnly)" line-rate="1" branch-rate="0.8333333333333334" complexity="6">
+              <lines>
+                <line number="143" hits="4" branch="false" />
+                <line number="144" hits="4" branch="false" />
+                <line number="145" hits="4" branch="false" />
+                <line number="146" hits="4" branch="false" />
+                <line number="147" hits="4" branch="false" />
+                <line number="148" hits="4" branch="false" />
+                <line number="149" hits="4" branch="false" />
+                <line number="150" hits="4" branch="false" />
+                <line number="151" hits="4" branch="false" />
+                <line number="152" hits="4" branch="false" />
+                <line number="153" hits="4" branch="false" />
+                <line number="154" hits="4" branch="true" condition-coverage="100% (2/2)" />
+                <line number="155" hits="4" branch="false" />
+                <line number="156" hits="4" branch="false" />
+                <line number="157" hits="4" branch="false" />
+                <line number="158" hits="4" branch="false" />
+                <line number="159" hits="4" branch="true" condition-coverage="50% (1/2)" />
+                <line number="160" hits="4" branch="false" />
+                <line number="161" hits="28" branch="true" condition-coverage="100% (2/2)" />
+                <line number="162" hits="8" branch="false" />
+                <line number="163" hits="8" branch="false" />
+                <line number="164" hits="8" branch="false" />
+                <line number="165" hits="8" branch="false" />
+                <line number="166" hits="8" branch="false" />
+                <line number="167" hits="8" branch="false" />
+                <line number="168" hits="8" branch="false" />
+                <line number="169" hits="8" branch="false" />
+                <line number="170" hits="8" branch="false" />
+                <line number="171" hits="4" branch="false" />
+                <line number="172" hits="4" branch="false" />
+              </lines>
+            </method>
+            <method name="EsUbigeo" signature="(System.String)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="174" hits="103" branch="true" condition-coverage="100% (4/4)" />
+              </lines>
+            </method>
+            <method name="LimpiarPlaca" signature="(System.String)" line-rate="1" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="178" hits="63" branch="true" condition-coverage="50% (1/2)" />
+              </lines>
+            </method>
+            <method name="Texto" signature="(System.String)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="180" hits="91" branch="true" condition-coverage="100% (2/2)" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="30" hits="49" branch="false" />
+            <line number="31" hits="49" branch="false" />
+            <line number="34" hits="49" branch="true" condition-coverage="100% (2/2)" />
+            <line number="35" hits="1" branch="false" />
+            <line number="36" hits="49" branch="true" condition-coverage="100% (2/2)" />
+            <line number="37" hits="1" branch="false" />
+            <line number="40" hits="49" branch="true" condition-coverage="50% (1/2)" />
+            <line number="41" hits="0" branch="false" />
+            <line number="42" hits="49" branch="true" condition-coverage="100% (4/4)" />
+            <line number="43" hits="1" branch="false" />
+            <line number="44" hits="49" branch="true" condition-coverage="100% (2/2)" />
+            <line number="45" hits="1" branch="false" />
+            <line number="46" hits="49" branch="true" condition-coverage="100% (2/2)" />
+            <line number="47" hits="2" branch="false" />
+            <line number="50" hits="49" branch="true" condition-coverage="100% (2/2)" />
+            <line number="51" hits="1" branch="false" />
+            <line number="52" hits="49" branch="true" condition-coverage="50% (1/2)" />
+            <line number="53" hits="0" branch="false" />
+            <line number="54" hits="49" branch="true" condition-coverage="100% (2/2)" />
+            <line number="55" hits="2" branch="false" />
+            <line number="56" hits="49" branch="true" condition-coverage="50% (1/2)" />
+            <line number="57" hits="0" branch="false" />
+            <line number="58" hits="49" branch="true" condition-coverage="100% (4/4)" />
+            <line number="59" hits="49" branch="false" />
+            <line number="60" hits="1" branch="false" />
+            <line number="63" hits="49" branch="true" condition-coverage="100% (2/2)" />
+            <line number="64" hits="7" branch="false" />
+            <line number="65" hits="7" branch="true" condition-coverage="100% (2/2)" />
+            <line number="66" hits="2" branch="false" />
+            <line number="67" hits="7" branch="true" condition-coverage="100% (2/2)" />
+            <line number="68" hits="2" branch="false" />
+            <line number="69" hits="7" branch="false" />
+            <line number="70" hits="42" branch="true" condition-coverage="50% (1/2)" />
+            <line number="71" hits="42" branch="false" />
+            <line number="72" hits="42" branch="true" condition-coverage="100% (2/2)" />
+            <line number="73" hits="3" branch="false" />
+            <line number="74" hits="42" branch="true" condition-coverage="100% (2/2)" />
+            <line number="75" hits="2" branch="false" />
+            <line number="76" hits="42" branch="true" condition-coverage="100% (4/4)" />
+            <line number="77" hits="2" branch="false" />
+            <line number="78" hits="42" branch="true" condition-coverage="75% (3/4)" />
+            <line number="79" hits="2" branch="false" />
+            <line number="80" hits="42" branch="false" />
+            <line number="82" hits="0" branch="false" />
+            <line number="83" hits="0" branch="false" />
+            <line number="84" hits="0" branch="false" />
+            <line number="87" hits="49" branch="true" condition-coverage="100% (2/2)" />
+            <line number="88" hits="1" branch="false" />
+            <line number="89" hits="48" branch="true" condition-coverage="50% (1/2)" />
+            <line number="90" hits="0" branch="false" />
+            <line number="92" hits="49" branch="false" />
+            <line number="93" hits="49" branch="false" />
+            <line number="102" hits="24" branch="false" />
+            <line number="103" hits="24" branch="false" />
+            <line number="104" hits="24" branch="false" />
+            <line number="105" hits="24" branch="false" />
+            <line number="106" hits="24" branch="false" />
+            <line number="107" hits="24" branch="false" />
+            <line number="108" hits="24" branch="true" condition-coverage="100% (2/2)" />
+            <line number="109" hits="24" branch="false" />
+            <line number="110" hits="24" branch="true" condition-coverage="100% (2/2)" />
+            <line number="111" hits="3" branch="false" />
+            <line number="112" hits="3" branch="false" />
+            <line number="113" hits="3" branch="false" />
+            <line number="114" hits="3" branch="false" />
+            <line number="115" hits="3" branch="false" />
+            <line number="117" hits="21" branch="false" />
+            <line number="118" hits="21" branch="false" />
+            <line number="119" hits="21" branch="false" />
+            <line number="120" hits="21" branch="false" />
+            <line number="121" hits="21" branch="false" />
+            <line number="122" hits="21" branch="true" condition-coverage="50% (1/2)" />
+            <line number="123" hits="21" branch="false" />
+            <line number="124" hits="21" branch="false" />
+            <line number="126" hits="24" branch="false" />
+            <line number="127" hits="24" branch="true" condition-coverage="100% (2/2)" />
+            <line number="128" hits="1" branch="false" />
+            <line number="130" hits="23" branch="false" />
+            <line number="131" hits="139" branch="true" condition-coverage="100% (2/2)" />
+            <line number="132" hits="35" branch="false" />
+            <line number="133" hits="23" branch="false" />
+            <line number="134" hits="23" branch="false" />
+            <line number="143" hits="4" branch="false" />
+            <line number="144" hits="4" branch="false" />
+            <line number="145" hits="4" branch="false" />
+            <line number="146" hits="4" branch="false" />
+            <line number="147" hits="4" branch="false" />
+            <line number="148" hits="4" branch="false" />
+            <line number="149" hits="4" branch="false" />
+            <line number="150" hits="4" branch="false" />
+            <line number="151" hits="4" branch="false" />
+            <line number="152" hits="4" branch="false" />
+            <line number="153" hits="4" branch="false" />
+            <line number="154" hits="4" branch="true" condition-coverage="100% (2/2)" />
+            <line number="155" hits="4" branch="false" />
+            <line number="156" hits="4" branch="false" />
+            <line number="157" hits="4" branch="false" />
+            <line number="158" hits="4" branch="false" />
+            <line number="159" hits="4" branch="true" condition-coverage="50% (1/2)" />
+            <line number="160" hits="4" branch="false" />
+            <line number="161" hits="28" branch="true" condition-coverage="100% (2/2)" />
+            <line number="162" hits="8" branch="false" />
+            <line number="163" hits="8" branch="false" />
+            <line number="164" hits="8" branch="false" />
+            <line number="165" hits="8" branch="false" />
+            <line number="166" hits="8" branch="false" />
+            <line number="167" hits="8" branch="false" />
+            <line number="168" hits="8" branch="false" />
+            <line number="169" hits="8" branch="false" />
+            <line number="170" hits="8" branch="false" />
+            <line number="171" hits="4" branch="false" />
+            <line number="172" hits="4" branch="false" />
+            <line number="174" hits="103" branch="true" condition-coverage="100% (4/4)" />
+            <line number="178" hits="63" branch="true" condition-coverage="50% (1/2)" />
+            <line number="180" hits="91" branch="true" condition-coverage="100% (2/2)" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ValidadorProducto" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorProducto.cs" line-rate="0.9387755102040817" branch-rate="0.875" complexity="41">
+          <methods>
+            <method name="Normalizar" signature="(Condor.Dominio.Entidades.Producto)" line-rate="1" branch-rate="0.6666666666666666" complexity="6">
+              <lines>
+                <line number="22" hits="1356" branch="false" />
+                <line number="23" hits="1356" branch="true" condition-coverage="50% (1/2)" />
+                <line number="24" hits="1356" branch="true" condition-coverage="50% (1/2)" />
+                <line number="25" hits="1356" branch="true" condition-coverage="100% (2/2)" />
+                <line number="26" hits="1" branch="false" />
+                <line number="27" hits="1356" branch="false" />
+                <line number="28" hits="1356" branch="false" />
+                <line number="29" hits="1356" branch="false" />
+              </lines>
+            </method>
+            <method name="NormalizarCodigo" signature="(System.String)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="33" hits="1937" branch="true" condition-coverage="100% (2/2)" />
+              </lines>
+            </method>
+            <method name="ErrorCodigo" signature="(System.String)" line-rate="1" branch-rate="1" complexity="10">
+              <lines>
+                <line number="40" hits="503" branch="false" />
+                <line number="41" hits="503" branch="false" />
+                <line number="42" hits="503" branch="true" condition-coverage="100% (2/2)" />
+                <line number="43" hits="443" branch="false" />
+                <line number="44" hits="60" branch="true" condition-coverage="100% (6/6)" />
+                <line number="45" hits="4" branch="false" />
+                <line number="46" hits="56" branch="true" condition-coverage="100% (2/2)" />
+                <line number="47" hits="8" branch="false" />
+                <line number="48" hits="48" branch="false" />
+                <line number="49" hits="503" branch="false" />
+              </lines>
+            </method>
+            <method name="PareceCodigo" signature="(System.String)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="56" hits="32" branch="false" />
+                <line number="57" hits="32" branch="false" />
+                <line number="58" hits="32" branch="true" condition-coverage="100% (4/4)" />
+                <line number="59" hits="32" branch="false" />
+              </lines>
+            </method>
+            <method name="Errores" signature="(Condor.Dominio.Entidades.Producto)" line-rate="0.8888888888888888" branch-rate="0.8125" complexity="16">
+              <lines>
+                <line number="63" hits="453" branch="false" />
+                <line number="64" hits="453" branch="false" />
+                <line number="66" hits="453" branch="true" condition-coverage="100% (2/2)" />
+                <line number="67" hits="5" branch="false" />
+                <line number="68" hits="448" branch="true" condition-coverage="100% (2/2)" />
+                <line number="69" hits="1" branch="false" />
+                <line number="71" hits="453" branch="true" condition-coverage="100% (2/2)" />
+                <line number="72" hits="8" branch="false" />
+                <line number="73" hits="445" branch="true" condition-coverage="100% (2/2)" />
+                <line number="74" hits="1" branch="false" />
+                <line number="75" hits="444" branch="true" condition-coverage="100% (2/2)" />
+                <line number="76" hits="1" branch="false" />
+                <line number="78" hits="453" branch="true" condition-coverage="50% (2/4)" />
+                <line number="79" hits="0" branch="false" />
+                <line number="81" hits="453" branch="true" condition-coverage="50% (1/2)" />
+                <line number="82" hits="0" branch="false" />
+                <line number="84" hits="453" branch="false" />
+                <line number="85" hits="453" branch="false" />
+              </lines>
+            </method>
+            <method name="Validar" signature="(Condor.Dominio.Entidades.Producto)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="89" hits="358" branch="false" />
+                <line number="90" hits="358" branch="false" />
+                <line number="91" hits="358" branch="false" />
+                <line number="92" hits="358" branch="true" condition-coverage="100% (2/2)" />
+                <line number="93" hits="3" branch="false" />
+                <line number="94" hits="355" branch="false" />
+                <line number="95" hits="355" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="14" hits="0" branch="false" />
+            <line number="22" hits="1356" branch="false" />
+            <line number="23" hits="1356" branch="true" condition-coverage="50% (1/2)" />
+            <line number="24" hits="1356" branch="true" condition-coverage="50% (1/2)" />
+            <line number="25" hits="1356" branch="true" condition-coverage="100% (2/2)" />
+            <line number="26" hits="1" branch="false" />
+            <line number="27" hits="1356" branch="false" />
+            <line number="28" hits="1356" branch="false" />
+            <line number="29" hits="1356" branch="false" />
+            <line number="33" hits="1937" branch="true" condition-coverage="100% (2/2)" />
+            <line number="40" hits="503" branch="false" />
+            <line number="41" hits="503" branch="false" />
+            <line number="42" hits="503" branch="true" condition-coverage="100% (2/2)" />
+            <line number="43" hits="443" branch="false" />
+            <line number="44" hits="60" branch="true" condition-coverage="100% (6/6)" />
+            <line number="45" hits="4" branch="false" />
+            <line number="46" hits="56" branch="true" condition-coverage="100% (2/2)" />
+            <line number="47" hits="8" branch="false" />
+            <line number="48" hits="48" branch="false" />
+            <line number="49" hits="503" branch="false" />
+            <line number="56" hits="32" branch="false" />
+            <line number="57" hits="32" branch="false" />
+            <line number="58" hits="32" branch="true" condition-coverage="100% (4/4)" />
+            <line number="59" hits="32" branch="false" />
+            <line number="63" hits="453" branch="false" />
+            <line number="64" hits="453" branch="false" />
+            <line number="66" hits="453" branch="true" condition-coverage="100% (2/2)" />
+            <line number="67" hits="5" branch="false" />
+            <line number="68" hits="448" branch="true" condition-coverage="100% (2/2)" />
+            <line number="69" hits="1" branch="false" />
+            <line number="71" hits="453" branch="true" condition-coverage="100% (2/2)" />
+            <line number="72" hits="8" branch="false" />
+            <line number="73" hits="445" branch="true" condition-coverage="100% (2/2)" />
+            <line number="74" hits="1" branch="false" />
+            <line number="75" hits="444" branch="true" condition-coverage="100% (2/2)" />
+            <line number="76" hits="1" branch="false" />
+            <line number="78" hits="453" branch="true" condition-coverage="50% (2/4)" />
+            <line number="79" hits="0" branch="false" />
+            <line number="81" hits="453" branch="true" condition-coverage="50% (1/2)" />
+            <line number="82" hits="0" branch="false" />
+            <line number="84" hits="453" branch="false" />
+            <line number="85" hits="453" branch="false" />
+            <line number="89" hits="358" branch="false" />
+            <line number="90" hits="358" branch="false" />
+            <line number="91" hits="358" branch="false" />
+            <line number="92" hits="358" branch="true" condition-coverage="100% (2/2)" />
+            <line number="93" hits="3" branch="false" />
+            <line number="94" hits="355" branch="false" />
+            <line number="95" hits="355" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Validacion.ValidadorProveedor" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Validacion/ValidadorProveedor.cs" line-rate="0.9387755102040817" branch-rate="0.9" complexity="30">
+          <methods>
+            <method name="Normalizar" signature="(Condor.Dominio.Entidades.Proveedor)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="21" hits="297" branch="false" />
+                <line number="22" hits="297" branch="false" />
+                <line number="23" hits="297" branch="true" condition-coverage="100% (2/2)" />
+                <line number="24" hits="297" branch="false" />
+                <line number="25" hits="297" branch="false" />
+                <line number="26" hits="297" branch="false" />
+                <line number="27" hits="297" branch="true" condition-coverage="100% (2/2)" />
+                <line number="28" hits="297" branch="false" />
+                <line number="29" hits="297" branch="false" />
+                <line number="30" hits="297" branch="false" />
+              </lines>
+            </method>
+            <method name="Errores" signature="(Condor.Dominio.Entidades.Proveedor)" line-rate="0.9259259259259259" branch-rate="0.8888888888888888" complexity="18">
+              <lines>
+                <line number="34" hits="317" branch="false" />
+                <line number="35" hits="317" branch="false" />
+                <line number="38" hits="317" branch="true" condition-coverage="100% (2/2)" />
+                <line number="39" hits="10" branch="false" />
+                <line number="41" hits="317" branch="true" condition-coverage="100% (2/2)" />
+                <line number="42" hits="2" branch="false" />
+                <line number="43" hits="315" branch="true" condition-coverage="100% (2/2)" />
+                <line number="44" hits="1" branch="false" />
+                <line number="46" hits="317" branch="false" />
+                <line number="47" hits="317" branch="false" />
+                <line number="48" hits="317" branch="false" />
+                <line number="50" hits="317" branch="true" condition-coverage="100% (2/2)" />
+                <line number="51" hits="199" branch="false" />
+                <line number="52" hits="199" branch="true" condition-coverage="50% (1/2)" />
+                <line number="53" hits="0" branch="false" />
+                <line number="54" hits="199" branch="true" condition-coverage="100% (2/2)" />
+                <line number="55" hits="2" branch="false" />
+                <line number="56" hits="199" branch="false" />
+                <line number="58" hits="317" branch="true" condition-coverage="100% (2/2)" />
+                <line number="59" hits="113" branch="false" />
+                <line number="60" hits="113" branch="true" condition-coverage="50% (1/2)" />
+                <line number="61" hits="0" branch="false" />
+                <line number="62" hits="113" branch="true" condition-coverage="100% (2/2)" />
+                <line number="63" hits="4" branch="false" />
+                <line number="64" hits="113" branch="false" />
+                <line number="66" hits="317" branch="false" />
+                <line number="67" hits="317" branch="false" />
+              </lines>
+            </method>
+            <method name="Validar" signature="(Condor.Dominio.Entidades.Proveedor)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="71" hits="285" branch="false" />
+                <line number="72" hits="285" branch="false" />
+                <line number="73" hits="285" branch="false" />
+                <line number="74" hits="285" branch="true" condition-coverage="100% (2/2)" />
+                <line number="75" hits="2" branch="false" />
+                <line number="76" hits="283" branch="false" />
+                <line number="77" hits="283" branch="false" />
+              </lines>
+            </method>
+            <method name="Largo" signature="(System.Collections.Generic.List`1&lt;System.String&gt;,System.String,System.Int32,System.String)" line-rate="0.75" branch-rate="0.75" complexity="4">
+              <lines>
+                <line number="80" hits="951" branch="false" />
+                <line number="81" hits="951" branch="true" condition-coverage="75% (3/4)" />
+                <line number="82" hits="0" branch="false" />
+                <line number="83" hits="951" branch="false" />
+              </lines>
+            </method>
+            <method name="Compactar" signature="(System.String)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="86" hits="1782" branch="true" condition-coverage="100% (2/2)" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="21" hits="297" branch="false" />
+            <line number="22" hits="297" branch="false" />
+            <line number="23" hits="297" branch="true" condition-coverage="100% (2/2)" />
+            <line number="24" hits="297" branch="false" />
+            <line number="25" hits="297" branch="false" />
+            <line number="26" hits="297" branch="false" />
+            <line number="27" hits="297" branch="true" condition-coverage="100% (2/2)" />
+            <line number="28" hits="297" branch="false" />
+            <line number="29" hits="297" branch="false" />
+            <line number="30" hits="297" branch="false" />
+            <line number="34" hits="317" branch="false" />
+            <line number="35" hits="317" branch="false" />
+            <line number="38" hits="317" branch="true" condition-coverage="100% (2/2)" />
+            <line number="39" hits="10" branch="false" />
+            <line number="41" hits="317" branch="true" condition-coverage="100% (2/2)" />
+            <line number="42" hits="2" branch="false" />
+            <line number="43" hits="315" branch="true" condition-coverage="100% (2/2)" />
+            <line number="44" hits="1" branch="false" />
+            <line number="46" hits="317" branch="false" />
+            <line number="47" hits="317" branch="false" />
+            <line number="48" hits="317" branch="false" />
+            <line number="50" hits="317" branch="true" condition-coverage="100% (2/2)" />
+            <line number="51" hits="199" branch="false" />
+            <line number="52" hits="199" branch="true" condition-coverage="50% (1/2)" />
+            <line number="53" hits="0" branch="false" />
+            <line number="54" hits="199" branch="true" condition-coverage="100% (2/2)" />
+            <line number="55" hits="2" branch="false" />
+            <line number="56" hits="199" branch="false" />
+            <line number="58" hits="317" branch="true" condition-coverage="100% (2/2)" />
+            <line number="59" hits="113" branch="false" />
+            <line number="60" hits="113" branch="true" condition-coverage="50% (1/2)" />
+            <line number="61" hits="0" branch="false" />
+            <line number="62" hits="113" branch="true" condition-coverage="100% (2/2)" />
+            <line number="63" hits="4" branch="false" />
+            <line number="64" hits="113" branch="false" />
+            <line number="66" hits="317" branch="false" />
+            <line number="67" hits="317" branch="false" />
+            <line number="71" hits="285" branch="false" />
+            <line number="72" hits="285" branch="false" />
+            <line number="73" hits="285" branch="false" />
+            <line number="74" hits="285" branch="true" condition-coverage="100% (2/2)" />
+            <line number="75" hits="2" branch="false" />
+            <line number="76" hits="283" branch="false" />
+            <line number="77" hits="283" branch="false" />
+            <line number="80" hits="951" branch="false" />
+            <line number="81" hits="951" branch="true" condition-coverage="75% (3/4)" />
+            <line number="82" hits="0" branch="false" />
+            <line number="83" hits="951" branch="false" />
+            <line number="86" hits="1782" branch="true" condition-coverage="100% (2/2)" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Ventas.CalculadoraVenta" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Ventas/CalculadoraVenta.cs" line-rate="0.9375" branch-rate="1" complexity="8">
+          <methods>
+            <method name="Importe" signature="(System.Decimal,System.Decimal)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="24" hits="1479" branch="false" />
+                <line number="25" hits="1479" branch="true" condition-coverage="100% (2/2)" />
+                <line number="26" hits="5" branch="false" />
+                <line number="27" hits="1474" branch="true" condition-coverage="100% (2/2)" />
+                <line number="28" hits="2" branch="false" />
+                <line number="30" hits="1472" branch="false" />
+                <line number="31" hits="1472" branch="false" />
+              </lines>
+            </method>
+            <method name="Totales" signature="(System.Collections.Generic.IEnumerable`1&lt;System.Decimal&gt;)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="35" hits="1081" branch="false" />
+                <line number="36" hits="1081" branch="false" />
+                <line number="37" hits="1081" branch="true" condition-coverage="100% (2/2)" />
+                <line number="38" hits="108" branch="false" />
+                <line number="40" hits="973" branch="false" />
+                <line number="41" hits="973" branch="false" />
+                <line number="42" hits="1081" branch="false" />
+              </lines>
+            </method>
+            <method name="Redondear" signature="(System.Decimal)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="45" hits="3578" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="20" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="20" hits="0" branch="false" />
+            <line number="24" hits="1479" branch="false" />
+            <line number="25" hits="1479" branch="true" condition-coverage="100% (2/2)" />
+            <line number="26" hits="5" branch="false" />
+            <line number="27" hits="1474" branch="true" condition-coverage="100% (2/2)" />
+            <line number="28" hits="2" branch="false" />
+            <line number="30" hits="1472" branch="false" />
+            <line number="31" hits="1472" branch="false" />
+            <line number="35" hits="1081" branch="false" />
+            <line number="36" hits="1081" branch="false" />
+            <line number="37" hits="1081" branch="true" condition-coverage="100% (2/2)" />
+            <line number="38" hits="108" branch="false" />
+            <line number="40" hits="973" branch="false" />
+            <line number="41" hits="973" branch="false" />
+            <line number="42" hits="1081" branch="false" />
+            <line number="45" hits="3578" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Ventas.ComprobanteInvalidoException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Ventas/EmisionComprobante.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.Collections.Generic.IReadOnlyList`1&lt;Condor.Dominio.Ventas.ErrorEmision&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="224" hits="14" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="224" hits="14" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Ventas.EmisionComprobante" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Ventas/EmisionComprobante.cs" line-rate="0.9777777777777777" branch-rate="0.9193548387096774" complexity="66">
+          <methods>
+            <method name="FechaPeru" signature="(System.DateTimeOffset)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="75" hits="674" branch="false" />
+              </lines>
+            </method>
+            <method name="VigenciaProforma" signature="(System.DateOnly)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="78" hits="26" branch="false" />
+              </lines>
+            </method>
+            <method name="SerieDe" signature="(Condor.Dominio.Ventas.TipoEmision)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="87" hits="433" branch="true" condition-coverage="100% (4/4)" />
+                <line number="88" hits="433" branch="false" />
+                <line number="89" hits="67" branch="false" />
+                <line number="90" hits="53" branch="false" />
+                <line number="91" hits="48" branch="false" />
+                <line number="92" hits="265" branch="false" />
+                <line number="93" hits="433" branch="false" />
+              </lines>
+            </method>
+            <method name="TipoSunatDe" signature="(Condor.Dominio.Ventas.TipoEmision)" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="96" hits="432" branch="true" condition-coverage="100% (4/4)" />
+                <line number="97" hits="432" branch="false" />
+                <line number="98" hits="67" branch="false" />
+                <line number="99" hits="53" branch="false" />
+                <line number="100" hits="47" branch="false" />
+                <line number="101" hits="265" branch="false" />
+                <line number="102" hits="432" branch="false" />
+              </lines>
+            </method>
+            <method name="Errores" signature="(Condor.Dominio.Ventas.SolicitudEmision)" line-rate="0.9487179487179487" branch-rate="0.8913043478260869" complexity="46">
+              <lines>
+                <line number="106" hits="554" branch="false" />
+                <line number="107" hits="554" branch="false" />
+                <line number="108" hits="554" branch="false" />
+                <line number="110" hits="554" branch="true" condition-coverage="100% (2/2)" />
+                <line number="111" hits="3" branch="false" />
+                <line number="113" hits="554" branch="true" condition-coverage="100% (6/6)" />
+                <line number="116" hits="32" branch="true" condition-coverage="100% (6/6)" />
+                <line number="117" hits="32" branch="false" />
+                <line number="118" hits="7" branch="false" />
+                <line number="119" hits="25" branch="true" condition-coverage="100% (2/2)" />
+                <line number="120" hits="1" branch="false" />
+                <line number="121" hits="32" branch="false" />
+                <line number="124" hits="90" branch="true" condition-coverage="100% (6/6)" />
+                <line number="125" hits="90" branch="false" />
+                <line number="126" hits="8" branch="false" />
+                <line number="127" hits="82" branch="true" condition-coverage="50% (1/2)" />
+                <line number="128" hits="0" branch="false" />
+                <line number="129" hits="90" branch="false" />
+                <line number="132" hits="311" branch="true" condition-coverage="75% (3/4)" />
+                <line number="133" hits="3" branch="false" />
+                <line number="134" hits="3" branch="false" />
+                <line number="135" hits="308" branch="true" condition-coverage="50% (2/4)" />
+                <line number="136" hits="0" branch="false" />
+                <line number="137" hits="311" branch="false" />
+                <line number="142" hits="121" branch="true" condition-coverage="100% (4/4)" />
+                <line number="143" hits="1" branch="true" condition-coverage="50% (1/2)" />
+                <line number="144" hits="1" branch="false" />
+                <line number="145" hits="121" branch="false" />
+                <line number="149" hits="554" branch="true" condition-coverage="100% (2/2)" />
+                <line number="150" hits="28" branch="false" />
+                <line number="151" hits="28" branch="true" condition-coverage="100% (2/2)" />
+                <line number="152" hits="1" branch="false" />
+                <line number="153" hits="27" branch="true" condition-coverage="100% (2/2)" />
+                <line number="154" hits="1" branch="false" />
+                <line number="155" hits="26" branch="true" condition-coverage="100% (2/2)" />
+                <line number="156" hits="2" branch="false" />
+                <line number="157" hits="28" branch="false" />
+                <line number="159" hits="554" branch="false" />
+                <line number="160" hits="554" branch="false" />
+              </lines>
+            </method>
+            <method name="Preparar" signature="(Condor.Dominio.Ventas.SolicitudEmision)" line-rate="1" branch-rate="1" complexity="8">
+              <lines>
+                <line number="168" hits="439" branch="false" />
+                <line number="169" hits="439" branch="false" />
+                <line number="170" hits="439" branch="true" condition-coverage="100% (2/2)" />
+                <line number="171" hits="7" branch="false" />
+                <line number="173" hits="432" branch="true" condition-coverage="100% (4/4)" />
+                <line number="174" hits="432" branch="false" />
+                <line number="175" hits="432" branch="false" />
+                <line number="176" hits="432" branch="false" />
+                <line number="177" hits="432" branch="false" />
+                <line number="178" hits="432" branch="false" />
+                <line number="179" hits="432" branch="false" />
+                <line number="180" hits="432" branch="false" />
+                <line number="182" hits="432" branch="false" />
+                <line number="183" hits="2582" branch="true" condition-coverage="100% (2/2)" />
+                <line number="184" hits="643" branch="false" />
+                <line number="185" hits="643" branch="false" />
+                <line number="186" hits="643" branch="false" />
+                <line number="187" hits="643" branch="false" />
+                <line number="188" hits="643" branch="false" />
+                <line number="189" hits="643" branch="false" />
+                <line number="190" hits="643" branch="false" />
+                <line number="191" hits="643" branch="false" />
+                <line number="192" hits="643" branch="false" />
+                <line number="193" hits="643" branch="false" />
+                <line number="194" hits="643" branch="false" />
+                <line number="195" hits="643" branch="false" />
+                <line number="197" hits="432" branch="false" />
+                <line number="198" hits="432" branch="false" />
+                <line number="199" hits="432" branch="false" />
+                <line number="200" hits="432" branch="false" />
+                <line number="201" hits="432" branch="false" />
+                <line number="202" hits="432" branch="false" />
+              </lines>
+            </method>
+            <method name="Total" signature="(System.Collections.Generic.IEnumerable`1&lt;Condor.Dominio.Entidades.DetalleComprobante&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="205" hits="311" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="72" hits="2" branch="false" />
+                <line number="75" hits="674" branch="false" />
+                <line number="78" hits="26" branch="false" />
+                <line number="85" hits="2" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="72" hits="2" branch="false" />
+            <line number="75" hits="674" branch="false" />
+            <line number="78" hits="26" branch="false" />
+            <line number="85" hits="2" branch="false" />
+            <line number="87" hits="433" branch="true" condition-coverage="100% (4/4)" />
+            <line number="88" hits="433" branch="false" />
+            <line number="89" hits="67" branch="false" />
+            <line number="90" hits="53" branch="false" />
+            <line number="91" hits="48" branch="false" />
+            <line number="92" hits="265" branch="false" />
+            <line number="93" hits="433" branch="false" />
+            <line number="96" hits="432" branch="true" condition-coverage="100% (4/4)" />
+            <line number="97" hits="432" branch="false" />
+            <line number="98" hits="67" branch="false" />
+            <line number="99" hits="53" branch="false" />
+            <line number="100" hits="47" branch="false" />
+            <line number="101" hits="265" branch="false" />
+            <line number="102" hits="432" branch="false" />
+            <line number="106" hits="554" branch="false" />
+            <line number="107" hits="554" branch="false" />
+            <line number="108" hits="554" branch="false" />
+            <line number="110" hits="554" branch="true" condition-coverage="100% (2/2)" />
+            <line number="111" hits="3" branch="false" />
+            <line number="113" hits="554" branch="true" condition-coverage="100% (6/6)" />
+            <line number="116" hits="32" branch="true" condition-coverage="100% (6/6)" />
+            <line number="117" hits="32" branch="false" />
+            <line number="118" hits="7" branch="false" />
+            <line number="119" hits="25" branch="true" condition-coverage="100% (2/2)" />
+            <line number="120" hits="1" branch="false" />
+            <line number="121" hits="32" branch="false" />
+            <line number="124" hits="90" branch="true" condition-coverage="100% (6/6)" />
+            <line number="125" hits="90" branch="false" />
+            <line number="126" hits="8" branch="false" />
+            <line number="127" hits="82" branch="true" condition-coverage="50% (1/2)" />
+            <line number="128" hits="0" branch="false" />
+            <line number="129" hits="90" branch="false" />
+            <line number="132" hits="311" branch="true" condition-coverage="75% (3/4)" />
+            <line number="133" hits="3" branch="false" />
+            <line number="134" hits="3" branch="false" />
+            <line number="135" hits="308" branch="true" condition-coverage="50% (2/4)" />
+            <line number="136" hits="0" branch="false" />
+            <line number="137" hits="311" branch="false" />
+            <line number="142" hits="121" branch="true" condition-coverage="100% (4/4)" />
+            <line number="143" hits="1" branch="true" condition-coverage="50% (1/2)" />
+            <line number="144" hits="1" branch="false" />
+            <line number="145" hits="121" branch="false" />
+            <line number="149" hits="554" branch="true" condition-coverage="100% (2/2)" />
+            <line number="150" hits="28" branch="false" />
+            <line number="151" hits="28" branch="true" condition-coverage="100% (2/2)" />
+            <line number="152" hits="1" branch="false" />
+            <line number="153" hits="27" branch="true" condition-coverage="100% (2/2)" />
+            <line number="154" hits="1" branch="false" />
+            <line number="155" hits="26" branch="true" condition-coverage="100% (2/2)" />
+            <line number="156" hits="2" branch="false" />
+            <line number="157" hits="28" branch="false" />
+            <line number="159" hits="554" branch="false" />
+            <line number="160" hits="554" branch="false" />
+            <line number="168" hits="439" branch="false" />
+            <line number="169" hits="439" branch="false" />
+            <line number="170" hits="439" branch="true" condition-coverage="100% (2/2)" />
+            <line number="171" hits="7" branch="false" />
+            <line number="173" hits="432" branch="true" condition-coverage="100% (4/4)" />
+            <line number="174" hits="432" branch="false" />
+            <line number="175" hits="432" branch="false" />
+            <line number="176" hits="432" branch="false" />
+            <line number="177" hits="432" branch="false" />
+            <line number="178" hits="432" branch="false" />
+            <line number="179" hits="432" branch="false" />
+            <line number="180" hits="432" branch="false" />
+            <line number="182" hits="432" branch="false" />
+            <line number="183" hits="2582" branch="true" condition-coverage="100% (2/2)" />
+            <line number="184" hits="643" branch="false" />
+            <line number="185" hits="643" branch="false" />
+            <line number="186" hits="643" branch="false" />
+            <line number="187" hits="643" branch="false" />
+            <line number="188" hits="643" branch="false" />
+            <line number="189" hits="643" branch="false" />
+            <line number="190" hits="643" branch="false" />
+            <line number="191" hits="643" branch="false" />
+            <line number="192" hits="643" branch="false" />
+            <line number="193" hits="643" branch="false" />
+            <line number="194" hits="643" branch="false" />
+            <line number="195" hits="643" branch="false" />
+            <line number="197" hits="432" branch="false" />
+            <line number="198" hits="432" branch="false" />
+            <line number="199" hits="432" branch="false" />
+            <line number="200" hits="432" branch="false" />
+            <line number="201" hits="432" branch="false" />
+            <line number="202" hits="432" branch="false" />
+            <line number="205" hits="311" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Ventas.ProformaYaConvertidaException" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Ventas/EmisionComprobante.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name=".ctor" signature="(System.String,System.Exception)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="215" hits="5" branch="false" />
+                <line number="216" hits="5" branch="false" />
+                <line number="217" hits="5" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="215" hits="5" branch="false" />
+            <line number="216" hits="5" branch="false" />
+            <line number="217" hits="5" branch="false" />
+          </lines>
+        </class>
+        <class name="Condor.Dominio.Ventas.TotalesVenta" filename="/w/Sistema_Logistico_Condor_final/src/Condor.Dominio/Ventas/CalculadoraVenta.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="get_Cero" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="332" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="6" hits="332" branch="false" />
+          </lines>
+        </class>
+      </classes>
+    </package>
+  </packages>
+</coverage>

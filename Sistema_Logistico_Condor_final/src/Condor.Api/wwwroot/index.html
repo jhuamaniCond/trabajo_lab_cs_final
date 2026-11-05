@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="es-PE">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ferretería Cóndor Majes</title>
+  <link rel="icon" href="img/condor.png">
+  <link rel="stylesheet" href="css/portal.css">
+</head>
+<!--
+  CC-03: portal web del mostrador. Replica las pantallas de la app de
+  escritorio (Condor.Escritorio) sobre las mismas rutas de Condor.Api.
+  Los id son los mismos AutomationId de la app WPF y los usa la suite
+  Selenium de G09 (selectores estables).
+-->
+<body>
+
+<!-- ================================================================
+     Ingresar (LoginWindow.xaml)
+     ================================================================ -->
+<div id="PantallaIngresar" class="fondo-ingresar">
+  <form id="VentanaIngresar" class="ventana-ingresar" autocomplete="off" novalidate>
+    <div class="greca"></div>
+    <div class="ingresar-marca">
+      <img src="img/condor.png" alt="" width="96">
+      <h1 class="serif">Ferretería Cóndor</h1>
+      <p>Ingrese con su usuario y contraseña.</p>
+    </div>
+    <div class="ingresar-campos">
+      <label for="CampoUsuario">Usuario</label>
+      <input id="CampoUsuario" name="usuario" maxlength="20">
+      <label for="CampoClave" class="mt14">Contraseña</label>
+      <input id="CampoClave" name="clave" type="password" maxlength="64">
+    </div>
+    <div id="AvisoError" class="aviso-error oculto" role="alert">
+      <span class="icono">&#xE783;</span><span id="TextoError"></span>
+    </div>
+    <div class="ingresar-pie">
+      <button type="button" id="BotonSalir" class="boton">Salir</button>
+      <button type="submit" id="BotonIngresar" class="boton principal"><span class="icono">&#xE8D7;</span>Ingresar</button>
+    </div>
+  </form>
+</div>
+
+<!-- ================================================================
+     Ventana principal (MainWindow.xaml)
+     ================================================================ -->
+<div id="PantallaPrincipal" class="ventana-principal oculto">
+  <nav class="lateral">
+    <div class="marca">
+      <img src="img/condor.png" alt="" width="136">
+      <div class="marca-1 serif">F E R R E T E R Í A</div>
+      <div class="marca-2 serif">C Ó N D O R</div>
+      <div class="marca-3">M&ensp;A&ensp;J&ensp;E&ensp;S</div>
+      <div class="marca-linea"></div>
+    </div>
+    <div class="sede">
+      <svg width="16" height="21" viewBox="0 0 16 21"><path d="M8,20 C8,20 1,12.5 1,8 A7,7 0 0 1 15,8 C15,12.5 8,20 8,20 Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="8" cy="8" r="2.8" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+      <div>Majes<br>Arequipa, Perú</div>
+    </div>
+    <button class="menu" id="MenuVenta" data-modulo="Venta"><span class="icono">&#xE7BF;</span><span class="texto">Nueva venta</span><span class="tecla">F1</span></button>
+    <button class="menu" id="MenuCatalogo" data-modulo="Catalogo" title="Catálogo: buscar productos y registrar uno nuevo."><span class="icono">&#xE8FD;</span><span class="texto">Catálogo</span><span class="tecla">F2</span></button>
+    <button class="menu" id="MenuClientes" data-modulo="Clientes" title="Clientes: buscar por DNI, RUC o nombre y registrar uno nuevo."><span class="icono">&#xE77B;</span><span class="texto">Clientes</span><span class="tecla">F3</span></button>
+    <button class="menu solo-encargado" id="MenuCompras" data-modulo="Compras" title="Compras a proveedores."><span class="icono">&#xE8A5;</span><span class="texto">Compras</span><span class="tecla">F4</span></button>
+    <button class="menu" id="MenuHistorial" data-modulo="Historial" title="Historial de ventas: buscar por fecha, tipo o cliente."><span class="icono">&#xE823;</span><span class="texto">Historial</span><span class="tecla">F5</span></button>
+    <button class="menu solo-encargado" id="MenuProveedores" data-modulo="Proveedores" title="Proveedores: buscar por RUC o razón social y registrar uno nuevo."><span class="icono">&#xE821;</span><span class="texto">Proveedores</span><span class="tecla">F6</span></button>
+    <button class="menu" id="MenuProformas" data-modulo="Proformas" title="Proformas: buscarlas y convertirlas en venta."><span class="icono">&#xE7C3;</span><span class="texto">Proformas</span><span class="tecla">F7</span></button>
+    <button class="menu solo-encargado" id="MenuGuias" data-modulo="Guias" title="Guías de remisión."><span class="icono">&#xE806;</span><span class="texto">Guías</span><span class="tecla">F8</span></button>
+    <button class="menu solo-encargado" id="MenuRespaldo" data-modulo="Respaldo" title="Respaldos de la base de datos."><span class="icono">&#xE753;</span><span class="texto">Respaldo</span><span class="tecla">F9</span></button>
+    <button class="menu solo-encargado" id="MenuReporte" data-modulo="Reporte" title="Reporte consolidado de ventas del período."><span class="icono">&#xE9D2;</span><span class="texto">Reporte</span><span class="tecla">F12</span></button>
+    <button class="menu cerrar" id="MenuCerrarSesion" title="Cerrar sesión y volver a pedir usuario y contraseña."><span class="icono">&#xE7E8;</span><span class="texto">Cerrar sesión</span><span class="tecla"></span></button>
+  </nav>
+
+  <main class="contenido">
+    <div class="greca"></div>
+
+    <div class="panel">
+      <!-- ============================ Nueva venta ============================ -->
+      <section id="ModuloVenta" class="modulo venta">
+        <div class="venta-cabecera">
+          <h1 class="serif titulo-venta">Nueva venta</h1>
+          <div class="fecha-hora"><span class="icono">&#xE787;</span><span id="Fecha"></span><span id="Hora"></span></div>
+        </div>
+        <div class="linea-tenue"></div>
+        <div class="venta-cuerpo">
+          <div class="venta-izquierda">
+            <div class="busqueda">
+              <div class="campo-producto">
+                <label for="CampoProducto">Producto</label>
+                <div class="con-icono">
+                  <span class="icono">&#xE721;</span>
+                  <input id="CampoProducto" autocomplete="off" placeholder="Buscar producto…  (cemento, clavo, tubo) o pasar por el lector">
+                  <ul id="ListaSugerencias" class="sugerencias oculto" role="listbox"></ul>
+                </div>
+              </div>
+              <div class="campo-cantidad">
+                <label for="CampoCantidad">Cantidad</label>
+                <input id="CampoCantidad" value="1" inputmode="decimal">
+              </div>
+              <button id="BotonAgregar" class="boton principal agregar"><span class="circulo">&#xE710;</span>Agregar</button>
+              <button id="BotonNuevoProducto" class="boton chico" title="Registrar un producto que no está en el catálogo."><span class="icono">&#xE710;</span>Nuevo producto</button>
+            </div>
+            <div id="ErrorVenta" class="texto-error oculto"></div>
+
+            <div class="tarjeta detalle">
+              <table id="TablaDetalle" class="tabla">
+                <thead><tr><th class="c">N.°</th><th>Producto</th><th class="c">Cantidad</th><th class="c">Unidad</th><th class="d">Precio unit.</th><th class="d">Subtotal</th><th></th></tr></thead>
+                <tbody></tbody>
+              </table>
+              <div id="DetalleVacio" class="vacio">
+                <span class="icono">&#xE7BF;</span>
+                <div class="serif">Aún no hay productos en la venta</div>
+                <p>Escriba el nombre en Producto, elija con Enter y vuelva a pulsar Enter para agregar.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="venta-derecha">
+            <div class="venta-derecha-desplazable">
+            <div class="tarjeta cliente">
+              <h2 class="serif"><span class="icono acento">&#xE77B;</span>Cliente</h2>
+              <label for="CampoDocumento" class="chico">DNI o RUC</label>
+              <div class="fila">
+                <input id="CampoDocumento" maxlength="11" inputmode="numeric" title="8 dígitos para DNI u 11 para RUC. Enter busca al cliente.">
+                <button id="BotonBuscarCliente" class="boton"><span class="icono">&#xE721;</span>Buscar</button>
+              </div>
+              <div id="ErrorCliente" class="texto-error oculto"></div>
+              <div id="ClienteSeleccionado" class="cliente-elegido oculto">
+                <div><div id="ClienteNombre" class="negrita"></div><div id="ClienteDocumento" class="suave"></div><div id="ClienteDireccion" class="suave"></div></div>
+                <button id="BotonQuitarCliente" class="quitar" title="Quitar el cliente de la venta">&#xE74D;</button>
+              </div>
+              <div id="SinCliente" class="sin-cliente">
+                <span id="TextoSinCliente">Sin cliente: boleta sin DNI.</span>
+                <button id="BotonNuevoCliente" class="boton chico"><span class="icono">&#xE710;</span>Nuevo cliente</button>
+              </div>
+            </div>
+
+            <div class="tarjeta resumen">
+              <h2 class="serif">Resumen de venta</h2>
+              <div class="tipos" role="radiogroup">
+                <label class="opcion"><input type="radio" name="tipo" id="TipoBoleta" value="BOLETA" checked><span>Boleta</span></label>
+                <label class="opcion"><input type="radio" name="tipo" id="TipoConDni" value="BOLETA_DNI"><span>Con DNI</span></label>
+                <label class="opcion"><input type="radio" name="tipo" id="TipoFactura" value="FACTURA"><span>Factura</span></label>
+                <label class="opcion"><input type="radio" name="tipo" id="TipoNotaVenta" value="NOTA_VENTA"><span>Nota venta</span></label>
+                <label class="opcion"><input type="radio" name="tipo" id="TipoProforma" value="PROFORMA"><span>Proforma</span></label>
+              </div>
+              <div id="AvisoProforma" class="aviso-proforma oculto"><span class="icono">&#xE7C3;</span><span id="TextoAvisoProforma"></span></div>
+              <div class="monto"><span>Op. gravada</span><span id="TextoOpGravada">S/ 0.00</span></div>
+              <div class="monto"><span>IGV (18 %)</span><span id="TextoIgv">S/ 0.00</span></div>
+              <div class="separador"></div>
+              <div class="total"><span class="serif">TOTAL</span><span id="TextoTotal" class="serif">S/ 0.00</span></div>
+            </div>
+            </div>
+
+            <div class="acciones-venta">
+              <div id="ErrorEmision" class="aviso-error oculto" role="alert"><span id="TextoErrorEmision"></span></div>
+              <div id="ResultadoEmision" class="aviso-exito oculto" role="status"><span class="icono">&#xE930;</span><span id="TextoResultadoEmision"></span></div>
+              <button id="BotonEmitir" class="boton principal emitir" disabled><span class="icono">&#xE749;</span>Emitir e imprimir<span class="normal">&nbsp;(F10)</span></button>
+              <button id="BotonCancelarVenta" class="boton cancelar"><span class="icono">&#xE711;</span>Cancelar venta<span class="suave">&nbsp;(Esc)</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ Catálogo ============================ -->
+      <section id="ModuloCatalogo" class="modulo lista oculto">
+        <header class="cab-modulo">
+          <span class="insignia icono">&#xE8FD;</span>
+          <div><h1>Catálogo</h1><p>Busque por nombre o código de barras. Los precios incluyen IGV.</p></div>
+          <button id="BotonNuevoProductoCatalogo" class="boton principal"><span class="icono">&#xE710;</span>Nuevo producto</button>
+        </header>
+        <div class="fila buscador"><input id="CampoBuscarCatalogo" placeholder=""><button id="BotonBuscarCatalogo" class="boton"><span class="icono">&#xE721;</span>Buscar</button></div>
+        <div class="tarjeta tabla-contenedor">
+          <table id="TablaCatalogo" class="tabla"><thead><tr><th>Código</th><th>Producto</th><th class="c">Unidad</th><th class="d">Precio</th></tr></thead><tbody></tbody></table>
+        </div>
+        <footer class="pie-modulo"><span id="TextoCatalogo"></span></footer>
+      </section>
+
+      <!-- ============================ Clientes ============================ -->
+      <section id="ModuloClientes" class="modulo lista oculto">
+        <header class="cab-modulo">
+          <span class="insignia icono">&#xE77B;</span>
+          <div><h1>Clientes</h1><p>Busque por DNI, RUC o nombre. Usar en la venta lo deja elegido en Nueva venta.</p></div>
+          <button id="BotonNuevoClienteModulo" class="boton principal"><span class="icono">&#xE710;</span>Nuevo cliente</button>
+        </header>
+        <div class="fila buscador"><input id="CampoBuscarClientes"><button id="BotonBuscarClientes" class="boton"><span class="icono">&#xE721;</span>Buscar</button></div>
+        <div class="tarjeta tabla-contenedor">
+          <table id="TablaClientes" class="tabla seleccionable"><thead><tr><th>Documento</th><th>Nombre o razón social</th><th>Dirección</th></tr></thead><tbody></tbody></table>
+        </div>
+        <footer class="pie-modulo"><span id="TextoClientes"></span><button id="BotonUsarCliente" class="boton principal" disabled>Usar en la venta</button></footer>
+      </section>
+
+      <!-- ============================ Historial ============================ -->
+      <section id="ModuloHistorial" class="modulo lista oculto">
+        <header class="cab-modulo">
+          <span class="insignia icono">&#xE823;</span>
+          <div><h1>Historial de ventas</h1><p>Filtre por fechas, tipo, cliente o número. La columna SUNAT dice si ya fue aceptado; los pendientes se reenvían solos.</p></div>
+        </header>
+        <div class="filtros">
+          <label for="FiltroDesde">Desde</label><input id="FiltroDesde" type="date">
+          <label for="FiltroHasta">Hasta</label><input id="FiltroHasta" type="date">
+          <label for="FiltroTipo">Tipo</label>
+          <select id="FiltroTipo"><option value="">Todas las ventas</option><option value="03">Boletas</option><option value="01">Facturas</option><option value="NV">Notas de venta</option><option value="PR">Proformas</option></select>
+          <label for="FiltroTexto">Cliente o número</label><input id="FiltroTexto">
+          <button id="BotonBuscarHistorial" class="boton principal"><span class="icono">&#xE721;</span>Buscar</button>
+          <button id="BotonHoy" class="boton">Hoy</button><button id="BotonEsteMes" class="boton">Este mes</button><button id="BotonTodo" class="boton">Todo</button>
+        </div>
+        <div id="ErrorHistorial" class="texto-error oculto"></div>
+        <div class="tarjeta tabla-contenedor">
+          <table id="TablaHistorial" class="tabla"><thead><tr><th>Tipo</th><th>Número</th><th>Fecha</th><th>Cliente</th><th>Usuario</th><th class="d">Total</th><th>SUNAT</th></tr></thead><tbody></tbody></table>
+        </div>
+        <footer class="pie-modulo"><span id="TextoHistorial"></span></footer>
+      </section>
+
+      <!-- ============================ Proveedores ============================ -->
+      <section id="ModuloProveedores" class="modulo lista oculto">
+        <header class="cab-modulo">
+          <span class="insignia icono">&#xE821;</span>
+          <div><h1>Proveedores</h1><p>Busque por RUC o razón social. Solo el Encargado general los registra.</p></div>
+          <button id="BotonNuevoProveedor" class="boton principal"><span class="icono">&#xE710;</span>Nuevo proveedor</button>
+        </header>
+        <div class="fila buscador"><input id="CampoBuscarProveedores"><button id="BotonBuscarProveedores" class="boton"><span class="icono">&#xE721;</span>Buscar</button></div>
+        <div class="tarjeta tabla-contenedor">
+          <table id="TablaProveedores" class="tabla"><thead><tr><th>RUC</th><th>Razón social</th><th>Teléfono</th><th>Contacto</th></tr></thead><tbody></tbody></table>
+        </div>
+        <footer class="pie-modulo"><span id="TextoProveedores"></span></footer>
+      </section>
+
+      <!-- ============================ Compras (Encargado) ============================ -->
+      <section id="ModuloCompras" class="modulo lista oculto">
+        <header class="cab-modulo">
+          <span class="insignia icono">&#xE8A5;</span>
+          <div><h1>Compras a proveedores</h1><p>Facturas y boletas recibidas de los proveedores y egresos del período. Solo para el Encargado general.</p></div>
+          <button id="BotonNuevaCompra" class="boton principal"><span class="icono">&#xE710;</span>Nueva compra</button>
+        </header>
+        <div class="filtros">
+          <label for="CompraDesde">Desde</label><input id="CompraDesde" type="date">
+          <label for="CompraHasta">Hasta</label><input id="CompraHasta" type="date">
+          <label for="CompraProveedor">Proveedor</label><input id="CompraProveedor" placeholder="RUC o razón social">
+          <button id="BotonBuscarCompras" class="boton principal"><span class="icono">&#xE721;</span>Buscar</button>
+        </div>
+        <div id="ErrorCompras" class="texto-error oculto"></div>
+        <div class="tarjeta tabla-contenedor">
+          <table id="TablaCompras" class="tabla"><thead><tr><th>Comprobante</th><th>Fecha</th><th>RUC</th><th>Proveedor</th><th class="d">Op. gravada</th><th class="d">IGV</th><th class="d">Total</th></tr></thead><tbody></tbody></table>
+        </div>
+        <footer class="pie-modulo"><span id="TextoCompras"></span></footer>
+      </section>
+
+      <!-- ============================ Proformas ============================ -->
+      <section id="ModuloProformas" class="modulo lista oculto">
+        <header class="cab-modulo">
+          <span class="insignia icono">&#xE7C3;</span>
+          <div><h1>Proformas</h1><p>Busque por número, DNI, RUC o nombre del cliente. Convertir en venta lleva el detalle a la pantalla de venta sin reescribirlo.</p></div>
+        </header>
+        <div class="fila buscador"><input id="CampoBuscarProformas"><button id="BotonBuscarProformas" class="boton"><span class="icono">&#xE721;</span>Buscar</button></div>
+        <div class="tarjeta tabla-contenedor">
+          <table id="TablaProformas" class="tabla seleccionable"><thead><tr><th>Número</th><th>Fecha</th><th>Cliente</th><th>Documento</th><th class="d">Total</th><th>Estado</th></tr></thead><tbody></tbody></table>
+        </div>
+        <footer class="pie-modulo"><span id="TextoProformas"></span><button id="BotonConvertir" class="boton principal" disabled><span class="icono">&#xE8AB;</span>Convertir en venta (Enter)</button></footer>
+      </section>
+
+      <!-- ============================ Reporte (Encargado) ============================ -->
+      <section id="ModuloReporte" class="modulo lista oculto">
+        <header class="cab-modulo">
+          <span class="insignia icono">&#xE9D2;</span>
+          <div><h1>Reporte de ventas</h1><p>Consolidado del período por día, tipo de comprobante, caja y usuario. Solo para el Encargado general.</p></div>
+        </header>
+        <div class="filtros">
+          <label for="ReporteDesde">Desde</label><input id="ReporteDesde" type="date">
+          <label for="ReporteHasta">Hasta</label><input id="ReporteHasta" type="date">
+          <button id="BotonGenerarReporte" class="boton principal"><span class="icono">&#xE9D2;</span>Generar</button>
+        </div>
+        <div id="ErrorReporte" class="texto-error oculto"></div>
+        <div id="ResultadoReporte" class="oculto">
+          <div class="cifras">
+            <div class="tarjeta cifra"><span>Ventas</span><strong id="ReporteCantidad"></strong></div>
+            <div class="tarjeta cifra"><span>Total</span><strong id="ReporteTotal" class="serif acento"></strong></div>
+            <div class="tarjeta cifra"><span>IGV</span><strong id="ReporteIgv"></strong></div>
+            <div class="tarjeta cifra"><span>Ticket promedio</span><strong id="ReportePromedio"></strong></div>
+            <div class="tarjeta cifra"><span>Pendientes SUNAT</span><strong id="ReportePendientes"></strong></div>
+          </div>
+          <div class="reporte-tablas">
+            <div class="tarjeta"><h3>Por tipo</h3><table id="TablaReporteTipo" class="tabla compacta"><thead><tr><th>Tipo</th><th class="c">Cant.</th><th class="d">Total</th></tr></thead><tbody></tbody></table></div>
+            <div class="tarjeta"><h3>Por usuario</h3><table id="TablaReporteUsuario" class="tabla compacta"><thead><tr><th>Usuario</th><th class="c">Cant.</th><th class="d">Total</th></tr></thead><tbody></tbody></table></div>
+            <div class="tarjeta"><h3>Por caja</h3><table id="TablaReporteTerminal" class="tabla compacta"><thead><tr><th>Caja</th><th class="c">Cant.</th><th class="d">Total</th></tr></thead><tbody></tbody></table></div>
+            <div class="tarjeta"><h3>Por día</h3><table id="TablaReporteDia" class="tabla compacta"><thead><tr><th>Día</th><th class="c">Cant.</th><th class="d">Total</th></tr></thead><tbody></tbody></table></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ Respaldo (Encargado) ============================ -->
+      <section id="ModuloRespaldo" class="modulo lista oculto">
+        <header class="cab-modulo">
+          <span class="insignia icono">&#xE753;</span>
+          <div><h1>Respaldo</h1><p>Últimos respaldos de la base central. El respaldo se genera desde la PC principal (app de escritorio, F9).</p></div>
+        </header>
+        <div class="tarjeta tabla-contenedor">
+          <table id="TablaRespaldos" class="tabla"><thead><tr><th>Archivo</th><th>Carpeta</th><th class="d">Tamaño</th><th>Terminado</th><th>PC</th></tr></thead><tbody></tbody></table>
+        </div>
+        <footer class="pie-modulo"><span id="TextoRespaldos"></span></footer>
+      </section>
+
+      <!-- ============================ Compras y Guías: solo en la app ============================ -->
+      <section id="ModuloSoloEscritorio" class="modulo lista oculto">
+        <header class="cab-modulo">
+          <span class="insignia icono" id="IconoSoloEscritorio">&#xE8A5;</span>
+          <div><h1 id="TituloSoloEscritorio">Compras</h1><p>Este módulo se usa en la app de escritorio de la PC principal.</p></div>
+        </header>
+        <div class="tarjeta vacio-modulo"><span class="icono">&#xE7F4;</span><div class="serif" id="TextoSoloEscritorio"></div></div>
+      </section>
+    </div>
+
+    <!-- Pie: usuario, rol, terminal, conexión y mensaje (MainWindow.xaml). -->
+    <footer class="pie">
+      <span class="icono">&#xEA8C;</span>
+      <span id="TextoUsuario"></span><span id="TextoRol" class="suave"></span>
+      <span class="suave punto">·</span><span>Portal web</span>
+      <span class="conexion"><span id="PuntoConexion" class="punto-conexion"></span><span id="TextoConexion">Conectado</span></span>
+      <span id="TextoMensaje" class="mensaje"></span>
+      <span class="icono">&#xE701;</span>
+    </footer>
+  </main>
+</div>
+
+<!-- ================================================================
+     Ventanas modales: nuevo producto, cliente y proveedor
+     ================================================================ -->
+<div id="Velo" class="velo oculto"></div>
+
+<form id="VentanaNuevoProducto" class="modal oculto" novalidate>
+  <div class="greca"></div>
+  <h2 class="serif">Nuevo producto</h2>
+  <label for="CampoNombreProducto">Nombre</label><input id="CampoNombreProducto" maxlength="150">
+  <div class="dos">
+    <div><label for="CampoPrecioProducto">Precio (S/, con IGV)</label><input id="CampoPrecioProducto" inputmode="decimal"></div>
+    <div><label for="CampoUnidadProducto">Unidad</label>
+      <select id="CampoUnidadProducto"><option>UND</option><option>BLS</option><option>KG</option><option>M</option><option>GLN</option><option>LT</option><option>CJA</option><option>PAR</option><option>RLL</option><option>VAR</option></select></div>
+  </div>
+  <label for="CampoCodigoProducto">Código de barras (opcional)</label><input id="CampoCodigoProducto" maxlength="20">
+  <div id="ErrorNuevoProducto" class="aviso-error oculto"></div>
+  <div class="modal-pie"><button type="button" class="boton cerrar-modal" id="BotonCancelarProducto">Cancelar</button><button type="submit" id="BotonGuardarProducto" class="boton principal">Guardar</button></div>
+</form>
+
+<form id="VentanaNuevoCliente" class="modal oculto" novalidate>
+  <div class="greca"></div>
+  <h2 class="serif">Nuevo cliente</h2>
+  <label for="CampoNuevoDocumento">DNI (8 dígitos) o RUC (11 dígitos)</label><input id="CampoNuevoDocumento" maxlength="11" inputmode="numeric">
+  <label for="CampoNuevoNombre">Nombre o razón social</label><input id="CampoNuevoNombre" maxlength="200">
+  <label for="CampoNuevaDireccion">Dirección (opcional)</label><input id="CampoNuevaDireccion" maxlength="250">
+  <div id="ErrorNuevoCliente" class="aviso-error oculto"></div>
+  <div class="modal-pie"><button type="button" class="boton cerrar-modal" id="BotonCancelarCliente">Cancelar</button><button type="submit" id="BotonGuardarCliente" class="boton principal">Guardar</button></div>
+</form>
+
+<form id="VentanaNuevoProveedor" class="modal oculto" novalidate>
+  <div class="greca"></div>
+  <h2 class="serif">Nuevo proveedor</h2>
+  <label for="CampoProveedorRuc">RUC</label><input id="CampoProveedorRuc" maxlength="11" inputmode="numeric">
+  <label for="CampoProveedorRazon">Razón social</label><input id="CampoProveedorRazon" maxlength="200">
+  <div class="dos">
+    <div><label for="CampoProveedorTelefono">Teléfono</label><input id="CampoProveedorTelefono" maxlength="30"></div>
+    <div><label for="CampoProveedorContacto">Contacto</label><input id="CampoProveedorContacto" maxlength="100"></div>
+  </div>
+  <div id="ErrorNuevoProveedor" class="aviso-error oculto"></div>
+  <div class="modal-pie"><button type="button" class="boton cerrar-modal" id="BotonCancelarProveedor">Cancelar</button><button type="submit" id="BotonGuardarProveedor" class="boton principal">Guardar</button></div>
+</form>
+
+<form id="VentanaNuevaCompra" class="modal ancho oculto" novalidate>
+  <div class="greca"></div>
+  <h2 class="serif">Nueva compra</h2>
+  <div class="tres">
+    <div><label for="CampoCompraRuc">RUC del proveedor</label><input id="CampoCompraRuc" maxlength="11" inputmode="numeric"></div>
+    <div><label for="CampoCompraTipo">Comprobante</label><select id="CampoCompraTipo"><option value="01">Factura</option><option value="03">Boleta</option></select></div>
+    <div><label for="CampoCompraFecha">Fecha</label><input id="CampoCompraFecha" type="date"></div>
+    <div><label for="CampoCompraSerie">Serie</label><input id="CampoCompraSerie" maxlength="4" placeholder="F001"></div>
+    <div><label for="CampoCompraNumero">Número</label><input id="CampoCompraNumero" inputmode="numeric" maxlength="8"></div>
+  </div>
+  <div class="linea-compra">
+    <div class="crece"><label for="CampoCompraProducto">Producto</label><input id="CampoCompraProducto" list="ListaCompraProductos" placeholder="Escriba 3 letras y elija"><datalist id="ListaCompraProductos"></datalist></div>
+    <div><label for="CampoCompraCantidad">Cantidad</label><input id="CampoCompraCantidad" value="1" inputmode="decimal"></div>
+    <div><label for="CampoCompraCosto">Costo unit.</label><input id="CampoCompraCosto" inputmode="decimal"></div>
+    <button type="button" id="BotonAgregarLineaCompra" class="boton"><span class="icono">&#xE710;</span>Agregar</button>
+  </div>
+  <table id="TablaLineasCompra" class="tabla compacta"><thead><tr><th>Producto</th><th class="c">Cant.</th><th class="d">Costo</th><th class="d">Importe</th><th></th></tr></thead><tbody></tbody></table>
+  <div class="total-compra">Total <strong id="TextoTotalCompra" class="serif acento">S/ 0.00</strong></div>
+  <div id="ErrorNuevaCompra" class="aviso-error oculto"></div>
+  <div class="modal-pie"><button type="button" class="boton cerrar-modal" id="BotonCancelarCompra">Cancelar</button><button type="submit" id="BotonGuardarCompra" class="boton principal">Registrar compra</button></div>
+</form>
+
+<script src="js/portal.js"></script>
+</body>
+</html>

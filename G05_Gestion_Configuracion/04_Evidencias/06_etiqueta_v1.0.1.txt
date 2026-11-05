@@ -1,0 +1,52 @@
+### Motivo
+tags/v1.0.0 (r35) es copia de trunk@34. Despues se confirmaron en el trunk documentos del paquete de entrega (r36-r40: cuestionarios G02-G08, fotos de elicitacion, README 1.2.0, historial) y la actualizacion de politica, README y dictamen (r42-r43).
+Las etiquetas no se modifican (politica, procedimiento 4): se crea tags/v1.0.1 y v1.0.0 se conserva.
+
+### Etiqueta del avance 2 (LB-2), creada antes
+   A /tags/v0.2.0 (from /trunk:34)
+r41 | jpayehuanca | 2026-11-04 20:22:04 -0500 (mié, 04 Nov. 2026)
+
+### Revision del trunk que se etiqueta
+Revision: 43
+Last Changed Author: rcondo
+Last Changed Rev: 43
+Last Changed Date: 2026-11-04 20:24:15 -0500 (mié, 04 Nov. 2026)
+Version del producto en trunk@43: 1.2.0 (misma que trunk@34)
+
+### jpayehuanca (responsable de configuracion) crea tags/v1.0.1 desde trunk@43
+   A /tags/v1.0.1 (from /trunk:43)
+Etiqueta de entrega final corregida v1.0.1 (LB-F.1): copia de trunk@43, producto Condor 1.2.0; codigo identico a v1.0.0
+r44 | jpayehuanca | 2026-11-04 20:29:19 -0500 (mié, 04 Nov. 2026)
+
+### Etiquetas
+     44 jpayehuanca              Nov. 04 20:29 ./
+     16 jpayehuanca              Oct. 30 23:43 v0.1.0/
+     41 jpayehuanca              Nov. 04 20:22 v0.2.0/
+     35 jpayehuanca              Nov. 04 19:52 v1.0.0/
+     44 jpayehuanca              Nov. 04 20:29 v1.0.1/
+
+### La etiqueta coincide con trunk@43 (diff vacio)
+Archivos con diferencias: 0
+
+### Diferencias entre tags/v1.0.0 y tags/v1.0.1
+Codigo y base de datos (src, db, tests, herramientas): 0 archivos con diferencias
+Total: 35 rutas, todas de documentacion y evidencias:
+A       G02_Proceso_Requerimientos/07_Cuestionario_guia.md
+A       G03_Analisis_Sistemas/06_Cuestionario_guia.md
+A       G04_Dimensionamiento/05_Cuestionario_guia.md
+M       G05_Gestion_Configuracion/01_Politica/politica_configuracion.md
+M       G05_Gestion_Configuracion/04_Evidencias/04_respaldo_y_verificacion.txt
+A       G05_Gestion_Configuracion/04_Evidencias/05_etiqueta_v1.0.0.txt
+M       G05_Gestion_Configuracion/04_Evidencias/historial_svn.txt
+M       G05_Gestion_Configuracion/04_Evidencias/historial_svn.xml
+A       G05_Gestion_Configuracion/07_Cuestionario_guia.md
+A       G05_Gestion_Configuracion/07_diagrama_actualizacion_version.png
+A       G05_Gestion_Configuracion/07_diagrama_actualizacion_version.puml
+A       G05_Gestion_Configuracion/07_diagrama_actualizacion_version.svg
+A       G06_Gestion_Riesgos/07_Cuestionario_guia.md
+A       G07_Pruebas_Unitarias/08_Cuestionario_guia.md
+A       G08_Pruebas_Rendimiento/09_Cuestionario_guia.md
+M       G09_Gestion_Calidad/06_Dictamen/dictamen_liberacion.md
+M       Sistema_Logistico_Condor_final/README.md
+A       condor_imgs
+  (mas 3 carpetas y 14 fotos en condor_imgs/)

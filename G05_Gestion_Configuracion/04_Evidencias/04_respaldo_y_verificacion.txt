@@ -1,0 +1,41 @@
+### Verificación del respaldo 03_Respaldo/condor_r16.dump.gz
+svnadmin create repo_restaurado; gunzip -c condor_r16.dump.gz | svnadmin load repo_restaurado
+Revisión más reciente del repositorio original: 16
+Revisión más reciente del repositorio restaurado: 16
+Etiquetas restauradas: tags/
+ tags/v0.1.0/
+ 
+Árbol trunk/ (archivos): original 637 · restaurado 637
+
+svnadmin verify repo_restaurado:
+OK: las 17 revisiones (r0-r16) se verificaron sin errores
+
+### Verificación del respaldo 03_Respaldo/condor_r35.dump.gz (entrega final: tags/v1.0.0, producto 1.2.0) - 2026-11-04
+svnadmin dump -q 02_Repositorio/condor | gzip -9 > 03_Respaldo/condor_r35.dump.gz
+svnadmin create repo_restaurado; gunzip -c condor_r35.dump.gz | svnadmin load repo_restaurado
+Tamaño: 184 198 375 bytes · SHA-256: 8e2608dfb712ca1b2087d18050f17d83e9080ab2f6a28314e1c92b3c5c1b1d57
+Revisión más reciente del repositorio original: 35
+Revisión más reciente del repositorio restaurado: 35
+UUID original y restaurado: 6ab94264-1e9c-3c46-8415-336edabad3b5 (iguales)
+Etiquetas restauradas: tags/ tags/v0.1.0/ tags/v1.0.0/
+Ramas restauradas: CC-03-portal-web/ DEF-01-precio-catalogo/ MEJ-01-correlativo-al-final/
+Árbol trunk/ (archivos): original 3982 · restaurado 3982 (listado completo idéntico)
+Árbol tags/v1.0.0/ (archivos): original 3982 · restaurado 3982 (listado completo idéntico)
+
+svnadmin verify repo_restaurado:
+OK: las 36 revisiones (r0-r35) se verificaron sin errores
+
+### Verificación del respaldo 03_Respaldo/condor_r44.dump.gz (entrega final corregida: tags/v1.0.1, producto 1.2.0) - 2026-11-04
+svnadmin dump -q 02_Repositorio/condor | gzip -9 > 03_Respaldo/condor_r44.dump.gz
+svnadmin create repo_restaurado; gunzip -c condor_r44.dump.gz | svnadmin load repo_restaurado
+Tamaño: 188 823 805 bytes · SHA-256: 6086975a864e53444faa82272ee66da82966fe89c8cc32e77f78c501b5953bf9
+Revisión más reciente del repositorio original: 44
+Revisión más reciente del repositorio restaurado: 44
+UUID original y restaurado: 6ab94264-1e9c-3c46-8415-336edabad3b5 (iguales)
+Etiquetas restauradas: tags/ tags/v0.1.0/ tags/v0.2.0/ tags/v1.0.0/ tags/v1.0.1/
+Ramas restauradas: CC-03-portal-web/ DEF-01-precio-catalogo/ MEJ-01-correlativo-al-final/
+Árbol trunk/ (archivos): original 4007 · restaurado 4007 (listado completo idéntico)
+Árbol tags/v1.0.1/ (archivos): original 4007 · restaurado 4007 (listado completo idéntico)
+
+svnadmin verify repo_restaurado:
+OK: las 45 revisiones (r0-r44) se verificaron sin errores

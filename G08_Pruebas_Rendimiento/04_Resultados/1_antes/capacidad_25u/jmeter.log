@@ -1,0 +1,259 @@
+2026-11-01 14:44:59,771 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-11-01 14:44:59,781 INFO o.a.j.JMeter: Loading user properties from: C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\8\apache-jmeter-5.6.3\bin\user.properties
+2026-11-01 14:44:59,781 INFO o.a.j.JMeter: Loading system properties from: C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\8\apache-jmeter-5.6.3\bin\system.properties
+2026-11-01 14:44:59,781 INFO o.a.j.JMeter: Setting JMeter property: datos=C:/Users/jeanp/Downloads/UNIVERSIDAD 2026-B/Calidad de Software/Lab/Trabajo Grupal/G08_Pruebas_Rendimiento/03_Datos
+2026-11-01 14:44:59,781 INFO o.a.j.JMeter: Setting JMeter property: capacidad.usuarios=25
+2026-11-01 14:44:59,782 INFO o.a.j.JMeter: Setting JMeter property: pausa.min=0
+2026-11-01 14:44:59,782 INFO o.a.j.JMeter: Setting JMeter property: pausa.rango=0
+2026-11-01 14:44:59,782 INFO o.a.j.JMeter: Setting JMeter property: jmeter.reportgenerator.apdex_satisfied_threshold=500
+2026-11-01 14:44:59,782 INFO o.a.j.JMeter: Setting JMeter property: jmeter.reportgenerator.apdex_tolerated_threshold=2000
+2026-11-01 14:44:59,782 INFO o.a.j.JMeter: Setting JMeter property: jmeter.reportgenerator.overall_granularity=10000
+2026-11-01 14:44:59,782 INFO o.a.j.JMeter: Setting JMeter property: jmeter.save.saveservice.thread_counts=true
+2026-11-01 14:44:59,786 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-11-01 14:44:59,787 INFO o.a.j.JMeter: Version 5.6.3
+2026-11-01 14:44:59,787 INFO o.a.j.JMeter: java.version=26.0.2.1
+2026-11-01 14:44:59,787 INFO o.a.j.JMeter: java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2026-11-01 14:44:59,787 INFO o.a.j.JMeter: os.name=Windows 11
+2026-11-01 14:44:59,787 INFO o.a.j.JMeter: os.arch=amd64
+2026-11-01 14:44:59,787 INFO o.a.j.JMeter: os.version=10.0
+2026-11-01 14:44:59,787 INFO o.a.j.JMeter: file.encoding=UTF-8
+2026-11-01 14:44:59,787 INFO o.a.j.JMeter: java.awt.headless=true
+2026-11-01 14:44:59,787 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-11-01 14:44:59,787 INFO o.a.j.JMeter: Available Processors =20
+2026-11-01 14:44:59,796 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-11-01 14:44:59,796 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-11-01 14:44:59,796 INFO o.a.j.JMeter: JMeterHome=C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\8\apache-jmeter-5.6.3
+2026-11-01 14:44:59,796 INFO o.a.j.JMeter: user.dir  =C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\02_Scripts
+2026-11-01 14:44:59,797 INFO o.a.j.JMeter: PWD       =C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\02_Scripts
+2026-11-01 14:44:59,803 INFO o.a.j.JMeter: IP: 192.168.100.37 Name: laptop-jphc FullName: laptop-jphc
+2026-11-01 14:44:59,810 INFO o.a.j.JMeter: Setting property 'jmeter.reportgenerator.outputdir' to:'C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\04_Resultados\1_antes\capacidad_25u\dashboard'
+2026-11-01 14:44:59,812 INFO o.a.j.s.FileServer: Default base='C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\02_Scripts'
+2026-11-01 14:44:59,812 INFO o.a.j.s.FileServer: Set new base='C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\02_Scripts'
+2026-11-01 14:44:59,955 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2026-11-01 14:44:59,970 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2026-11-01 14:44:59,972 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2026-11-01 14:44:59,975 INFO o.a.j.s.SaveService: Loading file: C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\02_Scripts\condor_rendimiento.jmx
+2026-11-01 14:45:00,008 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-01 14:45:00,008 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-01 14:45:00,009 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-01 14:45:00,009 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-11-01 14:45:00,009 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2026-11-01 14:45:00,009 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2026-11-01 14:45:00,053 INFO o.a.j.JMeter: Creating summariser <summary>
+2026-11-01 14:45:00,056 INFO o.a.j.r.d.ReportGenerator: ReportGenerator will use for Parsing the separator: ','
+2026-11-01 14:45:00,056 INFO o.a.j.r.d.ReportGenerator: Will generate report at end of test from  results file: C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\04_Resultados\1_antes\capacidad_25u\resultado.jtl
+2026-11-01 14:45:00,056 INFO o.a.j.r.d.ReportGenerator: Reading report generator properties from: C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\8\apache-jmeter-5.6.3\bin\reportgenerator.properties
+2026-11-01 14:45:00,057 INFO o.a.j.r.d.ReportGenerator: Merging with JMeter properties
+2026-11-01 14:45:00,059 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.temp_dir' not found, using default value 'temp' instead.
+2026-11-01 14:45:00,061 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.apdex_per_transaction' not found, using default value 'null' instead.
+2026-11-01 14:45:00,061 INFO o.a.j.r.c.ReportGeneratorConfiguration: apdex_per_transaction is empty, not APDEX per transaction customization
+2026-11-01 14:45:00,061 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.sample_filter' not found, using default value 'null' instead.
+2026-11-01 14:45:00,061 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.report_title' not found, using default value 'null' instead.
+2026-11-01 14:45:00,061 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.start_date' not found, using default value 'null' instead.
+2026-11-01 14:45:00,061 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.end_date' not found, using default value 'null' instead.
+2026-11-01 14:45:00,061 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.date_format' not found, using default value 'null' instead.
+2026-11-01 14:45:00,062 INFO o.a.j.r.c.ReportGeneratorConfiguration: Will use date range start date: null, end date: null
+2026-11-01 14:45:00,065 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.totalTPS.exclude_controllers' not found, using default value 'false' instead.
+2026-11-01 14:45:00,065 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.activeThreadsOverTime.exclude_controllers' not found, using default value 'false' instead.
+2026-11-01 14:45:00,065 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.timeVsThreads.exclude_controllers' not found, using default value 'false' instead.
+2026-11-01 14:45:00,065 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.responseTimeDistribution.exclude_controllers' not found, using default value 'false' instead.
+2026-11-01 14:45:00,065 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.transactionsPerSecond.exclude_controllers' not found, using default value 'false' instead.
+2026-11-01 14:45:00,065 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.responseTimePercentiles.exclude_controllers' not found, using default value 'false' instead.
+2026-11-01 14:45:00,065 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.responseTimePercentilesOverTime.exclude_controllers' not found, using default value 'false' instead.
+2026-11-01 14:45:00,065 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.responseTimesOverTime.exclude_controllers' not found, using default value 'false' instead.
+2026-11-01 14:45:00,065 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.connectTimeOverTime.exclude_controllers' not found, using default value 'false' instead.
+2026-11-01 14:45:00,065 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.latenciesOverTime.exclude_controllers' not found, using default value 'false' instead.
+2026-11-01 14:45:00,066 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.json.filters_only_sample_series' not found, using default value 'true' instead.
+2026-11-01 14:45:00,066 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.json.series_filter' not found, using default value '' instead.
+2026-11-01 14:45:00,066 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.json.show_controllers_only' not found, using default value 'false' instead.
+2026-11-01 14:45:00,066 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.html.filters_only_sample_series' not found, using default value 'true' instead.
+2026-11-01 14:45:00,066 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.html.series_filter' not found, using default value '' instead.
+2026-11-01 14:45:00,066 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.html.show_controllers_only' not found, using default value 'false' instead.
+2026-11-01 14:45:00,074 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2026-11-01 14:45:00,074 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-11-01 14:45:00,075 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-11-01 14:45:00,077 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2026-11-01 14:45:00,077 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2026-11-01 14:45:00,120 INFO o.a.j.JMeter: Running test (1793562300120)
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Carga esperada (10 u, 5 min)
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Starting 0 threads for group Carga esperada (10 u, 5 min).
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-11-01 14:45:00,133 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=0 ramp-up=30 delayedStart=false
+2026-11-01 14:45:00,133 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 2 : Estrés E1: 10 u (0:00-9:30)
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Starting 0 threads for group Estrés E1: 10 u (0:00-9:30).
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-11-01 14:45:00,133 INFO o.a.j.t.ThreadGroup: Starting thread group... number=2 threads=0 ramp-up=30 delayedStart=false
+2026-11-01 14:45:00,133 INFO o.a.j.t.ThreadGroup: Started thread group number 2
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 3 : Estrés E2: +15 u = 25 (3:30-9:30)
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Starting 0 threads for group Estrés E2: +15 u = 25 (3:30-9:30).
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-11-01 14:45:00,133 INFO o.a.j.t.ThreadGroup: Starting thread group... number=3 threads=0 ramp-up=10 delayedStart=false
+2026-11-01 14:45:00,133 INFO o.a.j.t.ThreadGroup: Started thread group number 3
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 4 : Estrés E3: +25 u = 50 (6:30-9:30)
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Starting 0 threads for group Estrés E3: +25 u = 50 (6:30-9:30).
+2026-11-01 14:45:00,133 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-11-01 14:45:00,133 INFO o.a.j.t.ThreadGroup: Starting thread group... number=4 threads=0 ramp-up=10 delayedStart=false
+2026-11-01 14:45:00,134 INFO o.a.j.t.ThreadGroup: Started thread group number 4
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 5 : Pico base: 10 u (0:00-7:00)
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Starting 0 threads for group Pico base: 10 u (0:00-7:00).
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-11-01 14:45:00,134 INFO o.a.j.t.ThreadGroup: Starting thread group... number=5 threads=0 ramp-up=30 delayedStart=false
+2026-11-01 14:45:00,134 INFO o.a.j.t.ThreadGroup: Started thread group number 5
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 6 : Pico ráfaga: +40 u = 50 (3:00-4:10)
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Starting 0 threads for group Pico ráfaga: +40 u = 50 (3:00-4:10).
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-11-01 14:45:00,134 INFO o.a.j.t.ThreadGroup: Starting thread group... number=6 threads=0 ramp-up=10 delayedStart=false
+2026-11-01 14:45:00,134 INFO o.a.j.t.ThreadGroup: Started thread group number 6
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 7 : Estabilidad (10 u, 15 min)
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Starting 0 threads for group Estabilidad (10 u, 15 min).
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-11-01 14:45:00,134 INFO o.a.j.t.ThreadGroup: Starting thread group... number=7 threads=0 ramp-up=30 delayedStart=false
+2026-11-01 14:45:00,134 INFO o.a.j.t.ThreadGroup: Started thread group number 7
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 8 : Capacidad (sin pausas, diagnóstico)
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Starting 25 threads for group Capacidad (sin pausas, diagnóstico).
+2026-11-01 14:45:00,134 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-11-01 14:45:00,134 INFO o.a.j.t.ThreadGroup: Starting thread group... number=8 threads=25 ramp-up=10 delayedStart=false
+2026-11-01 14:45:00,144 INFO o.a.j.t.ThreadGroup: Started thread group number 8
+2026-11-01 14:45:00,144 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2026-11-01 14:45:00,170 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-1
+2026-11-01 14:45:00,172 INFO o.a.j.s.FileServer: Stored: C:/Users/jeanp/Downloads/UNIVERSIDAD 2026-B/Calidad de Software/Lab/Trabajo Grupal/G08_Pruebas_Rendimiento/03_Datos/ventas.csv
+2026-11-01 14:45:00,178 INFO o.a.j.s.FileServer: Stored: C:/Users/jeanp/Downloads/UNIVERSIDAD 2026-B/Calidad de Software/Lab/Trabajo Grupal/G08_Pruebas_Rendimiento/03_Datos/consultas.csv
+2026-11-01 14:45:00,179 INFO o.a.j.s.FileServer: Stored: C:/Users/jeanp/Downloads/UNIVERSIDAD 2026-B/Calidad de Software/Lab/Trabajo Grupal/G08_Pruebas_Rendimiento/03_Datos/usuarios.csv
+2026-11-01 14:45:00,186 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = laptop-jphc
+2026-11-01 14:45:00,189 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2026-11-01 14:45:00,190 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2026-11-01 14:45:00,190 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
+2026-11-01 14:45:00,190 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2026-11-01 14:45:00,190 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2026-11-01 14:45:00,318 INFO o.a.j.r.Summariser: summary +      1 in 00:00:00 =    5.1/s Avg:    76 Min:    76 Max:    76 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0
+2026-11-01 14:45:00,571 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-2
+2026-11-01 14:45:00,969 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-3
+2026-11-01 14:45:01,368 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-4
+2026-11-01 14:45:01,768 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-5
+2026-11-01 14:45:02,167 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-6
+2026-11-01 14:45:02,567 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-7
+2026-11-01 14:45:02,967 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-8
+2026-11-01 14:45:03,365 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-9
+2026-11-01 14:45:03,765 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-10
+2026-11-01 14:45:04,166 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-11
+2026-11-01 14:45:04,565 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-12
+2026-11-01 14:45:04,965 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-13
+2026-11-01 14:45:05,366 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-14
+2026-11-01 14:45:05,765 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-15
+2026-11-01 14:45:06,164 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-16
+2026-11-01 14:45:06,564 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-17
+2026-11-01 14:45:06,962 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-18
+2026-11-01 14:45:07,363 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-19
+2026-11-01 14:45:07,761 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-20
+2026-11-01 14:45:08,162 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-21
+2026-11-01 14:45:08,562 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-22
+2026-11-01 14:45:08,961 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-23
+2026-11-01 14:45:09,360 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-24
+2026-11-01 14:45:09,760 INFO o.a.j.t.JMeterThread: Thread started: Capacidad (sin pausas, diagnóstico) 8-25
+2026-11-01 14:45:30,000 INFO o.a.j.r.Summariser: summary +  23039 in 00:00:30 =  776.2/s Avg:    26 Min:     4 Max:   564 Err:     0 (0.00%) Active: 25 Started: 25 Finished: 0
+2026-11-01 14:45:30,001 INFO o.a.j.r.Summariser: summary =  23040 in 00:00:30 =  771.1/s Avg:    26 Min:     4 Max:   564 Err:     0 (0.00%)
+2026-11-01 14:46:00,000 INFO o.a.j.r.Summariser: summary +  24874 in 00:00:30 =  829.1/s Avg:    30 Min:     4 Max:   634 Err:     0 (0.00%) Active: 25 Started: 25 Finished: 0
+2026-11-01 14:46:00,002 INFO o.a.j.r.Summariser: summary =  47914 in 00:01:00 =  800.2/s Avg:    28 Min:     4 Max:   634 Err:     0 (0.00%)
+2026-11-01 14:46:30,001 INFO o.a.j.r.Summariser: summary +  25157 in 00:00:30 =  838.5/s Avg:    29 Min:     4 Max:   744 Err:     0 (0.00%) Active: 25 Started: 25 Finished: 0
+2026-11-01 14:46:30,001 INFO o.a.j.r.Summariser: summary =  73071 in 00:01:30 =  813.0/s Avg:    28 Min:     4 Max:   744 Err:     0 (0.00%)
+2026-11-01 14:47:00,000 INFO o.a.j.r.Summariser: summary +  24648 in 00:00:30 =  821.6/s Avg:    30 Min:     4 Max:   647 Err:     0 (0.00%) Active: 25 Started: 25 Finished: 0
+2026-11-01 14:47:00,001 INFO o.a.j.r.Summariser: summary =  97719 in 00:02:00 =  815.1/s Avg:    29 Min:     4 Max:   744 Err:     0 (0.00%)
+2026-11-01 14:47:10,140 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-10
+2026-11-01 14:47:10,141 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-10
+2026-11-01 14:47:10,144 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-22
+2026-11-01 14:47:10,144 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-22
+2026-11-01 14:47:10,150 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-4
+2026-11-01 14:47:10,150 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-4
+2026-11-01 14:47:10,150 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-8
+2026-11-01 14:47:10,150 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-8
+2026-11-01 14:47:10,152 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-23
+2026-11-01 14:47:10,152 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-23
+2026-11-01 14:47:10,152 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-12
+2026-11-01 14:47:10,153 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-12
+2026-11-01 14:47:10,153 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-25
+2026-11-01 14:47:10,153 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-25
+2026-11-01 14:47:10,158 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-1
+2026-11-01 14:47:10,158 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-1
+2026-11-01 14:47:10,163 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-9
+2026-11-01 14:47:10,164 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-9
+2026-11-01 14:47:10,167 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-11
+2026-11-01 14:47:10,167 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-11
+2026-11-01 14:47:10,171 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-19
+2026-11-01 14:47:10,171 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-19
+2026-11-01 14:47:10,176 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-7
+2026-11-01 14:47:10,176 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-7
+2026-11-01 14:47:10,180 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-3
+2026-11-01 14:47:10,180 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-3
+2026-11-01 14:47:10,183 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-5
+2026-11-01 14:47:10,183 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-5
+2026-11-01 14:47:10,187 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-20
+2026-11-01 14:47:10,187 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-20
+2026-11-01 14:47:10,191 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-17
+2026-11-01 14:47:10,191 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-17
+2026-11-01 14:47:10,195 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-15
+2026-11-01 14:47:10,195 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-15
+2026-11-01 14:47:10,199 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-24
+2026-11-01 14:47:10,199 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-24
+2026-11-01 14:47:10,202 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-6
+2026-11-01 14:47:10,202 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-6
+2026-11-01 14:47:10,206 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-13
+2026-11-01 14:47:10,206 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-13
+2026-11-01 14:47:10,210 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-16
+2026-11-01 14:47:10,211 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-16
+2026-11-01 14:47:10,213 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-14
+2026-11-01 14:47:10,213 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-14
+2026-11-01 14:47:10,217 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-21
+2026-11-01 14:47:10,218 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-21
+2026-11-01 14:47:10,221 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-2
+2026-11-01 14:47:10,221 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-2
+2026-11-01 14:47:10,225 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Capacidad (sin pausas, diagnóstico) 8-18
+2026-11-01 14:47:10,225 INFO o.a.j.t.JMeterThread: Thread finished: Capacidad (sin pausas, diagnóstico) 8-18
+2026-11-01 14:47:10,226 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2026-11-01 14:47:10,226 INFO o.a.j.s.FileServer: Close: C:/Users/jeanp/Downloads/UNIVERSIDAD 2026-B/Calidad de Software/Lab/Trabajo Grupal/G08_Pruebas_Rendimiento/03_Datos/ventas.csv
+2026-11-01 14:47:10,226 INFO o.a.j.s.FileServer: Close: C:/Users/jeanp/Downloads/UNIVERSIDAD 2026-B/Calidad de Software/Lab/Trabajo Grupal/G08_Pruebas_Rendimiento/03_Datos/consultas.csv
+2026-11-01 14:47:10,226 INFO o.a.j.s.FileServer: Close: C:/Users/jeanp/Downloads/UNIVERSIDAD 2026-B/Calidad de Software/Lab/Trabajo Grupal/G08_Pruebas_Rendimiento/03_Datos/usuarios.csv
+2026-11-01 14:47:10,227 INFO o.a.j.r.Summariser: summary +   7682 in 00:00:10 =  751.1/s Avg:    33 Min:     4 Max:   523 Err:     0 (0.00%) Active: 0 Started: 25 Finished: 25
+2026-11-01 14:47:10,227 INFO o.a.j.r.Summariser: summary = 105401 in 00:02:10 =  810.1/s Avg:    29 Min:     4 Max:   744 Err:     0 (0.00%)
+2026-11-01 14:47:10,228 INFO o.a.j.JMeter: Generating Dashboard
+2026-11-01 14:47:10,228 INFO o.a.j.r.d.ReportGenerator: Flushing result collector before report Generation
+2026-11-01 14:47:10,237 INFO o.a.j.r.p.NormalizerSampleConsumer: Using format, 'ms', to parse timeStamp field
+2026-11-01 14:47:11,825 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.AggregateConsumer#stopProducing(): beginDate produced 0 samples
+2026-11-01 14:47:11,825 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.AggregateConsumer#stopProducing(): endDate produced 0 samples
+2026-11-01 14:47:11,826 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.ApdexSummaryConsumer#stopProducing(): apdexSummary produced 0 samples
+2026-11-01 14:47:11,826 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.RequestsSummaryConsumer#stopProducing(): requestsSummary produced 0 samples
+2026-11-01 14:47:11,835 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.StatisticsSummaryConsumer#stopProducing(): statisticsSummary produced 0 samples
+2026-11-01 14:47:11,836 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.Top5ErrorsBySamplerConsumer#stopProducing(): top5ErrorsBySampler produced 0 samples
+2026-11-01 14:47:11,836 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.ErrorsSummaryConsumer#stopProducing(): errorsSummary produced 0 samples
+2026-11-01 14:47:11,836 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.HitsPerSecondGraphConsumer#stopProducing(): hitsPerSecond produced 0 samples
+2026-11-01 14:47:12,590 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.LatencyVSRequestGraphConsumer#stopProducing(): latencyVsRequest produced 0 samples
+2026-11-01 14:47:12,594 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.SyntheticResponseTimeDistributionGraphConsumer#stopProducing(): syntheticResponseTimeDistribution produced 0 samples
+2026-11-01 14:47:12,594 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.BytesThroughputGraphConsumer#stopProducing(): bytesThroughputOverTime produced 0 samples
+2026-11-01 14:47:12,594 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.CodesPerSecondGraphConsumer#stopProducing(): codesPerSecond produced 0 samples
+2026-11-01 14:47:13,335 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ResponseTimeVSRequestGraphConsumer#stopProducing(): responseTimeVsRequest produced 0 samples
+2026-11-01 14:47:13,338 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.FilterConsumer#stopProducing(): startIntervalControlerFilter produced 737807 samples
+2026-11-01 14:47:13,338 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.TotalTPSGraphConsumer#stopProducing(): totalTPS produced 0 samples
+2026-11-01 14:47:13,338 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ActiveThreadsGraphConsumer#stopProducing(): activeThreadsOverTime produced 0 samples
+2026-11-01 14:47:13,338 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.TimeVSThreadGraphConsumer#stopProducing(): timeVsThreads produced 0 samples
+2026-11-01 14:47:13,338 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ResponseTimeDistributionGraphConsumer#stopProducing(): responseTimeDistribution produced 0 samples
+2026-11-01 14:47:13,338 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.TransactionsPerSecondGraphConsumer#stopProducing(): transactionsPerSecond produced 0 samples
+2026-11-01 14:47:13,338 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ResponseTimePercentilesGraphConsumer#stopProducing(): responseTimePercentiles produced 0 samples
+2026-11-01 14:47:13,340 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ResponseTimePercentilesOverTimeGraphConsumer#stopProducing(): responseTimePercentilesOverTime produced 0 samples
+2026-11-01 14:47:13,346 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ResponseTimeOverTimeGraphConsumer#stopProducing(): responseTimesOverTime produced 0 samples
+2026-11-01 14:47:13,347 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ConnectTimeOverTimeGraphConsumer#stopProducing(): connectTimeOverTime produced 0 samples
+2026-11-01 14:47:13,347 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.LatencyOverTimeGraphConsumer#stopProducing(): latenciesOverTime produced 0 samples
+2026-11-01 14:47:13,347 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.FilterConsumer#stopProducing(): nameFilter produced 1581015 samples
+2026-11-01 14:47:13,347 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.FilterConsumer#stopProducing(): dateRangeFilter produced 316203 samples
+2026-11-01 14:47:13,347 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.NormalizerSampleConsumer#stopProducing(): normalizer produced 105401 samples
+2026-11-01 14:47:13,348 INFO o.a.j.r.p.CsvFileSampleSource: produce(): 105401 samples produced in 3s 87 ms on channel 0
+2026-11-01 14:47:13,348 INFO o.a.j.r.d.ReportGenerator: Exporting data using exporter:'json' of className:'org.apache.jmeter.report.dashboard.JsonExporter'
+2026-11-01 14:47:13,414 INFO o.a.j.r.d.JsonExporter: Found data for consumer statisticsSummary in context
+2026-11-01 14:47:13,414 INFO o.a.j.r.d.JsonExporter: Creating statistics for overall
+2026-11-01 14:47:13,415 INFO o.a.j.r.d.JsonExporter: Creating statistics for other transactions
+2026-11-01 14:47:13,415 INFO o.a.j.r.d.JsonExporter: Checking output folder
+2026-11-01 14:47:13,416 INFO o.a.j.r.d.JsonExporter: Writing statistics JSON to C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\04_Resultados\1_antes\capacidad_25u\dashboard\statistics.json
+2026-11-01 14:47:13,461 INFO o.a.j.r.d.ReportGenerator: Exporting data using exporter:'html' of className:'org.apache.jmeter.report.dashboard.HtmlTemplateExporter'
+2026-11-01 14:47:13,465 INFO o.a.j.r.d.HtmlTemplateExporter: Will generate dashboard in folder: C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\04_Resultados\1_antes\capacidad_25u\dashboard
+2026-11-01 14:47:13,548 INFO o.a.j.r.d.HtmlTemplateExporter: Report will be generated in: C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\04_Resultados\1_antes\capacidad_25u\dashboard, creating folder structure
+2026-11-01 14:47:13,551 INFO o.a.j.r.d.TemplateVisitor: Copying folder from 'C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\8\apache-jmeter-5.6.3\bin\report-template' to 'C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\04_Resultados\1_antes\capacidad_25u\dashboard', got message: C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\04_Resultados\1_antes\capacidad_25u\dashboard, found non empty folder with following content [C:\Users\jeanp\Downloads\UNIVERSIDAD 2026-B\Calidad de Software\Lab\Trabajo Grupal\G08_Pruebas_Rendimiento\04_Resultados\1_antes\capacidad_25u\dashboard\statistics.json], will be ignored
+2026-11-01 14:47:13,938 INFO o.a.j.JMeter: Dashboard generated

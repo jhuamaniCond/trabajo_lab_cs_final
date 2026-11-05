@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Alcance de la cobertura (coverlet 6.0.2), declarado para G07:
+    Incluye: el ensamblado Condor.Dominio completo (paquete de lógica de negocio:
+             entidades, validaciones, ventas, seguridad, reportes, SUNAT, impresión).
+    Excluye: los proyectos de pruebas, la API, los datos (Npgsql), la presentación
+             WPF y el código generado por el compilador ([GeneratedCode],
+             [CompilerGenerated]). Las interfaces de Contratos/ no tienen líneas
+             ejecutables, así que no cuentan ni a favor ni en contra.
+-->
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat code coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <Include>[Condor.Dominio]*</Include>
+          <Exclude>[Condor.Pruebas]*,[Condor.PruebasUnitarias]*</Exclude>
+          <ExcludeByAttribute>GeneratedCodeAttribute,CompilerGeneratedAttribute,ExcludeFromCodeCoverageAttribute</ExcludeByAttribute>
+          <SingleHit>false</SingleHit>
+          <UseSourceLink>false</UseSourceLink>
+          <IncludeTestAssembly>false</IncludeTestAssembly>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Datos de demostración para la sustentación y las pruebas de interfaz:
+       25 o más registros en cada módulo (F2 a F8). Usa las reglas de
+       Condor.Dominio y los repositorios de Condor.Datos, así los correlativos,
+       el IGV y los totales salen igual que en una venta real. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Condor.DatosDemo</RootNamespace>
+    <AssemblyName>DatosDemo</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Condor.Datos\Condor.Datos.csproj" />
+  </ItemGroup>
+
+</Project>

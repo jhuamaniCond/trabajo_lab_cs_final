@@ -1,0 +1,11 @@
+--- a/Sistema_Logistico_Condor_final/src/Condor.Dominio/Ventas/EmisionComprobante.cs
++++ b/Sistema_Logistico_Condor_final/src/Condor.Dominio/Ventas/EmisionComprobante.cs
+@@ -129,7 +129,7 @@
+                 break;
+ 
+             case TipoEmision.Boleta:
+-                if (cliente is null && Total(solicitud.Detalle) > MontoBoletaIdentificada)
++                if (cliente is null && Total(solicitud.Detalle) >= MontoBoletaIdentificada)
+                     errores.Add(new(CampoEmision.Documento,
+                         $"Las boletas de más de S/ {MontoBoletaIdentificada:0.00} deben llevar el DNI del cliente: elija Boleta con DNI."));
+                 else if (cliente is { Id: <= 0 })

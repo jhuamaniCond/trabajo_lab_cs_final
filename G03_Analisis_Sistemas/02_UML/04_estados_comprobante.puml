@@ -1,0 +1,40 @@
+@startuml 04_estados_comprobante
+!pragma layout smetana
+title Diagrama de estados del comprobante electrónico frente a la SUNAT (RF-07, RF-10, CRQ-10)
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+[*] --> Pendiente : emitir boleta o factura\n[COMMIT con número de serie]
+
+state "PENDIENTE" as Pendiente : estado_sunat = PENDIENTE\nimpreso o en cola de impresión
+state "Reservado por una PC" as Reservado : reservado_hasta = ahora + 5 min\n(FOR UPDATE SKIP LOCKED)
+state "ACEPTADO" as Aceptado : CDR guardado
+state "OBSERVADO" as Observado : CDR con observaciones
+state "RECHAZADO" as Rechazado : se muestra aparte en el reporte
+
+Pendiente --> Aceptado : CDR código 0
+Pendiente --> Observado : CDR código 4000+
+Pendiente --> Rechazado : CDR código 2000–3999
+Pendiente --> Pendiente : falla de red / SUNAT no disponible\n[intentos + 1]
+Pendiente --> Reservado : reenvío automático\n[cada ReenvioMinutos]
+Reservado --> Aceptado : CDR código 0
+Reservado --> Observado : CDR código 4000+
+Reservado --> Rechazado : CDR código 2000–3999
+Reservado --> Pendiente : falla o vence la reserva\n(otra PC lo retoma)
+
+Aceptado --> [*]
+Observado --> [*]
+Rechazado --> [*]
+
+note right of Pendiente
+  Si el más antiguo tiene más de 2 días,
+  el pie de Nueva venta avisa en rojo
+  (plazo de 3 días, CRQ-10).
+end note
+note bottom of Aceptado
+  Los estados definitivos ya no cambian:
+  si dos PC reenvían el mismo comprobante,
+  la segunda respuesta no pisa la primera (V007).
+end note
+@enduml

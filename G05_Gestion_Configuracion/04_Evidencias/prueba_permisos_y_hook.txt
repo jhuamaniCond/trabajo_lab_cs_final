@@ -1,0 +1,21 @@
+### r1: estructura inicial (jpayehuanca)
+Committing transaction...
+Committed revision 1.
+
+### Hook pre-commit: mensaje demasiado corto (debe rechazarse)
+Committing transaction...
+svn: E165001: Commit blocked by pre-commit hook (exit code 1) with output:
+El mensaje de registro debe explicar el cambio: minimo 10 caracteres. 
+
+
+### authz: rcondo intenta crear una etiqueta (debe rechazarse)
+Committing transaction...
+svn: E220004: Access denied
+
+### authz: el docente lista el repositorio (solo lectura)
+branches/
+tags/
+trunk/
+
+### authz: el docente intenta escribir (debe rechazarse)
+svn: E170001: Authorization failed

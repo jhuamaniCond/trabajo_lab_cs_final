@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>Condor.Pruebas</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <!-- API en memoria para las pruebas de integración de Condor.Api (CC-01). -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.11" />
+    <!-- Cobertura con coverlet (comando en docs/pruebas.md). -->
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Condor.Api\Condor.Api.csproj" />
+    <ProjectReference Include="..\..\src\Condor.ClienteApi\Condor.ClienteApi.csproj" />
+    <ProjectReference Include="..\..\src\Condor.Datos\Condor.Datos.csproj" />
+    <ProjectReference Include="..\..\src\Condor.Impresion\Condor.Impresion.csproj" />
+    <ProjectReference Include="..\..\src\Condor.Presentacion\Condor.Presentacion.csproj" />
+    <ProjectReference Include="..\..\src\Condor.Sunat\Condor.Sunat.csproj" />
+  </ItemGroup>
+
+</Project>

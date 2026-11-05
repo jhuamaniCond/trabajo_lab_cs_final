@@ -1,0 +1,9 @@
+﻿DEF-02 defecto controlado - 2026-11-01 13:27:37 -05:00
+Archivo: Sistema_Logistico_Condor_final/src/Condor.Dominio/Ventas/EmisionComprobante.cs
+SHA-256 original: 2DFC891F8A7930DA39CB1906C397E6204058C2D1035A934DC11C14AA7B6B87FC
+Cambio inyectado: '>' -> '>=' en la regla de la boleta de S/ 700 (CRQ-02)
+SHA-256 con defecto: 7FD2733869B144716737EF8461353EADB11D8CD212A390D5355BA2FE894439FE
+Ejecución 1 (con defecto): código de salida 1 (esperado distinto de 0)
+Restaurado. SHA-256 tras restaurar: 2DFC891F8A7930DA39CB1906C397E6204058C2D1035A934DC11C14AA7B6B87FC (IGUAL al original)
+Ejecución 2 (restaurado): código de salida 0 (esperado 0)
+Conclusión: la suite DETECTÓ el defecto y vuelve a pasar con el código restaurado

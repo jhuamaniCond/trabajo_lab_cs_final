@@ -1,0 +1,18 @@
+{
+  "fecha": "2026-11-04T18:51:29",
+  "url": "http://localhost:5080/",
+  "python": "3.12.0",
+  "so": "Windows-11-10.0.26300-SP0",
+  "selenium": "4.52.0",
+  "producto": {
+    "estado": "OK",
+    "baseDatos": true,
+    "version": "1.2.0",
+    "terminal": "API-LAPTOP-JPHC"
+  },
+  "navegador": {
+    "navegador": "chrome",
+    "version": "156.0.8078.80",
+    "controlador": "156.0.8078.80 (fb096c0011f9d50f0a264a9376420cdea9c421e3-refs/branch-heads/8078@{#1705})"
+  }
+}

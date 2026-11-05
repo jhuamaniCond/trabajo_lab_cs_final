@@ -1,0 +1,19 @@
+@startuml M05_acceso_denegado
+skinparam dpi 170
+title M05 · Restricción por rol (RF-03): el Vendedor pulsa F4 Compras
+salt
+{+
+  {/ F1 Nueva venta | F2 Catálogo | F3 Clientes | F5 Historial | F7 Proformas | Cerrar sesión }
+  ==
+  .
+  {+
+    <b>Acceso denegado</b>
+    El módulo Compras es solo para el Encargado general.
+    Su usuario: vendedor1 (Vendedor).
+    [ Aceptar ]
+  }
+  .
+  --
+  Usuario: vendedor1 (Vendedor) · los botones F4, F6, F8 y F9 no se muestran a este rol
+}
+@enduml

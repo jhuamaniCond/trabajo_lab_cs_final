@@ -1,0 +1,1 @@
+Passed!  - Failed:     0, Passed:   944, Skipped:     5, Total:   949, Duration: 12 s - Condor.Pruebas.dll (net8.0)

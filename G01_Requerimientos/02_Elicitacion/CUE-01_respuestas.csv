@@ -1,0 +1,5 @@
+vendedor,turno,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15
+V1,mañana,c,c,a,c,5,5,4,5,4,5,4,4,5,"Buscar el precio en la lista, que además está desactualizada","Encontrar rápido el producto con su precio"
+V2,mañana,d,d,b,c,5,4,5,5,4,5,5,5,5,"Calcular el IGV a mano y llenar la boleta con la cola esperando","Calcular solo el total y el IGV"
+V3,tarde,a,b,a,d,5,5,4,4,5,4,3,2,4,"No conozco todos los precios y tengo que preguntar","Mostrar el precio al escribir el nombre"
+V4,tarde,b,c,c,b,4,5,5,5,3,5,4,4,5,"Repetir la boleta cuando me equivoco","Imprimir la boleta sin escribirla a mano"

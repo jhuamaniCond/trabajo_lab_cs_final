@@ -1,0 +1,47 @@
+{
+  // Copie este archivo como condor.json en la carpeta del programa de cada PC.
+  // Desde la versión 1.1.0 (CC-01) las PC no se conectan a PostgreSQL: hablan
+  // con el backend Condor.Api de la PC principal. En la PC principal use
+  // "http://localhost:5080"; en las demás, la IP fija de la PC principal.
+  "Api": {
+    "Url": "http://192.168.1.10:5080",
+    "TiempoEsperaSegundos": 15,
+    // Solo en la PC principal: ruta de CondorApi.exe. Si el backend no está
+    // corriendo al abrir la app, la app lo arranca. En las demás PC, vacío.
+    "Backend": ""
+  },
+
+  // Ticketera térmica de 80 mm (HU-12). "Nombre" es el de la impresora en
+  // Configuración > Impresoras de Windows. Si se deja vacío, el ticket se
+  // muestra en pantalla en lugar de imprimirse.
+  "Ticketera": {
+    "Nombre": "",
+    "Columnas": 48,
+    "EsperaSegundos": 10
+  },
+
+  // Envío a la SUNAT (HU-07). Solo en la PC que tiene internet; las demás
+  // pueden dejarlo vacío y sus comprobantes quedan pendientes de envío.
+  // Ambiente "Beta" (pruebas): usuario MODDATOS, clave moddatos y, si no se
+  // indica certificado, se firma con uno de prueba. En "Produccion" van el
+  // usuario secundario SOL de la ferretería y su certificado digital (.pfx).
+  "Sunat": {
+    "Ambiente": "Beta",
+    "UsuarioSol": "MODDATOS",
+    "ClaveSol": "moddatos",
+    "Certificado": "",
+    "ClaveCertificado": "",
+    "EsperaSegundos": 30,
+    // Cada cuántos minutos se reenvían solos los comprobantes que quedaron
+    // pendientes por falta de internet (HU-17). 0 = esta PC no los reenvía.
+    "ReenvioMinutos": 5,
+    // Guías de remisión (HU-10): credenciales de la API de guías, de SUNAT
+    // Operaciones en Línea > Credenciales de API SUNAT. Vacías = las guías se
+    // emiten e imprimen y quedan pendientes de envío.
+    "ClientId": "",
+    "ClientSecret": ""
+  }
+
+  // El respaldo manual (HU-15) ya no se configura aquí: lo genera la API en
+  // la PC principal (sección Respaldo de src/Condor.Api/appsettings.json).
+}
