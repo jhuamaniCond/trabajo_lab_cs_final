@@ -95,7 +95,7 @@ def portada(doc, titulo, subtitulo, extra=None):
     for nombre, _, _ in INTEGRANTES:
         doc.titulo_portada(nombre, negrita=False, espacio_despues=2)
     doc.espacio(24)
-    doc.titulo_portada("Docente: Jesús Martín Silva Fernández", negrita=False)
+    doc.titulo_portada("Docente: José Rafael Delgado Bastidas", negrita=False)
     doc.titulo_portada("Arequipa, %s" % FECHA, negrita=False)
     doc.salto_pagina()
 

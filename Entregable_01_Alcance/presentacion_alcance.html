@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Cóndor — Propuesta de alcance</title>
+<!-- Fuentes: Fraunces (titulares) + IBM Plex Mono (texto tipo ticket) -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   TEMA — cambie estas variables para cambiar todo el look
+   =========================================== */
+:root {
+    --stage-bg: #e9e2d3;
+    --slide-bg: #f4efe4;
+    --paper: #ffffff;
+    --ink: #22201b;
+    --ink-2: #3d3930;
+    --muted: #7a7263;
+    --rule: #c9c0ae;
+    --red: #c8321f;
+    --teal: #1d6b62;
+    --teal-soft: #e3efec;
+    --red-soft: #f8e6e2;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'IBM Plex Mono', monospace;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ===========================================
+   FIXED 16:9 STAGE (viewport-base.css completo)
+   =========================================== */
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-viewport { position: fixed; inset: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; background: var(--slide-bg, #fff); }
+.slide { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; display: block; visibility: hidden; opacity: 0; pointer-events: none; background: var(--slide-bg, #fff); }
+.slide.active, .slide.visible { visibility: visible; opacity: 1; pointer-events: auto; z-index: 1; }
+img, video, canvas, svg { max-width: 100%; max-height: 100%; }
+.deck-controls { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 1000; }
+@media print {
+    html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+    .deck-viewport { position: static; overflow: visible; background: #fff; }
+    .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+    .slide { position: relative; display: block !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; width: 1920px; height: 1080px; break-after: page; page-break-after: always; }
+    .slide:last-child { break-after: auto; page-break-after: auto; }
+    .deck-controls { display: none !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+}
+
+/* ===========================================
+   BASE DE DIAPOSITIVA
+   .inner es una columna flex: encabezado arriba y .fill ocupa todo el alto restante
+   =========================================== */
+.slide {
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: radial-gradient(circle at 18% 8%, #fffaf0 0, transparent 55%), var(--slide-bg);
+}
+.inner { position: absolute; left: 120px; right: 120px; top: 80px; bottom: 132px; display: flex; flex-direction: column; }
+.fill { flex: 1; min-height: 0; margin-top: 36px; }
+.roles .paper { padding: 26px 36px; }
+#prob .paper { padding: 24px 32px; }
+#prob .paper li { font-size: 21px; margin-bottom: 0; line-height: 1.4; }
+#prob .kicker { margin-bottom: 8px; }
+#prob .stat .big { font-size: 52px; }
+#prob .stat p { font-size: 18px; }
+#reglas li { font-size: 21px; line-height: 1.4; }
+#reglas .kicker { margin-bottom: 6px; }
+#tecno p { font-size: 20px; line-height: 1.45; }
+#ries .paper { padding: 22px 34px; }
+#ries .paper h3 { font-size: 32px; margin-bottom: 4px; }
+#ries .paper li { font-size: 21px; line-height: 1.4; }
+#ries .kicker { margin-bottom: 8px; }
+#restr .paper { padding: 22px 32px; }
+#restr .paper p { font-size: 21px; line-height: 1.45; }
+#restr .kicker { margin-bottom: 8px; }
+.roles .paper h3 { font-size: 34px; margin-bottom: 8px; }
+.roles .paper p { font-size: 22px; }
+.col { display: flex; flex-direction: column; gap: 30px; }
+.col > .grow { flex: 1; min-height: 0; }
+
+/* Cromo del deck: pie con título y número de página */
+.chrome { position: absolute; left: 120px; right: 120px; bottom: 44px; display: flex; justify-content: space-between; font-size: 18px; letter-spacing: .12em; color: var(--muted); border-top: 2px dashed var(--rule); padding-top: 16px; }
+
+/* Encabezado de sección: sello rojo + titular serif */
+.tag { align-self: flex-start; display: inline-block; border: 2px solid var(--red); color: var(--red); font-weight: 600; font-size: 22px; letter-spacing: .14em; padding: 8px 16px; transform: rotate(-1.5deg); }
+.slide.visible .tag.reveal { transform: rotate(-1.5deg); }
+h2 { font-family: var(--font-display); font-weight: 900; font-size: 80px; line-height: 1; letter-spacing: -.015em; margin: 24px 0 0; }
+h2 i { font-weight: 400; color: var(--teal); }
+.lead { font-size: 25px; line-height: 1.5; color: var(--ink-2); }
+
+/* Papel de ticket con borde inferior troquelado */
+.paper { background: var(--paper); box-shadow: 0 18px 40px rgba(50,40,20,.13); position: relative; padding: 34px 40px; }
+.paper.cut::after { content: ""; position: absolute; left: 0; bottom: -16px; width: 100%; height: 16px; background: radial-gradient(circle at 10px 0, #fff 9px, transparent 10px) 0 0/20px 16px; }
+.paper.flexcol { display: flex; flex-direction: column; }
+.paper.center { display: flex; flex-direction: column; justify-content: center; }
+.paper h3 { font-family: var(--font-display); font-weight: 700; font-size: 38px; line-height: 1.1; margin-bottom: 14px; }
+.paper p, .paper li { font-size: 24px; line-height: 1.5; color: var(--ink-2); }
+.paper ul { list-style: none; }
+.paper li { padding-left: 28px; position: relative; margin-bottom: 12px; }
+.paper li::before { content: "›"; position: absolute; left: 4px; color: var(--red); font-weight: 600; }
+.paper ul.spread { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; }
+.paper ul.spread li { margin-bottom: 0; }
+.hr { border-top: 2px dashed var(--rule); margin: 18px 0; }
+.kicker { font-size: 20px; letter-spacing: .14em; color: var(--red); font-weight: 600; margin-bottom: 14px; }
+.num { font-family: var(--font-display); font-weight: 900; color: var(--teal); }
+
+/* Tablas tipo ticket: dentro de .paper.flexcol la tabla estira sus filas */
+table { width: 100%; border-collapse: collapse; font-size: 23px; }
+.paper.flexcol table { flex: 1; height: 100%; }
+th { text-align: left; font-weight: 600; font-size: 17px; letter-spacing: .12em; color: var(--muted); padding: 10px 16px; border-bottom: 2px solid var(--ink); height: 1px; }
+td { padding: 10px 16px; border-bottom: 1px dashed var(--rule); vertical-align: middle; line-height: 1.4; color: var(--ink-2); }
+td b { color: var(--ink); }
+
+/* Fotos tipo polaroid */
+.photo { background: #fff; padding: 14px 14px 50px; box-shadow: 0 18px 40px rgba(50,40,20,.18); position: absolute; }
+.photo img { display: block; width: 100%; height: 100%; object-fit: cover; max-width: none; max-height: none; }
+.photo figcaption { position: absolute; left: 16px; bottom: 14px; font-size: 17px; color: var(--muted); letter-spacing: .06em; }
+
+/* ===========================================
+   ANIMACIONES — se activan con .visible en la diapositiva actual
+   =========================================== */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.slide.visible .reveal { opacity: 1; transform: none; }
+.d1 { transition-delay: .08s; } .d2 { transition-delay: .18s; } .d3 { transition-delay: .28s; }
+.d4 { transition-delay: .38s; } .d5 { transition-delay: .48s; } .d6 { transition-delay: .58s; }
+.drop { transform: translateY(-110%); transition: transform 1.3s var(--ease); }
+.slide.visible .drop { transform: none; }
+
+/* ===========================================
+   PORTADA Y CIERRE
+   =========================================== */
+.cover .left { position: absolute; left: 120px; top: 110px; width: 1040px; }
+.cover h1 { font-family: var(--font-display); font-weight: 900; font-size: 124px; line-height: .95; letter-spacing: -.02em; margin: 40px 0 34px; }
+.cover h1 i { font-weight: 400; color: var(--teal); }
+.cover .sub { font-size: 28px; line-height: 1.55; color: var(--ink-2); max-width: 960px; }
+.team { position: absolute; left: 120px; top: 730px; width: 1080px; }
+.team .lbl { font-size: 18px; letter-spacing: .16em; color: var(--muted); margin-bottom: 14px; }
+.team ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; border-top: 2px dashed var(--rule); padding-top: 18px; }
+.team li { font-size: 22px; line-height: 1.3; white-space: nowrap; }
+.team li span { color: var(--red); font-weight: 600; margin-right: 10px; }
+.cover .foot { position: absolute; left: 120px; bottom: 52px; font-size: 18px; color: var(--muted); letter-spacing: .1em; }
+.ticket { position: absolute; right: 150px; top: 0; width: 540px; height: 960px; background: #fff; padding: 64px 50px; font-size: 23px; line-height: 1.75; box-shadow: 0 24px 50px rgba(50,40,20,.18); display: flex; flex-direction: column; justify-content: space-between; }
+.ticket::after { content: ""; position: absolute; left: 0; bottom: -18px; width: 100%; height: 18px; background: radial-gradient(circle at 10px 0, #fff 9px, transparent 10px) 0 0/20px 18px; }
+.ticket h4 { font-family: var(--font-display); font-size: 50px; text-align: center; line-height: 1; }
+.ticket .hr { margin: 10px 0; }
+.c { text-align: center; } .row { display: flex; justify-content: space-between; } .tot { font-weight: 600; font-size: 28px; }
+.thanks h1 { font-size: 300px !important; line-height: .9 !important; margin: 30px 0 30px !important; }
+
+/* ===========================================
+   COMPONENTES DE CONTENIDO
+   =========================================== */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.stat .big { font-family: var(--font-display); font-weight: 900; font-size: 60px; line-height: 1; color: var(--red); }
+.stat p { font-size: 20px; margin-top: 10px; }
+
+/* Lista de RF en dos columnas que estira sus filas */
+.rf { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-auto-flow: column; grid-template-rows: repeat(8, 1fr); gap: 0 48px; }
+.rf div { display: grid; grid-template-columns: 96px 1fr 112px; align-items: center; border-bottom: 1px dashed var(--rule); font-size: 24px; }
+.rf .id { font-weight: 600; color: var(--red); }
+.rf .pn { font-size: 16px; color: var(--muted); text-align: right; letter-spacing: .06em; }
+
+/* Checklist de mínimos */
+.check li { display: flex; justify-content: space-between; gap: 20px; }
+.check li::before { content: "✓"; color: var(--teal); }
+.check li span:last-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
+
+/* Hitos */
+.timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.milestone { border-top: 8px solid var(--teal); display: flex; flex-direction: column; justify-content: center; }
+.milestone.now { border-top-color: var(--red); }
+.milestone .date { font-family: var(--font-display); font-weight: 900; font-size: 64px; color: var(--teal); line-height: 1; }
+.milestone.now .date { color: var(--red); }
+
+/* ===========================================
+   EDICIÓN EN LÍNEA (tecla E o esquina superior izquierda)
+   =========================================== */
+.edit-hotzone { position: fixed; top: 0; left: 0; width: 80px; height: 80px; z-index: 10000; cursor: pointer; }
+.edit-toggle { position: fixed; top: 18px; left: 18px; z-index: 10001; font: 600 14px var(--font-body); padding: 10px 14px; background: #fff; border: 2px solid var(--ink); opacity: 0; pointer-events: none; transition: opacity .3s; cursor: pointer; }
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+.edit-toggle.active { background: var(--red); color: #fff; border-color: var(--red); }
+body.editing [contenteditable="true"] { outline: 2px dashed rgba(200,50,31,.45); outline-offset: 4px; }
+.progress { position: fixed; left: 0; bottom: 0; height: 4px; background: var(--red); z-index: 1000; transition: width .4s var(--ease); }
+</style>
+</head>
+<body>
+<div class="edit-hotzone"></div>
+<button class="edit-toggle" id="editToggle" title="Modo edición (E)">EDITAR</button>
+<div class="progress" id="progress"></div>
+
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- =========================================== 01 PORTADA =========================================== -->
+<section class="slide cover active">
+    <div class="left">
+        <span class="tag reveal d1">PRIMER ENTREGABLE · 11-11-2026</span>
+        <h1 class="reveal d2">Sistema de ventas <i>y facturación</i> Cóndor</h1>
+        <p class="sub reveal d3">Propuesta de alcance para la Ferretería Cóndor Majes S.A.C.: cada venta del mostrador, con su comprobante electrónico, en menos de un minuto.</p>
+    </div>
+    <div class="team reveal d4">
+        <p class="lbl">INTEGRANTES</p>
+        <ul>
+            <li><span>01</span>Huamani Condori, Jeanpiero Sixto</li>
+            <li><span>02</span>Payehuanca Riquelme, Jhastyn Jefferson</li>
+            <li><span>03</span>Condo Zamata, Richard Alberto</li>
+            <li><span>04</span>Chaisa Fernández, Anthony Leonel</li>
+        </ul>
+    </div>
+    <p class="foot">CALIDAD DE SOFTWARE 2026-B · EPIS UNSA</p>
+    <div class="ticket drop">
+        <h4>CÓNDOR</h4>
+        <p class="c">FERRETERÍA CÓNDOR MAJES S.A.C.<br>MAJES · AREQUIPA</p>
+        <div class="hr"></div>
+        <p class="c">PROPUESTA DE ALCANCE<br>N.º 001-2026</p>
+        <div class="hr"></div>
+        <div>
+            <div class="row"><span>01 Problema</span><span>p. 3</span></div>
+            <div class="row"><span>02 Usuarios</span><span>p. 4</span></div>
+            <div class="row"><span>03 Restricciones</span><span>p. 5</span></div>
+            <div class="row"><span>04 Beneficios</span><span>p. 6</span></div>
+            <div class="row"><span>05 Alcance</span><span>p. 7</span></div>
+        </div>
+        <div class="hr"></div>
+        <div>
+            <div class="row tot"><span>RF / RNF</span><span>16 / 8</span></div>
+            <div class="row"><span>Procesos</span><span>3</span></div>
+            <div class="row"><span>Roles</span><span>2</span></div>
+        </div>
+        <div class="hr"></div>
+        <p class="c">*** PRIMER ENTREGABLE ***</p>
+    </div>
+</section>
+
+<!-- =========================================== 02 EL CLIENTE =========================================== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag reveal d1">EL CLIENTE</span>
+        <h2 class="reveal d2">Una ferretería de barrio <i>con tres mostradores</i></h2>
+        <div class="fill" style="display:grid; grid-template-columns: 1fr 780px; grid-template-rows: minmax(0,1fr); gap:50px;">
+            <div class="paper cut center reveal d3">
+                <p class="kicker">FERRETERÍA CÓNDOR MAJES S.A.C.</p>
+                <ul class="spread" style="font-size:26px;">
+                    <li style="font-size:26px;">Vende al público y a obras de construcción en Majes, Arequipa.</li>
+                    <li style="font-size:26px;">Atiende con 2 a 3 vendedores por turno, de pie y con prisa en horas punta.</li>
+                    <li style="font-size:26px;">Cuenta con <b>3 PC</b> en el local: una principal y dos de mostrador, conectadas por red local.</li>
+                    <li style="font-size:26px;">Emite boletas, facturas y guías de remisión y debe informarlas a la SUNAT.</li>
+                    <li style="font-size:26px;">Un gerente (dueño), un encargado general y un contador externo toman las decisiones.</li>
+                </ul>
+            </div>
+            <div style="position:relative;">
+                <figure class="photo reveal d3" style="left:0; top:0; width:390px; bottom:20px; transform:rotate(-2.5deg);">
+                    <img src="assets/fachada.jpg" alt="Fachada de la ferretería de día"><figcaption>SEDE PRINCIPAL · DE DÍA</figcaption>
+                </figure>
+                <figure class="photo reveal d4" style="right:0; top:30px; width:380px; bottom:0; transform:rotate(2deg);">
+                    <img src="assets/sede04.jpg" alt="Mostrador de la ferretería de noche"><figcaption>MOSTRADOR · DE NOCHE</figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+    <div class="chrome"><span>CÓNDOR · PROPUESTA DE ALCANCE</span><span>02 / 13</span></div>
+</section>
+
+<!-- =========================================== 03 PROBLEMA =========================================== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag reveal d1">01 · PROBLEMA</span>
+        <h2 class="reveal d2">Cuaderno, talonario <i>y la SUNAT al cerrar</i></h2>
+        <div class="fill" style="display:grid; grid-template-columns: 1fr 440px; grid-template-rows: minmax(0,1fr); gap:44px;" id="prob">
+            <div class="col">
+                <div class="g2 grow">
+                    <div class="paper flexcol reveal d3">
+                        <p class="kicker">CÓMO SE TRABAJA HOY</p>
+                        <ul class="spread">
+                            <li>Las ventas se anotan en un cuaderno.</li>
+                            <li>Las boletas se llenan a mano en talonarios.</li>
+                            <li>Los precios salen de una lista impresa que se desactualiza.</li>
+                            <li>La facturación electrónica se hace aparte, en el portal de la SUNAT, al cerrar.</li>
+                        </ul>
+                    </div>
+                    <div class="paper flexcol reveal d4">
+                        <p class="kicker">QUÉ PROVOCA</p>
+                        <ul class="spread">
+                            <li>Colas en horas punta.</li>
+                            <li>Errores de precio y de cálculo del IGV.</li>
+                            <li>Comprobantes que no llegan a tiempo a la SUNAT.</li>
+                            <li>Compras sin registro ordenado ni información consolidada.</li>
+                            <li>No se sabe qué vendedor emitió cada comprobante.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="paper cut reveal d5">
+                    <p class="kicker">OBSERVACIÓN PRELIMINAR EN EL MOSTRADOR</p>
+                    <div class="stats">
+                        <div class="stat"><div class="big">2 min 50 s</div><p>mediana por venta de 3 productos con boleta manual</p></div>
+                        <div class="stat"><div class="big">2 de 12</div><p>boletas observadas con error en el cálculo del IGV</p></div>
+                        <div class="stat"><div class="big">0</div><p>registro de qué usuario y qué PC emitió cada comprobante</p></div>
+                    </div>
+                </div>
+            </div>
+            <figure class="photo reveal d4" style="position:relative; height:100%; transform:rotate(1.5deg);">
+                <img src="assets/pc_principal.jpg" alt="PC principal junto a papeles y talonarios"><figcaption>PC PRINCIPAL · CAJA</figcaption>
+            </figure>
+        </div>
+    </div>
+    <div class="chrome"><span>CÓNDOR · PROPUESTA DE ALCANCE</span><span>03 / 13</span></div>
+</section>
+
+<!-- =========================================== 04 USUARIOS =========================================== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag reveal d1">02 · USUARIOS</span>
+        <h2 class="reveal d2">Cuatro interesados, <i>dos roles en el sistema</i></h2>
+        <div class="fill col">
+            <div class="g2 roles reveal d3">
+                <div class="paper" style="border-top:8px solid var(--teal);">
+                    <p class="kicker" style="color:var(--teal)">ROL 1</p>
+                    <h3>Vendedor</h3>
+                    <p>Busca productos, identifica al cliente, emite boletas, facturas, notas de venta y proformas, imprime el ticket y consulta el historial.</p>
+                </div>
+                <div class="paper" style="border-top:8px solid var(--red);">
+                    <p class="kicker">ROL 2</p>
+                    <h3>Encargado general</h3>
+                    <p>Todo lo del vendedor más proveedores, compras, guías de remisión, respaldos y el reporte consolidado de ventas.</p>
+                </div>
+            </div>
+            <div class="paper cut flexcol grow reveal d4" style="padding:14px 32px;">
+                <table style="font-size:21px;">
+                    <thead><tr><th>INTERESADO</th><th>ROL EN EL SISTEMA</th><th>PERFIL</th><th>USO</th></tr></thead>
+                    <tbody>
+                        <tr><td><b>Vendedores de mostrador</b> (2–3 por turno)</td><td>Vendedor</td><td>Secundaria completa, manejo básico de PC; conocen los productos.</td><td>Todo el turno</td></tr>
+                        <tr><td><b>Encargado general</b></td><td>Encargado general</td><td>Técnico o experiencia administrativa; maneja compras, proveedores y guías.</td><td>Diaria</td></tr>
+                        <tr><td><b>Gerente general</b> (dueño)</td><td>Encargado general (consulta)</td><td>Aprueba el alcance; usa el reporte consolidado.</td><td>Semanal</td></tr>
+                        <tr><td><b>Contador externo</b></td><td>Sin cuenta</td><td>Fija las reglas tributarias; revisa comprobantes a través del encargado.</td><td>Mensual</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="chrome"><span>CÓNDOR · PROPUESTA DE ALCANCE</span><span>04 / 13</span></div>
+</section>
+
+<!-- =========================================== 05 RESTRICCIONES =========================================== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag reveal d1">03 · RESTRICCIONES</span>
+        <h2 class="reveal d2">Lo que el sistema <i>no puede ignorar</i></h2>
+        <div class="fill col" id="restr">
+            <div class="g3 grow" style="grid-template-rows: 1fr 1fr;">
+                <div class="paper center reveal d2"><p class="kicker">PLATAFORMA</p><p>Windows 10/11 en las 3 PC, red local del local y una base de datos central en la PC principal.</p></div>
+                <div class="paper center reveal d3"><p class="kicker">HARDWARE</p><p>Ticketera térmica de 80 mm (ESC/POS) y lector de código de barras que funciona como teclado.</p></div>
+                <div class="paper center reveal d4"><p class="kicker">NORMATIVA SUNAT</p><p>Comprobantes electrónicos UBL 2.1 firmados; envío como máximo 3 días después de la emisión; DNI en boletas de más de S/ 700.</p></div>
+                <div class="paper center reveal d3"><p class="kicker">SEGURIDAD</p><p>Solo el servidor conoce la clave de la base; las PC acceden a los datos únicamente a través de la API, con usuario y contraseña.</p></div>
+                <div class="paper center reveal d4"><p class="kicker">ACADÉMICAS</p><p>Rutas HTTP evaluables con JMeter, interfaz automatizable para aceptación y pruebas unitarias con una herramienta equivalente a JUnit.</p></div>
+                <div class="paper center reveal d5"><p class="kicker">INFRAESTRUCTURA Y PLAZO</p><p>Sin servidor dedicado ni nube: respaldo en disco externo. Entregas el 11-11, el 25-11 y el 02-12-2026.</p></div>
+            </div>
+            <div class="paper cut reveal d6" style="padding:22px 36px; background:#fffdf6;">
+                <p style="font-size:22px;"><b style="color:var(--red)">Supuestos:</b> la PC principal queda encendida en horario de atención · la SUNAT y su API de guías se <b>simulan</b> en las pruebas · el catálogo inicial se carga desde la lista de precios en CSV de la ferretería.</p>
+            </div>
+        </div>
+    </div>
+    <div class="chrome"><span>CÓNDOR · PROPUESTA DE ALCANCE</span><span>05 / 13</span></div>
+</section>
+
+<!-- =========================================== 06 BENEFICIOS =========================================== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag reveal d1">04 · BENEFICIO ESPERADO</span>
+        <h2 class="reveal d2">Cinco mejoras <i>que se pueden medir</i></h2>
+        <div class="fill paper cut flexcol reveal d3" style="padding:24px 38px;">
+            <table style="font-size:25px;">
+                <thead><tr><th style="width:30%">BENEFICIO</th><th style="width:27%">HOY</th><th>META CON CÓNDOR</th></tr></thead>
+                <tbody>
+                    <tr><td><b>Atender más rápido</b></td><td>2 min 50 s por venta</td><td><span class="num" style="font-size:40px">≤ 60 s</span> por venta de 3 productos, solo con teclado</td></tr>
+                    <tr><td><b>Cero errores de IGV</b></td><td>2 de 12 boletas con error</td><td><span class="num" style="font-size:40px">0</span> errores: el servidor calcula el IGV del 18 %</td></tr>
+                    <tr><td><b>Cumplir con la SUNAT</b></td><td>Envío manual al cerrar el día</td><td><span class="num" style="font-size:40px">100 %</span> de comprobantes enviados, con reenvío automático</td></tr>
+                    <tr><td><b>Saber quién vendió</b></td><td>Sin registro</td><td>Cada comprobante guarda el <b>usuario y la PC</b> que lo emitió</td></tr>
+                    <tr><td><b>Información para el gerente</b></td><td>Ninguna consolidada</td><td>Reporte de ventas por <b>día, tipo, terminal y usuario</b></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="chrome"><span>CÓNDOR · PROPUESTA DE ALCANCE</span><span>06 / 13</span></div>
+</section>
+
+<!-- =========================================== 07 ALCANCE: PROCESOS =========================================== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag reveal d1">05 · ALCANCE — PROCESOS DE NEGOCIO</span>
+        <h2 class="reveal d2">Tres procesos <i>completos, de principio a fin</i></h2>
+        <div class="fill col">
+            <div class="g3 grow">
+                <div class="paper cut flexcol reveal d3">
+                    <p class="kicker">PN-01</p>
+                    <h3>Venta y facturación electrónica</h3>
+                    <div class="hr"></div>
+                    <ul class="spread">
+                        <li>Buscar el producto por nombre o código de barras.</li>
+                        <li>Identificar al cliente por DNI o RUC.</li>
+                        <li>Emitir boleta, factura o nota de venta.</li>
+                        <li>Imprimir el ticket.</li>
+                        <li>Enviar el comprobante a la SUNAT.</li>
+                    </ul>
+                </div>
+                <div class="paper cut flexcol reveal d4">
+                    <p class="kicker">PN-02</p>
+                    <h3>Cotización y conversión en venta</h3>
+                    <div class="hr"></div>
+                    <ul class="spread">
+                        <li>Emitir una proforma con vigencia de 7 días.</li>
+                        <li>Recuperarla cuando el cliente vuelve.</li>
+                        <li>Convertirla en boleta o factura <b>una sola vez</b>.</li>
+                        <li>Rechazar proformas vencidas o ya convertidas.</li>
+                    </ul>
+                </div>
+                <div class="paper cut flexcol reveal d5">
+                    <p class="kicker">PN-03</p>
+                    <h3>Abastecimiento<br>&nbsp;</h3>
+                    <div class="hr"></div>
+                    <ul class="spread">
+                        <li>Registrar al proveedor con RUC único.</li>
+                        <li>Registrar sus compras.</li>
+                        <li>Impedir que un comprobante de proveedor se registre dos veces.</li>
+                        <li>Solo el encargado general accede.</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="lead reveal d6" style="margin-top:6px;">Los procesos se apoyan en el <b>ingreso con roles</b>, el <b>catálogo</b>, las <b>consultas</b> y el <b>respaldo</b> de la base de datos.</p>
+        </div>
+    </div>
+    <div class="chrome"><span>CÓNDOR · PROPUESTA DE ALCANCE</span><span>07 / 13</span></div>
+</section>
+
+<!-- =========================================== 08 ALCANCE: RF =========================================== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag reveal d1">05 · ALCANCE — REQUISITOS FUNCIONALES</span>
+        <h2 class="reveal d2">16 requisitos funcionales <i>propuestos</i></h2>
+        <div class="fill col">
+            <div class="paper cut flexcol grow reveal d3" style="padding:18px 44px 22px;">
+                <div class="rf">
+                    <div><span class="id">RF-01</span><span>Iniciar sesión</span><span class="pn">SOPORTE</span></div>
+                    <div><span class="id">RF-02</span><span>Cerrar sesión</span><span class="pn">SOPORTE</span></div>
+                    <div><span class="id">RF-03</span><span>Restringir módulos según el rol</span><span class="pn">SOPORTE</span></div>
+                    <div><span class="id">RF-04</span><span>Registrar producto en el catálogo</span><span class="pn">SOPORTE</span></div>
+                    <div><span class="id">RF-05</span><span>Buscar producto para la venta</span><span class="pn">PN-01</span></div>
+                    <div><span class="id">RF-06</span><span>Registrar y buscar cliente (DNI/RUC)</span><span class="pn">PN-01</span></div>
+                    <div><span class="id">RF-07</span><span>Emitir comprobante de venta</span><span class="pn">PN-01/02</span></div>
+                    <div><span class="id">RF-08</span><span>Emitir proforma y convertirla en venta</span><span class="pn">PN-02</span></div>
+                    <div><span class="id">RF-09</span><span>Imprimir y reimprimir el ticket</span><span class="pn">PN-01</span></div>
+                    <div><span class="id">RF-10</span><span>Enviar a la SUNAT y reenviar pendientes</span><span class="pn">PN-01</span></div>
+                    <div><span class="id">RF-11</span><span>Registrar proveedor</span><span class="pn">PN-03</span></div>
+                    <div><span class="id">RF-12</span><span>Registrar compra a proveedor</span><span class="pn">PN-03</span></div>
+                    <div><span class="id">RF-13</span><span>Emitir guía de remisión electrónica</span><span class="pn">PN-01</span></div>
+                    <div><span class="id">RF-14</span><span>Consultar historial de ventas</span><span class="pn">CONSULTA</span></div>
+                    <div><span class="id">RF-15</span><span>Reporte consolidado de ventas</span><span class="pn">CONSULTA</span></div>
+                    <div><span class="id">RF-16</span><span>Respaldo de la base de datos</span><span class="pn">SOPORTE</span></div>
+                </div>
+            </div>
+            <p class="lead reveal d4" style="margin-top:6px;">Cada requisito llevará ID, descripción, fuente, prioridad y un <b>criterio de aceptación observable</b> en la ERS (G01).</p>
+        </div>
+    </div>
+    <div class="chrome"><span>CÓNDOR · PROPUESTA DE ALCANCE</span><span>08 / 13</span></div>
+</section>
+
+<!-- =========================================== 09 ALCANCE: RNF =========================================== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag reveal d1">05 · ALCANCE — REQUISITOS NO FUNCIONALES</span>
+        <h2 class="reveal d2">8 requisitos no funcionales <i>con su indicador</i></h2>
+        <div class="fill paper cut flexcol reveal d3" style="padding:18px 36px 22px;">
+            <table style="font-size:24px;">
+                <thead><tr><th style="width:11%">ID</th><th style="width:21%">ATRIBUTO</th><th>META MEDIBLE</th></tr></thead>
+                <tbody>
+                    <tr><td><b>RNF-01</b></td><td>Rendimiento</td><td>Sugerencias de productos en <b>&lt; 1 s</b> desde la tercera letra, con 3 000 productos.</td></tr>
+                    <tr><td><b>RNF-02</b></td><td>Rendimiento</td><td><b>p95 ≤ 2 s</b> y <b>error ≤ 1 %</b> al consultar productos y emitir boleta, con 10 usuarios por 5 min.</td></tr>
+                    <tr><td><b>RNF-03</b></td><td>Seguridad</td><td>Contraseñas con hash PBKDF2; bloqueo de 15 min tras <b>5 intentos</b>; <b>100 %</b> de accesos indebidos rechazados.</td></tr>
+                    <tr><td><b>RNF-04</b></td><td>Integridad</td><td>3 PC emitiendo a la vez con <b>0</b> números de comprobante repetidos o saltados.</td></tr>
+                    <tr><td><b>RNF-05</b></td><td>Disponibilidad</td><td>Vender sin internet y reenviar el <b>100 %</b> de pendientes al volver la conexión.</td></tr>
+                    <tr><td><b>RNF-06</b></td><td>Usabilidad</td><td>Venta de 3 productos con boleta, solo con teclado, en <b>≤ 60 s</b>.</td></tr>
+                    <tr><td><b>RNF-07</b></td><td>Recuperabilidad</td><td><b>0</b> registros perdidos tras reiniciar; restauración de respaldo verificada.</td></tr>
+                    <tr><td><b>RNF-08</b></td><td>Mantenibilidad</td><td>Cobertura de líneas <b>≥ 80 %</b> en el paquete de lógica de negocio.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="chrome"><span>CÓNDOR · PROPUESTA DE ALCANCE</span><span>09 / 13</span></div>
+</section>
+
+<!-- =========================================== 10 ALCANCE: LÍMITES Y MÍNIMOS =========================================== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag reveal d1">05 · ALCANCE — RIESGOS</span>
+        <h2 class="reveal d2">Riesgos iniciales <i>y cómo se mitigan</i></h2>
+        <div class="fill col" id="ries">
+            <div class="g2 grow" style="grid-template-rows: 1fr 1fr; gap:30px 40px;">
+                <div class="paper flexcol reveal d3" style="border-top:8px solid var(--red);">
+                    <p class="kicker">R-01 · PROBABILIDAD ALTA</p>
+                    <h3>Se cae internet en el local</h3>
+                    <ul class="spread">
+                        <li><b>Impacto:</b> los comprobantes no llegan a la SUNAT dentro de los 3 días.</li>
+                        <li><b>Mitigación:</b> se sigue vendiendo sin conexión y una cola reenvía los pendientes al volver (RF-10, RNF-05).</li>
+                    </ul>
+                </div>
+                <div class="paper flexcol reveal d4" style="border-top:8px solid var(--red);">
+                    <p class="kicker">R-02 · PROBABILIDAD ALTA</p>
+                    <h3>Tres PC emiten a la vez</h3>
+                    <ul class="spread">
+                        <li><b>Impacto:</b> números de comprobante repetidos o saltados en una serie.</li>
+                        <li><b>Mitigación:</b> solo el servidor asigna el número, dentro de una transacción (RNF-04).</li>
+                    </ul>
+                </div>
+                <div class="paper cut flexcol reveal d5" style="border-top:8px solid var(--teal);">
+                    <p class="kicker" style="color:var(--teal)">R-03 · PROBABILIDAD MEDIA</p>
+                    <h3>Falla la PC principal</h3>
+                    <ul class="spread">
+                        <li><b>Impacto:</b> se detienen las ventas y pueden perderse datos.</li>
+                        <li><b>Mitigación:</b> base persistente y respaldo en disco externo con restauración verificada (RF-16, RNF-07).</li>
+                    </ul>
+                </div>
+                <div class="paper cut flexcol reveal d6" style="border-top:8px solid var(--teal);">
+                    <p class="kicker" style="color:var(--teal)">R-04 · PROBABILIDAD MEDIA</p>
+                    <h3>Errores tributarios o cambios de la SUNAT</h3>
+                    <ul class="spread">
+                        <li><b>Impacto:</b> IGV mal calculado o comprobantes rechazados.</li>
+                        <li><b>Mitigación:</b> el servidor calcula el IGV, se validan DNI y RUC, y el contador externo fija las reglas.</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="lead reveal d6" style="font-size:21px;">Riesgos preliminares: el plan completo, con probabilidad, impacto y seguimiento, se desarrollará en el G06.</p>
+        </div>
+    </div>
+    <div class="chrome"><span>CÓNDOR · PROPUESTA DE ALCANCE</span><span>10 / 13</span></div>
+</section>
+
+<!-- =========================================== 11 ARQUITECTURA PROPUESTA =========================================== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag reveal d1">SOLUCIÓN PROPUESTA</span>
+        <h2 class="reveal d2">Tres PC, <i>una API, una base central</i></h2>
+        <div class="fill" style="display:grid; grid-template-columns: 960px 1fr; grid-template-rows: minmax(0,1fr); gap:50px;">
+            <div class="paper cut center reveal d3" style="padding:30px 36px;">
+                <svg viewBox="0 0 840 560" style="width:100%; height:100%;" font-family="IBM Plex Mono" font-size="21">
+                    <g fill="#fff" stroke="#22201b" stroke-width="2.5">
+                        <rect x="20" y="20" width="230" height="90"/><rect x="305" y="20" width="230" height="90"/><rect x="590" y="20" width="230" height="90"/>
+                        <rect x="220" y="230" width="400" height="110" fill="#e3efec" stroke="#1d6b62"/>
+                        <rect x="20" y="430" width="300" height="100"/><rect x="520" y="430" width="300" height="100" fill="#f8e6e2" stroke="#c8321f"/>
+                    </g>
+                    <g stroke="#22201b" stroke-width="2.5" fill="none">
+                        <path d="M135 110 V170 H705 V110 M420 110 V230"/>
+                        <path d="M330 340 V385 H170 V430"/>
+                        <path d="M510 340 V385 H670 V430" stroke-dasharray="8 6" stroke="#c8321f"/>
+                    </g>
+                    <g fill="#22201b" text-anchor="middle">
+                        <text x="135" y="60" font-weight="600">PC-1 · CAJA</text><text x="135" y="90" font-size="16" fill="#7a7263">+ ticketera</text>
+                        <text x="420" y="60" font-weight="600">PC-2</text><text x="420" y="90" font-size="16" fill="#7a7263">mostrador</text>
+                        <text x="705" y="60" font-weight="600">PC-3</text><text x="705" y="90" font-size="16" fill="#7a7263">mostrador</text>
+                        <text x="420" y="278" font-weight="600" fill="#1d6b62">API REST central</text><text x="420" y="308" font-size="16" fill="#7a7263">PC principal · usuario + rol</text>
+                        <text x="170" y="474" font-weight="600">Base de datos</text><text x="170" y="504" font-size="16" fill="#7a7263">central y persistente</text>
+                        <text x="670" y="474" font-weight="600" fill="#c8321f">SUNAT</text><text x="670" y="504" font-size="16" fill="#7a7263">simulada en pruebas</text>
+                        <text x="240" y="200" font-size="16" fill="#7a7263">HTTP + token</text>
+                    </g>
+                </svg>
+            </div>
+            <div class="col">
+                <div class="paper flexcol grow reveal d4">
+                    <p class="kicker">DECISIONES INICIALES</p>
+                    <ul class="spread">
+                        <li>Aplicación de escritorio operable solo con teclado (atajos F1–F11).</li>
+                        <li>API REST: las PC nunca tocan la base de datos directamente.</li>
+                        <li>Base de datos relacional en la PC principal.</li>
+                        <li>La API permite medir con <b>JMeter</b>; la interfaz se automatiza para la aceptación.</li>
+                        <li>La SUNAT se reemplaza por un servicio simulado en las pruebas.</li>
+                    </ul>
+                </div>
+                <p class="lead reveal d5" style="font-size:21px;">Arquitectura preliminar: se detallará en el SDD (G03).</p>
+            </div>
+        </div>
+    </div>
+    <div class="chrome"><span>CÓNDOR · PROPUESTA DE ALCANCE</span><span>11 / 13</span></div>
+</section>
+
+<!-- =========================================== 12 PLAN DE TRABAJO =========================================== -->
+<section class="slide">
+    <div class="inner">
+        <span class="tag reveal d1">ORGANIZACIÓN Y PLAN</span>
+        <h2 class="reveal d2">Cuatro roles cada uno, <i>tres incrementos</i></h2>
+        <div class="fill col">
+            <div class="paper flexcol grow reveal d3" style="padding:18px 32px;">
+                <table style="font-size:24px;">
+                    <thead><tr><th>INTEGRANTE</th><th>LIDERA</th><th>COORDINA</th></tr></thead>
+                    <tbody>
+                        <tr><td><b>Huamani Condori, Jeanpiero Sixto</b></td><td>G01 · G07 · dictamen G09</td><td>Proyecto, cronograma y entregas</td></tr>
+                        <tr><td><b>Payehuanca Riquelme, Jhastyn Jefferson</b></td><td>G02 · G05 · suite G09</td><td>Comité de cambios y repositorio SVN</td></tr>
+                        <tr><td><b>Condo Zamata, Richard Alberto</b></td><td>G03 · G08</td><td>Diseño y rendimiento</td></tr>
+                        <tr><td><b>Chaisa Fernández, Anthony Leonel</b></td><td>G04 · G06</td><td>Estimación y riesgos</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size:19px; color:var(--muted); margin-top:12px;">Todos ejercen los roles de analista, desarrollador, responsable de configuración y evaluador de calidad.</p>
+            </div>
+            <div class="timeline">
+                <div class="paper cut milestone now reveal d4"><div class="date">11-11</div><div class="hr"></div><p><b>H1 · Hoy.</b> Alcance del producto y G01; G02 a G05 en marcha.</p></div>
+                <div class="paper cut milestone reveal d5"><div class="date">25-11</div><div class="hr"></div><p><b>H2.</b> Producto construido; G02 a G09 con evidencias de avance.</p></div>
+                <div class="paper cut milestone reveal d6"><div class="date">02-12</div><div class="hr"></div><p><b>H3.</b> Versión v1.0.0, informe final y sustentación de 20 min.</p></div>
+            </div>
+        </div>
+    </div>
+    <div class="chrome"><span>CÓNDOR · PROPUESTA DE ALCANCE</span><span>12 / 13</span></div>
+</section>
+
+<!-- =========================================== 13 CIERRE =========================================== -->
+<section class="slide cover thanks">
+    <div class="left" style="top:150px;">
+        <span class="tag reveal d1">SISTEMA DE VENTAS Y FACTURACIÓN CÓNDOR</span>
+        <h1 class="reveal d2"><i>Gracias</i></h1>
+    </div>
+    <div class="team reveal d4">
+        <p class="lbl">INTEGRANTES</p>
+        <ul>
+            <li><span>01</span>Huamani Condori, Jeanpiero Sixto</li>
+            <li><span>02</span>Payehuanca Riquelme, Jhastyn Jefferson</li>
+            <li><span>03</span>Condo Zamata, Richard Alberto</li>
+            <li><span>04</span>Chaisa Fernández, Anthony Leonel</li>
+        </ul>
+    </div>
+    <p class="foot">CALIDAD DE SOFTWARE 2026-B · EPIS UNSA</p>
+    <div class="ticket drop">
+        <h4>CÓNDOR</h4>
+        <p class="c">FERRETERÍA CÓNDOR MAJES S.A.C.<br>MAJES · AREQUIPA</p>
+        <div class="hr"></div>
+        <div>
+            <div class="row"><span>Procesos</span><span>3</span></div>
+            <div class="row"><span>Roles</span><span>2</span></div>
+            <div class="row"><span>Req. funcionales</span><span>16</span></div>
+            <div class="row"><span>Req. no funcionales</span><span>8</span></div>
+            <div class="row"><span>Entregas</span><span>3</span></div>
+        </div>
+        <div class="hr"></div>
+        <div class="row tot"><span>META / VENTA</span><span>≤ 60 s</span></div>
+        <div class="hr"></div>
+        <p class="c tot">¡GRACIAS!</p>
+        <p class="c" style="font-size:19px; color:var(--muted);">*** VUELVA PRONTO ***</p>
+    </div>
+</section>
+
+</main>
+</div>
+
+<script>
+/* ===========================================
+   CONTROLADOR DE LA PRESENTACIÓN
+   Flechas, espacio, Re Pág/Av Pág, rueda, deslizar; #n en la URL abre la diapositiva n
+   =========================================== */
+class SlidePresentation {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.stage = document.getElementById('deckStage');
+        this.progress = document.getElementById('progress');
+        this.current = 0;
+        this.wheelLock = false;
+        this.setupStageScale();
+        this.setupNav();
+        const start = parseInt(location.hash.slice(1), 10);
+        this.show(isNaN(start) ? 0 : start - 1);
+    }
+    setupStageScale() {
+        const scale = () => {
+            const k = Math.min(innerWidth / 1920, innerHeight / 1080);
+            this.stage.style.transform = `translate(${(innerWidth - 1920 * k) / 2}px, ${(innerHeight - 1080 * k) / 2}px) scale(${k})`;
+        };
+        scale();
+        addEventListener('resize', scale);
+    }
+    setupNav() {
+        document.addEventListener('keydown', e => {
+            if (document.body.classList.contains('editing')) return;
+            if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); this.show(this.current + 1); }
+            if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); this.show(this.current - 1); }
+            if (e.key === 'Home') this.show(0);
+            if (e.key === 'End') this.show(this.slides.length - 1);
+        });
+        addEventListener('wheel', e => {
+            if (this.wheelLock || document.body.classList.contains('editing')) return;
+            this.wheelLock = true; setTimeout(() => this.wheelLock = false, 700);
+            this.show(this.current + (e.deltaY > 0 ? 1 : -1));
+        }, { passive: true });
+        let x0 = null;
+        addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+        addEventListener('touchend', e => {
+            if (x0 === null) return;
+            const dx = e.changedTouches[0].clientX - x0;
+            if (Math.abs(dx) > 50) this.show(this.current + (dx < 0 ? 1 : -1));
+            x0 = null;
+        });
+    }
+    show(i) {
+        this.current = Math.max(0, Math.min(i, this.slides.length - 1));
+        this.slides.forEach((s, n) => {
+            s.classList.toggle('active', n === this.current);
+            s.classList.remove('visible');
+        });
+        // Doble frame para que las transiciones de entrada se reproduzcan
+        requestAnimationFrame(() => requestAnimationFrame(() => this.slides[this.current].classList.add('visible')));
+        this.progress.style.width = ((this.current + 1) / this.slides.length * 100) + '%';
+    }
+}
+const deck = new SlidePresentation();
+
+/* ===========================================
+   EDICIÓN EN LÍNEA
+   E o esquina superior izquierda: activar · Ctrl+S: descargar el HTML editado
+   =========================================== */
+const editor = {
+    isActive: false,
+    key: 'condor-alcance-edits-v2',
+    targets() { return document.querySelectorAll('.slide h1, .slide h2, .slide h3, .slide h4, .slide p, .slide li, .slide td, .slide .tag, .slide .rf span, .slide .date, .slide .big, .slide .row span'); },
+    toggleEditMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle('editing', this.isActive);
+        document.getElementById('editToggle').classList.toggle('active', this.isActive);
+        document.getElementById('editToggle').textContent = this.isActive ? 'GUARDAR Y SALIR' : 'EDITAR';
+        this.targets().forEach(el => el.contentEditable = this.isActive ? 'true' : 'false');
+        if (!this.isActive) this.save();
+    },
+    save() {
+        try { localStorage.setItem(this.key, JSON.stringify([...this.targets()].map(el => el.innerHTML))); } catch (e) {}
+    },
+    load() {
+        try {
+            const data = JSON.parse(localStorage.getItem(this.key) || 'null');
+            if (data) this.targets().forEach((el, i) => { if (data[i] !== undefined) el.innerHTML = data[i]; });
+        } catch (e) {}
+    },
+    download() {
+        this.targets().forEach(el => el.removeAttribute('contenteditable'));
+        document.body.classList.remove('editing');
+        const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([html], { type: 'text/html' })), download: 'presentacion_alcance.html' });
+        a.click();
+        if (this.isActive) { document.body.classList.add('editing'); this.targets().forEach(el => el.contentEditable = 'true'); }
+    }
+};
+editor.load();
+const editToggle = document.getElementById('editToggle');
+const hotzone = document.querySelector('.edit-hotzone');
+let hideTimeout = null;
+editToggle.addEventListener('click', () => editor.toggleEditMode());
+hotzone.addEventListener('click', () => editor.toggleEditMode());
+hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
+hotzone.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+editToggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+editToggle.addEventListener('mouseleave', () => { hideTimeout = setTimeout(() => { if (!editor.isActive) editToggle.classList.remove('show'); }, 400); });
+document.addEventListener('keydown', e => {
+    if ((e.key === 'e' || e.key === 'E') && !e.target.isContentEditable) editor.toggleEditMode();
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); editor.save(); editor.download(); }
+});
+</script>
+</body>
+</html>
